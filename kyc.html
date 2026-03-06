@@ -51,6 +51,14 @@ input[type=file]{display:none;}
 @media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.page-main{margin-left:0;padding:20px 16px 80px}.mob-menu-btn{display:flex}.sidebar-backdrop.show{display:block}}
 @media(max-width:600px){.two-col-grid{grid-template-columns:1fr}.page-title{font-size:1.2rem}.card-box{padding:16px}}
 </style>
+<style>
+/* HEADER LOCK OVERRIDE */
+@media(max-width:900px){
+  .page-topbar{left:0 !important;right:0 !important;padding:12px 16px !important;}
+  .page-main{padding-top:72px !important; margin-left:0 !important;}
+}
+.page-topbar{padding-top: 0 !important; margin-bottom:0 !important;}
+</style>
 </head>
 <body>
 <script src="auth.js"></script>
