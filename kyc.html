@@ -147,24 +147,40 @@ input[type=file]{display:none;}
       </div>
     </div>
 
-    <!-- STEP 3: Selfie -->
+    <!-- STEP 3: Camera Selfie -->
     <div class="step-block" id="step3">
-      <div class="card-box-title">Selfie Verification</div>
+      <div class="card-box-title">Live Selfie Verification</div>
       <div class="form-group">
-        <label class="form-label">Take or Upload a Selfie</label>
-        <div class="file-drop" onclick="document.getElementById('kF3').click()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:8px;opacity:.4;"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><br/>
-          Hold document next to your face &bull; Good lighting<br/>
-          <small style="font-size:.72rem;opacity:.5;">JPG or PNG &bull; Max 10MB</small>
+        <label class="form-label">Hold your ID document next to your face</label>
+        <div id="cameraArea" style="background:#0D1117;border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;position:relative;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <video id="cameraFeed" autoplay playsinline style="width:100%;max-height:280px;object-fit:cover;display:none;"></video>
+          <canvas id="cameraCanvas" style="display:none;"></canvas>
+          <img id="capturedPhoto" style="width:100%;max-height:280px;object-fit:cover;border-radius:10px;display:none;" alt="Selfie" />
+          <div id="cameraPlaceholder" style="text-align:center;padding:30px 20px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" style="opacity:.25;margin-bottom:10px;"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            <div style="font-size:.84rem;color:rgba(234,236,239,.35);">Camera not started</div>
+            <div style="font-size:.72rem;color:rgba(234,236,239,.2);margin-top:4px;">Click Start Camera below</div>
+          </div>
         </div>
-        <input type="file" id="kF3" accept="image/*" onchange="filePicked(this,'kF3Status')" />
-        <div id="kF3Status" style="font-size:.75rem;color:#0ECB81;margin-top:4px;"></div>
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button class="btn-ghost" id="startCamBtn" style="flex:1;justify-content:center;" onclick="startCamera()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            Start Camera
+          </button>
+          <button class="btn-gold" id="snapBtn" style="flex:1;display:none;justify-content:center;" onclick="snapPhoto()">
+            Take Photo
+          </button>
+          <button class="btn-ghost" id="retakeBtn" style="flex:1;display:none;justify-content:center;" onclick="retakePhoto()">
+            Retake
+          </button>
+        </div>
+        <div id="selfieStatus" style="font-size:.75rem;color:#0ECB81;margin-top:6px;text-align:center;"></div>
       </div>
-      <div style="font-size:.8rem;color:rgba(234,236,239,.5);background:rgba(240,185,11,.05);border:1px solid rgba(240,185,11,.15);border-radius:10px;padding:13px 16px;margin-bottom:18px;">
-        After submission, our compliance team reviews your documents within <strong style="color:#F0B90B;">3 working days</strong>. You will receive an email notification once verified.
+      <div style="font-size:.8rem;color:rgba(234,236,239,.5);background:rgba(240,185,11,.05);border:1px solid rgba(240,185,11,.15);border-radius:10px;padding:12px 16px;margin-bottom:16px;">
+        After submission, our team reviews within <strong style="color:#F0B90B;">3 working days</strong>. Check your email for updates.
       </div>
       <div style="display:flex;gap:10px;">
-        <button class="btn-ghost" onclick="goKYC(2)">&larr; Back</button>
+        <button class="btn-ghost" onclick="goKYC(2);stopCamera();">&larr; Back</button>
         <button class="btn-gold" style="flex:1;" onclick="submitKYC()">Submit for Review</button>
       </div>
     </div>
@@ -212,10 +228,14 @@ function nextKYC(from){
   }
   goKYC(from+1);
 }
-function filePicked(inp,sid){const s=document.getElementById(sid);if(inp.files&&inp.files[0])s.textContent='Selected: '+inp.files[0].name;else s.textContent='';}
+let _stream=null,_selfieOk=false;
+function startCamera(){navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false}).then(stream=>{_stream=stream;const v=document.getElementById('cameraFeed');v.srcObject=stream;v.style.display='block';document.getElementById('cameraPlaceholder').style.display='none';document.getElementById('startCamBtn').style.display='none';document.getElementById('snapBtn').style.display='flex';showToast('Camera ready — take your selfie');}).catch(err=>{showToast('Camera access denied: '+err.message);});}
+function stopCamera(){if(_stream){_stream.getTracks().forEach(t=>t.stop());_stream=null;}}
+function snapPhoto(){const v=document.getElementById('cameraFeed');const c=document.getElementById('cameraCanvas');const img=document.getElementById('capturedPhoto');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);const dataUrl=c.toDataURL('image/jpeg',0.85);img.src=dataUrl;img.style.display='block';v.style.display='none';stopCamera();_selfieOk=true;document.getElementById('snapBtn').style.display='none';document.getElementById('retakeBtn').style.display='flex';document.getElementById('selfieStatus').textContent='Selfie captured successfully!';showToast('Selfie captured!');}
+function retakePhoto(){document.getElementById('capturedPhoto').style.display='none';document.getElementById('retakeBtn').style.display='none';document.getElementById('cameraPlaceholder').style.display='none';document.getElementById('selfieStatus').textContent='';_selfieOk=false;startCamera();}
 function submitKYC(){
-  const f3=document.getElementById('kF3');
-  if(!f3||!f3.files||!f3.files[0]){showToast('Please upload your selfie photo');return;}
+  if(!_selfieOk){showToast('Please take your selfie first');return;}
+  stopCamera();
   [1,2,3].forEach(i=>document.getElementById('step'+i).classList.remove('active'));
   document.getElementById('stepDone').classList.add('active');
 }

@@ -1,83 +1,97 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/><title>Card &mdash; CryptoCard</title><link rel="stylesheet" href="style.css"/><style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<title>Card &mdash; CryptoCard</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:#0B0E11;color:#EAECEF;font-family:'IBM Plex Sans',-apple-system,sans-serif;min-height:100vh;}
+body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
 .page-layout{display:flex;}
 .sidebar{width:220px;background:#0D1117;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s;}
-.sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 24px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#EAECEF;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:12px;}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 24px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:12px;}
 .sidebar-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border-radius:8px;display:flex;align-items:center;justify-content:center;}
-.sidebar-nav{list-style:none;flex:1;padding:0 8px;overflow-y:auto;}
-.sidebar-nav li a{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:rgba(234,236,239,.55);text-decoration:none;font-size:.875rem;font-weight:500;transition:all .2s;margin-bottom:2px;}
+.sidebar-nav{list-style:none;flex:1;padding:0 8px;}
+.sidebar-nav li a{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:rgba(255,255,255,.45);text-decoration:none;font-size:.875rem;font-weight:500;transition:all .2s;margin-bottom:2px;}
 .sidebar-nav li a:hover,.sidebar-nav li a.active{background:rgba(240,185,11,.08);color:#F0B90B;}
 .sidebar-nav li a.active svg{stroke:#F0B90B;}
 .sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.07);}
-.logout-btn{width:100%;display:flex;align-items:center;gap:8px;padding:10px 14px;background:none;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(234,236,239,.5);font-size:.84rem;cursor:pointer;font-family:inherit;transition:all .2s;}
+.logout-btn{width:100%;display:flex;align-items:center;gap:8px;padding:10px 14px;background:none;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(255,255,255,.4);font-size:.84rem;cursor:pointer;font-family:inherit;transition:all .2s;}
 .logout-btn:hover{border-color:rgba(239,68,68,.4);color:#EF4444;}
-.page-main{margin-left:220px;flex:1;padding:28px 32px;min-height:100vh;}
-.page-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
-.page-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:#EAECEF;}
-.page-subtitle{font-size:.82rem;color:rgba(234,236,239,.4);margin-top:4px;}
-.avatar-circle{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;}
-.card-box{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:24px;margin-bottom:20px;}
-.card-box-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;color:#EAECEF;margin-bottom:16px;}
-.form-label{font-size:.76rem;color:rgba(234,236,239,.5);font-weight:600;margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:.4px;}
-.form-input{width:100%;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px;color:#EAECEF;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s;}
-.form-input:focus{border-color:rgba(240,185,11,.4);}
-.form-select{width:100%;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px;color:#EAECEF;font-size:.9rem;font-family:inherit;outline:none;}
-.form-group{margin-bottom:18px;}
-.btn-gold{background:linear-gradient(135deg,#F0B90B,#F8D12F);color:#000;font-weight:700;border:none;border-radius:10px;padding:13px 28px;font-size:.9rem;cursor:pointer;font-family:inherit;transition:opacity .2s;display:inline-flex;align-items:center;gap:8px;}
-.btn-gold:hover{opacity:.85;}
-.btn-ghost{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 22px;color:rgba(234,236,239,.7);font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:6px;}
-.btn-ghost:hover{border-color:rgba(255,255,255,.2);color:#EAECEF;}
-.btn-danger{background:rgba(246,70,93,.08);border:1px solid rgba(246,70,93,.2);border-radius:10px;padding:11px 22px;color:#F6465D;font-size:.88rem;cursor:pointer;font-family:inherit;transition:all .2s;}
-.btn-danger:hover{background:rgba(246,70,93,.15);}
-.badge-green{display:inline-flex;padding:3px 10px;background:rgba(14,203,129,.1);border:1px solid rgba(14,203,129,.2);border-radius:100px;font-size:.72rem;color:#0ECB81;font-weight:600;}
-.badge-yellow{display:inline-flex;padding:3px 10px;background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.2);border-radius:100px;font-size:.72rem;color:#F0B90B;font-weight:600;}
-.badge-red{display:inline-flex;padding:3px 10px;background:rgba(246,70,93,.1);border:1px solid rgba(246,70,93,.2);border-radius:100px;font-size:.72rem;color:#F6465D;font-weight:600;}
-.info-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.85rem;}
+.page-main{margin-left:220px;flex:1;padding:28px 24px 80px;}
+.page-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px;position:sticky;top:0;background:#0B0E11;z-index:50;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.page-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.4rem;color:#fff;}
+.page-subtitle{font-size:.8rem;color:rgba(255,255,255,.35);margin-top:4px;}
+.avatar-circle{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;font-family:'Space Grotesk',sans-serif;}
+.card-box{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:22px;margin-bottom:18px;}
+.card-box-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.95rem;color:#fff;margin-bottom:14px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.85rem;}
 .info-row:last-child{border-bottom:none;}
-.info-row .lbl{color:rgba(234,236,239,.45);}
-.info-row .val{color:#EAECEF;font-weight:500;}
+.info-row .lbl{color:rgba(255,255,255,.4);}
+.info-row .val{color:#fff;font-weight:500;}
+.badge-green{display:inline-flex;padding:3px 9px;background:rgba(14,203,129,.1);border:1px solid rgba(14,203,129,.2);border-radius:100px;font-size:.72rem;color:#0ECB81;font-weight:600;}
+.badge-red{display:inline-flex;padding:3px 9px;background:rgba(246,70,93,.1);border:1px solid rgba(246,70,93,.2);border-radius:100px;font-size:.72rem;color:#F6465D;font-weight:600;}
+
+/* CARD FLIP */
+.card-flip-scene{width:100%;max-width:380px;height:210px;perspective:1000px;cursor:pointer;}
+.card-flip-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,0,.2,1);}
+.card-flip-scene.flipped .card-flip-inner{transform:rotateY(180deg);}
+.card-face,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:20px;overflow:hidden;}
+.card-face{background:linear-gradient(135deg,#1a1f3c,#0d1117 50%,#1a1035);border:1px solid rgba(99,102,241,.35);padding:22px;}
+.card-back{background:linear-gradient(135deg,#1a1035,#0d1117 50%,#1a1f3c);border:1px solid rgba(99,102,241,.35);transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:center;padding:22px;}
+.card-shimmer{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.04) 50%,transparent 60%);animation:shimmer 3s infinite;pointer-events:none;}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.vcard-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.vcard-brand{font-family:'Space Grotesk',sans-serif;font-weight:700;color:rgba(255,255,255,.9);font-size:.88rem;}
+.vcard-network{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.92rem;color:rgba(255,255,255,.75);}
+.vcard-chip{width:38px;height:28px;background:linear-gradient(135deg,#C9A84C,#F0D080);border-radius:5px;margin-bottom:14px;}
+.vcard-number{font-family:'IBM Plex Mono',monospace;font-size:1rem;letter-spacing:3px;color:rgba(255,255,255,.85);margin-bottom:14px;}
+.vcard-bottom{display:flex;justify-content:space-between;}
+.vcard-lbl{font-size:.58rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;}
+.vcard-name{font-size:.82rem;font-weight:600;color:#fff;font-family:'Space Grotesk',sans-serif;}
+.vcard-expiry{font-family:'IBM Plex Mono',monospace;font-size:.88rem;color:rgba(255,255,255,.8);}
+.magstripe{width:100%;height:38px;background:rgba(0,0,0,.7);margin-bottom:16px;}
+.cvv-strip{background:rgba(255,255,255,.9);border-radius:4px;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;}
+.cvv-strip-lbl{font-size:.7rem;color:#333;font-weight:600;}
+.cvv-val{font-family:'IBM Plex Mono',monospace;font-size:1.1rem;font-weight:700;color:#000;letter-spacing:4px;}
+
+.card-btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;width:100%;max-width:380px;}
+.card-btn{flex:1;min-width:70px;display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:12px;color:rgba(255,255,255,.7);font-size:.8rem;font-weight:500;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap;}
+.card-btn:hover{background:rgba(240,185,11,.08);border-color:rgba(240,185,11,.25);color:#F0B90B;}
+.card-btn.active-cvv{border-color:rgba(240,185,11,.4);color:#F0B90B;background:rgba(240,185,11,.08);}
+.limit-track{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin:8px 0;}
+.limit-fill{height:100%;background:linear-gradient(90deg,#F0B90B,#F8D12F);border-radius:3px;}
+.page-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:999;white-space:nowrap;}
+.page-toast.show{transform:translateX(-50%) translateY(0);}
 .mob-menu-btn{display:none;position:fixed;bottom:20px;left:20px;z-index:200;width:44px;height:44px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
 .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:999;white-space:nowrap;}
-.toast.show{transform:translateX(-50%) translateY(0);}
-div[style*="two-col"]{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-@media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.page-main{margin-left:0;padding:20px 16px 80px}.mob-menu-btn{display:flex}.sidebar-backdrop.show{display:block}}
-@media(max-width:600px){.page-title{font-size:1.2rem}.card-box{padding:16px}}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.page-main{margin-left:0}.mob-menu-btn{display:flex}.sidebar-backdrop.show{display:block}}
+@media(max-width:720px){.two-col{grid-template-columns:1fr}}
+@media(max-width:500px){.page-main{padding:12px 14px 80px}.card-btn{font-size:.74rem;padding:10px 6px}}
 </style>
-<style>
-.vcard{background:linear-gradient(135deg,#1a1f3c,#0d1117 50%,#1a1035);border:1px solid rgba(99,102,241,.35);border-radius:20px;padding:24px;position:relative;overflow:hidden;width:100%;max-width:380px;}
-.vcard-shimmer{position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.04) 50%,transparent 60%);animation:shimmer 3s infinite;pointer-events:none;}
-@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-.vcard-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-.vcard-brand{font-family:'Space Grotesk',sans-serif;font-weight:700;color:rgba(255,255,255,.9);font-size:.9rem;}
-.vcard-network{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.95rem;color:rgba(255,255,255,.8);}
-.vcard-chip{width:40px;height:30px;background:linear-gradient(135deg,#C9A84C,#F0D080);border-radius:6px;margin-bottom:16px;}
-.vcard-number{font-family:'IBM Plex Mono',monospace;font-size:1.05rem;letter-spacing:3px;color:rgba(255,255,255,.85);margin-bottom:16px;}
-.vcard-bottom{display:flex;justify-content:space-between;}
-.vcard-label{font-size:.6rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
-.vcard-name{font-size:.85rem;font-weight:600;color:#fff;font-family:'Space Grotesk',sans-serif;}
-.vcard-expiry{font-family:'IBM Plex Mono',monospace;font-size:.9rem;color:rgba(255,255,255,.85);}
-.card-btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;}
-.card-btn{flex:1;min-width:80px;display:flex;align-items:center;justify-content:center;gap:7px;padding:12px 10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:12px;color:#EAECEF;font-size:.82rem;font-weight:500;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap;}
-.card-btn:hover{background:rgba(240,185,11,.08);border-color:rgba(240,185,11,.25);color:#F0B90B;}
-.card-btn.active-danger{border-color:rgba(246,70,93,.3);color:#F6465D;background:rgba(246,70,93,.06);}
-.limit-track{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin:8px 0;}
-.limit-fill{height:100%;background:linear-gradient(90deg,#F0B90B,#F8D12F);border-radius:3px;width:0%;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-@media(max-width:700px){.two-col{grid-template-columns:1fr}}
-</style></head><body>
+</head>
+<body>
+<script src="auth.js"></script>
+<script>if(!authGuard()){}</script>
 <div class="page-layout">
 <aside class="sidebar" id="sidebar">
-  <a href="index.html" class="sidebar-logo"><div class="sidebar-logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>CryptoCard</a>
-  <ul class="sidebar-nav"><li><a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="3" y="15" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="11" rx="1"/></svg>Dashboard</a></li>
+  <a href="index.html" class="sidebar-logo">
+    <div class="sidebar-logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+    CryptoCard
+  </a>
+  <ul class="sidebar-nav">
+    <li><a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="3" y="15" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="11" rx="1"/></svg>Dashboard</a></li>
     <li><a href="deposit.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg>Deposit</a></li>
     <li><a href="card.html" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Card</a></li>
     <li><a href="transactions.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>Transactions</a></li>
     <li><a href="kyc.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>KYC</a></li>
-    <li><a href="settings.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a></li></ul>
+    <li><a href="settings.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a></li>
+  </ul>
   <div class="sidebar-footer"><button class="logout-btn" onclick="logout()"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</button></div>
 </aside>
+
 <div class="page-main">
   <div class="page-topbar">
     <div><div class="page-title">Card Management</div><div class="page-subtitle">Manage your virtual debit card</div></div>
@@ -85,45 +99,71 @@ div[style*="two-col"]{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
   </div>
   <div class="two-col">
     <div>
-      <div class="card-box" style="display:flex;flex-direction:column;align-items:flex-start;gap:20px;">
-        <div class="vcard" id="vcardEl">
-          <div class="vcard-shimmer"></div>
-          <div class="vcard-top"><div class="vcard-brand">CryptoCard</div><div class="vcard-network" id="cardNet">VISA</div></div>
-          <div class="vcard-chip"></div>
-          <div class="vcard-number" id="cardNum">&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;</div>
-          <div class="vcard-bottom">
-            <div><div class="vcard-label">Card Holder</div><div class="vcard-name" id="cardHolder">YOUR NAME</div></div>
-            <div style="text-align:right;"><div class="vcard-label">Expires</div><div class="vcard-expiry">09/28</div></div>
+      <div class="card-box" style="display:flex;flex-direction:column;align-items:flex-start;">
+        <!-- FLIP CARD -->
+        <div class="card-flip-scene" id="cardScene">
+          <div class="card-flip-inner">
+            <!-- FRONT -->
+            <div class="card-face">
+              <div class="card-shimmer"></div>
+              <div class="vcard-top">
+                <div class="vcard-brand">CryptoCard</div>
+                <div class="vcard-network">VISA</div>
+              </div>
+              <div class="vcard-chip"></div>
+              <div class="vcard-number" id="cardNum">&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; ????</div>
+              <div class="vcard-bottom">
+                <div><div class="vcard-lbl">Card Holder</div><div class="vcard-name" id="cardHolder">YOUR NAME</div></div>
+                <div style="text-align:right;"><div class="vcard-lbl">Expires</div><div class="vcard-expiry">09/28</div></div>
+              </div>
+            </div>
+            <!-- BACK -->
+            <div class="card-back">
+              <div class="magstripe"></div>
+              <div class="cvv-strip">
+                <div class="cvv-strip-lbl">CVV / Security Code</div>
+                <div class="cvv-val" id="cvvVal">738</div>
+              </div>
+              <div style="margin-top:12px;font-size:.7rem;color:rgba(255,255,255,.4);text-align:center;">Tap the CVV button again to flip back</div>
+            </div>
           </div>
         </div>
-        <div class="card-btn-row" style="width:100%;max-width:380px;">
-          <button class="card-btn" id="freezeBtn" onclick="doFreeze()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/><path d="m20 16-4-4 4-4"/><path d="m4 8 4 4-4 4"/><path d="m16 4-4 4-4-4"/><path d="m8 20 4-4 4 4"/></svg>Freeze</button>
-          <button class="card-btn" onclick="doReveal()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Reveal</button>
+
+        <!-- ACTION BUTTONS -->
+        <div class="card-btn-row">
+          <button class="card-btn" id="cvvBtn" onclick="doCVV()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            CVV
+          </button>
+          <button class="card-btn" id="revealBtn" onclick="doReveal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Reveal
+          </button>
           <button class="card-btn" onclick="doCopy()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy</button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            Copy
+          </button>
         </div>
       </div>
     </div>
     <div>
       <div class="card-box">
         <div class="card-box-title">Daily Spend Limit</div>
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:700;"></span>
-          <span style="color:rgba(234,236,239,.4);font-size:.85rem;">/ </span>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:1.4rem;font-weight:700;color:#fff;">$0</span>
+          <span style="color:rgba(255,255,255,.35);font-size:.85rem;">/ $300</span>
         </div>
         <div class="limit-track"><div class="limit-fill" style="width:0%;"></div></div>
-        <div style="font-size:.73rem;color:rgba(234,236,239,.3);margin-top:6px;display:flex;align-items:center;gap:4px;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Fixed at /day &mdash; cannot be increased</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.25);margin-top:6px;display:flex;align-items:center;gap:4px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Fixed $300/day &mdash; cannot be increased
+        </div>
       </div>
       <div class="card-box">
         <div class="card-box-title">Card Details</div>
-        <div class="info-row"><span class="lbl">Status</span><span class="val"><span class="badge-green" id="cardStatus">Active</span></span></div>
+        <div class="info-row"><span class="lbl">Status</span><span class="val"><span class="badge-green" id="cardStatusBadge">Active</span></span></div>
         <div class="info-row"><span class="lbl">Network</span><span class="val">Visa &bull; Virtual</span></div>
         <div class="info-row"><span class="lbl">Expires</span><span class="val">09/28</span></div>
-        <div class="info-row"><span class="lbl">CVV</span><span class="val" id="cvvDisplay">&bull;&bull;&bull;</span></div>
         <div class="info-row"><span class="lbl">Billing</span><span class="val">Global (180+ countries)</span></div>
       </div>
       <div class="card-box">
@@ -135,31 +175,67 @@ div[style*="two-col"]{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
       </div>
     </div>
   </div>
-</div></div>
+</div>
+</div>
+
 <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
-<button class="mob-menu-btn" onclick="toggleSidebar()" aria-label="Menu">
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
-</button>
-<div class="toast" id="pageToast"></div>
-<script src="auth.js"></script><script>if(!authGuard()){}</script><script src="app.js"></script>
+<button class="mob-menu-btn" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+<div class="page-toast" id="pageToast"></div>
+
+<script src="app.js"></script>
 <script>
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarBackdrop').classList.toggle('show');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('show');}
 function showToast(m){const t=document.getElementById('pageToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-const _u=getCurrentUser();if(_u&&document.getElementById('userAvatar'))document.getElementById('userAvatar').textContent=_u.name.charAt(0).toUpperCase();
-</script>
-<script>
+
 const u=getCurrentUser();
+let userCard='';
 if(u){
+  document.getElementById('userAvatar').textContent=u.name.charAt(0).toUpperCase();
   document.getElementById('cardHolder').textContent=u.name.toUpperCase().slice(0,22);
-  document.getElementById('cardNum').innerHTML='&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; '+(u.cardNumber||'0000').slice(-4);
+  userCard=u.cardNumber||'0000000000000000';
+  document.getElementById('cardNum').innerHTML='&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; '+userCard.slice(-4);
 }
-let frozen=false,revealed=false;
-function doFreeze(){frozen=!frozen;const btn=document.getElementById('freezeBtn');btn.classList.toggle('active-danger',frozen);btn.innerHTML=frozen?
-'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/><path d="m20 16-4-4 4-4"/><path d="m4 8 4 4-4 4"/><path d="m16 4-4 4-4-4"/><path d="m8 20 4-4 4 4"/></svg>Unfreeze':
-'<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/><path d="m20 16-4-4 4-4"/><path d="m4 8 4 4-4 4"/><path d="m16 4-4 4-4-4"/><path d="m8 20 4-4 4 4"/></svg>Freeze';
-const s=document.getElementById('cardStatus');s.className=frozen?'badge-red':'badge-green';s.textContent=frozen?'Frozen':'Active';
-showToast(frozen?'Card frozen':'Card unfrozen');}
-function doReveal(){const u=getCurrentUser();if(!u)return;revealed=!revealed;document.getElementById('cardNum').textContent=revealed?u.cardNumber.replace(/(\d{4})/g,' ').trim():'•••• •••• •••• '+u.cardNumber.slice(-4);document.getElementById('cvvDisplay').textContent=revealed?'738':'•••';showToast(revealed?'Number revealed (auto-hides in 10s)':'Hidden');if(revealed)setTimeout(()=>{revealed=false;document.getElementById('cardNum').innerHTML='&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; '+u.cardNumber.slice(-4);document.getElementById('cvvDisplay').textContent='&bull;&bull;&bull;';},10000);}
-function doCopy(){const u=getCurrentUser();if(u)navigator.clipboard.writeText(u.cardNumber).then(()=>showToast('Card number copied!'));}
-</script></body></html>
+
+let cvvShowing=false;
+let revealed=false;
+
+function doCVV(){
+  cvvShowing=!cvvShowing;
+  const scene=document.getElementById('cardScene');
+  const btn=document.getElementById('cvvBtn');
+  scene.classList.toggle('flipped',cvvShowing);
+  btn.classList.toggle('active-cvv',cvvShowing);
+  showToast(cvvShowing?'CVV visible — tap CVV again to hide':'Card flipped back');
+}
+
+function doReveal(){
+  if(!u)return;
+  revealed=!revealed;
+  const el=document.getElementById('cardNum');
+  const btn=document.getElementById('revealBtn');
+  if(revealed){
+    const formatted=userCard.replace(/(\d{4})/g,'$1 ').trim();
+    el.textContent=formatted;
+    btn.style.color='#F0B90B';
+    btn.style.borderColor='rgba(240,185,11,.35)';
+    showToast('Card number revealed — hides in 12s');
+    setTimeout(()=>{
+      revealed=false;
+      el.innerHTML='&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; '+userCard.slice(-4);
+      btn.style.color='';btn.style.borderColor='';
+    },12000);
+  } else {
+    el.innerHTML='&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; '+userCard.slice(-4);
+    btn.style.color='';btn.style.borderColor='';
+    showToast('Card number hidden');
+  }
+}
+
+function doCopy(){
+  if(!u)return;
+  navigator.clipboard.writeText(userCard).then(()=>showToast('Card number copied!')).catch(()=>{showToast('Copy failed — try again');});
+}
+</script>
+</body>
+</html>
