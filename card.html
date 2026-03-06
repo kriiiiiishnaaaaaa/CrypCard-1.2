@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Card Management — CryptoCard</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .card-management-grid {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 24px;
+    }
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .control-row:last-child { border-bottom: none; }
+    .control-label { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
+    .control-desc { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+    .block-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .block-row:last-child { border-bottom: none; }
+    .limit-display {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-bottom: 12px;
+    }
+    @media (max-width: 900px) {
+      .card-management-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo"><div class="nav-logo-icon">💳</div>CryptoCard</a>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a></li>
+      <li><a href="deposit.html"><span class="nav-icon">⬇</span> Deposit USDC</a></li>
+      <li><a href="card.html" class="active"><span class="nav-icon">💳</span> Card Management</a></li>
+      <li><a href="transactions.html"><span class="nav-icon">↕</span> Transactions</a></li>
+      <li><a href="kyc.html"><span class="nav-icon">🪪</span> KYC Verification</a></li>
+      <li><a href="settings.html"><span class="nav-icon">⚙</span> Settings</a></li>
+    </ul>
+    <div style="padding:24px 12px;position:absolute;bottom:0;left:0;right:0;border-top:1px solid var(--border);">
+      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">← Logout</a>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Card Management</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);">Control your virtual card settings</div>
+      </div>
+      <div class="topbar-actions">
+        <div class="notification-btn">🔔<div class="notification-dot"></div></div>
+        <div class="avatar-btn">K</div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="card-management-grid">
+
+        <!-- LEFT: Card Visual + Quick Controls -->
+        <div>
+          <!-- Card Visual (flip) -->
+          <div class="section-card" style="margin-bottom:20px;text-align:center;">
+            <div class="card-flip-container" id="cardFlip" style="width:100%;max-width:360px;height:220px;margin:0 auto 16px;" onclick="flipCard()">
+              <div class="card-flip-inner" id="cardFlipInner">
+                <div class="card-face">
+                  <div class="vcard" style="width:100%;height:100%;">
+                    <div class="vcard-shimmer"></div>
+                    <div class="vcard-top">
+                      <div class="vcard-brand">CryptoCard</div>
+                      <div class="vcard-network">VISA</div>
+                    </div>
+                    <div style="margin:12px 0;"><div class="vcard-chip"></div></div>
+                    <div class="vcard-number" id="dashCardNumber">4216 •••• •••• 7291</div>
+                    <div class="vcard-bottom">
+                      <div><div class="vcard-label">Card Holder</div><div class="vcard-name">KRISH DEV</div></div>
+                      <div style="text-align:right;"><div class="vcard-label">Expires</div><div class="vcard-expiry">09/28</div></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-back">
+                  <div class="card-back-strip" style="margin:-10px -28px 16px;"></div>
+                  <div class="card-cvv-row">
+                    <div style="flex:1;height:36px;background:rgba(255,255,255,0.1);border-radius:4px;"></div>
+                    <div>
+                      <div class="card-cvv-label">CVV</div>
+                      <div id="cvvMasked" class="card-cvv-box">•••</div>
+                      <div id="cvvRevealed" class="card-cvv-box" style="display:none;">738</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;">
+              <span id="cardStatusBadge" class="badge badge-active">● ACTIVE</span>
+              <span class="badge" style="background:rgba(99,102,241,0.1);color:var(--accent-primary);border:1px solid rgba(99,102,241,0.3);">Visa Virtual</span>
+            </div>
+            <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+              <button class="btn btn-secondary btn-sm" id="freezeBtn" data-frozen="false" onclick="toggleFreeze()">❄️ Freeze Card</button>
+              <button class="btn btn-secondary btn-sm" id="revealNumBtn" onclick="toggleCardNumber()">👁 Reveal Number</button>
+              <button class="btn btn-secondary btn-sm" id="revealCVVBtn" onclick="revealCVV()">🔑 Show CVV</button>
+              <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('4216884390127291')">📋 Copy</button>
+            </div>
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+              <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="openModal('physicalCardModal')">📮 Request Physical Card (Coming Soon)</button>
+            </div>
+          </div>
+
+          <!-- Card Details -->
+          <div class="section-card">
+            <div class="section-card-title">Card Details</div>
+            <div>
+              <div class="control-row">
+                <div><div class="control-label">Card Number</div></div>
+                <div style="font-family:'Space Mono',monospace;font-size:0.82rem;color:var(--text-secondary);">4216 •••• •••• 7291</div>
+              </div>
+              <div class="control-row">
+                <div><div class="control-label">Expiry Date</div></div>
+                <div style="font-family:'Space Mono',monospace;font-size:0.82rem;color:var(--text-secondary);">09/2028</div>
+              </div>
+              <div class="control-row">
+                <div><div class="control-label">Billing Address</div></div>
+                <div style="font-size:0.82rem;color:var(--text-secondary);">Mumbai, India</div>
+              </div>
+              <div class="control-row">
+                <div><div class="control-label">Card Network</div></div>
+                <div>
+                  <div class="network-toggle" style="margin-bottom:0;padding:3px;">
+                    <button class="network-toggle-btn active" style="padding:5px 14px;font-size:0.78rem;">Visa</button>
+                    <button class="network-toggle-btn" style="padding:5px 14px;font-size:0.78rem;">Mastercard</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Controls -->
+        <div>
+          <!-- Spend Limits -->
+          <div class="section-card" style="margin-bottom:20px;">
+            <div class="section-card-title">Spend Limits</div>
+
+            <div style="margin-bottom:24px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                <div class="control-label">Daily Limit</div>
+                <div class="limit-display" id="daily-limit-display">$500</div>
+              </div>
+              <input type="range" id="daily-limit" min="100" max="5000" step="100" value="500" />
+              <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-top:6px;">
+                <span>$100</span><span>$5,000</span>
+              </div>
+            </div>
+
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                <div class="control-label">Monthly Limit</div>
+                <div class="limit-display" id="monthly-limit-display">$2,000</div>
+              </div>
+              <input type="range" id="monthly-limit" min="500" max="20000" step="500" value="2000" />
+              <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-top:6px;">
+                <span>$500</span><span>$20,000</span>
+              </div>
+            </div>
+
+            <div style="margin-top:20px;padding:16px;background:var(--bg-surface);border-radius:var(--radius-md);">
+              <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:8px;">Spend This Month</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                <span style="font-size:0.9rem;font-weight:600;">$842.50</span>
+                <span style="font-size:0.8rem;color:var(--text-muted);">/ $2,000</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width:42%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Card Controls -->
+          <div class="section-card" style="margin-bottom:20px;">
+            <div class="section-card-title">Card Controls</div>
+            <div class="control-row">
+              <div>
+                <div class="control-label">Online Transactions</div>
+                <div class="control-desc">Allow card to be used for online / e-commerce purchases</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" checked />
+                <div class="toggle-track"></div>
+                <div class="toggle-thumb"></div>
+              </label>
+            </div>
+            <div class="control-row">
+              <div>
+                <div class="control-label">International Transactions</div>
+                <div class="control-desc">Allow transactions in foreign countries</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" checked />
+                <div class="toggle-track"></div>
+                <div class="toggle-thumb"></div>
+              </label>
+            </div>
+            <div class="control-row">
+              <div>
+                <div class="control-label">Contactless / NFC</div>
+                <div class="control-desc">Allow tap-to-pay and Apple/Google Pay</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" checked />
+                <div class="toggle-track"></div>
+                <div class="toggle-thumb"></div>
+              </label>
+            </div>
+            <div class="control-row">
+              <div>
+                <div class="control-label">ATM Withdrawals</div>
+                <div class="control-desc">Allow cash withdrawals at ATMs</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" />
+                <div class="toggle-track"></div>
+                <div class="toggle-thumb"></div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Merchant Category Blocks -->
+          <div class="section-card">
+            <div class="section-card-title">Merchant Category Blocks</div>
+            <div class="block-row">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="font-size:1.2rem;">🎰</span>
+                <div><div class="control-label">Gambling & Casinos</div><div class="control-desc">Block payments to gambling services</div></div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" checked />
+                <div class="toggle-track"></div>
+                <div class="toggle-thumb"></div>
+              </label>
+            </div>
+            <div class="block-row">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="font-size:1.2rem;">🍺</span>
+                <div><div class="control-label">Alcohol & Tobacco</div></div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" />
+                <div class="toggle-track"></div>
+                <div class="toggle-thumb"></div>
+              </label>
+            </div>
+            <div class="block-row">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="font-size:1.2rem;">💊</span>
+                <div><div class="control-label">Adult Content</div></div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" checked />
+                <div class="toggle-track"></div>
+                <div class="toggle-thumb"></div>
+              </label>
+            </div>
+            <div class="block-row">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <span style="font-size:1.2rem;">⛽</span>
+                <div><div class="control-label">Cryptocurrency Exchanges</div></div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" />
+                <div class="toggle-track"></div>
+                <div class="toggle-thumb"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction History -->
+      <div class="section-card" style="margin-top:24px;">
+        <div class="section-card-title">
+          Card Transaction History
+          <div style="display:flex;gap:8px;">
+            <select class="form-select" style="width:auto;padding:8px 32px 8px 12px;font-size:0.82rem;">
+              <option>All Time</option><option>This Month</option><option>Last Month</option>
+            </select>
+            <select class="form-select" style="width:auto;padding:8px 32px 8px 12px;font-size:0.82rem;">
+              <option>All Status</option><option>Approved</option><option>Pending</option><option>Declined</option>
+            </select>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Merchant</th><th>Category</th><th>Fiat Amount</th><th>USDC Deducted</th><th>Rate</th><th>Date</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Starbucks</td><td>☕ Food</td><td>$4.50</td><td>4.51 USDC</td><td>0.998</td><td>Mar 6 09:30</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
+            <tr><td>Amazon.com</td><td>🛒 Shopping</td><td>$89.99</td><td>90.08 USDC</td><td>0.999</td><td>Mar 5 14:12</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
+            <tr><td>Netflix</td><td>🎬 Entertainment</td><td>$15.99</td><td>16.02 USDC</td><td>0.998</td><td>Mar 4 00:01</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
+            <tr><td>Shell Station</td><td>⛽ Transport</td><td>$52.00</td><td>52.10 USDC</td><td>0.998</td><td>Mar 3 11:44</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
+            <tr><td>Marriott Hotel</td><td>🏨 Travel</td><td>$220.00</td><td>220.44 USDC</td><td>0.998</td><td>Mar 1 15:00</td><td><span class="badge badge-pending" style="font-size:0.7rem;">Pending</span></td></tr>
+            <tr><td>Unknown Merchant</td><td>❓ Other</td><td>$250.00</td><td>—</td><td>—</td><td>Feb 28 22:15</td><td><span class="badge badge-declined" style="font-size:0.7rem;">Declined</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Physical Card Modal -->
+<div class="modal-overlay" id="physicalCardModal">
+  <div class="modal">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+      <h3>Physical Card</h3>
+      <button onclick="closeModal('physicalCardModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">✕</button>
+    </div>
+    <div style="text-align:center;padding:20px 0;">
+      <div style="font-size:3rem;margin-bottom:16px;">📮</div>
+      <h3>Coming Soon!</h3>
+      <p style="margin-top:12px;">Physical card issuance is currently in beta. Join the waitlist to be notified when it's available in your country.</p>
+      <button class="btn btn-primary" style="margin-top:24px;width:100%;">Join Waitlist</button>
+    </div>
+  </div>
+</div>
+
+<div class="copy-toast" id="copyToast">✓ Copied to clipboard!</div>
+<script src="app.js"></script>
+<script>
+  // Range slider live display
+  const dailySlider = document.getElementById('daily-limit');
+  const dailyDisplay = document.getElementById('daily-limit-display');
+  if (dailySlider) {
+    dailySlider.addEventListener('input', () => {
+      dailyDisplay.textContent = '$' + Number(dailySlider.value).toLocaleString();
+    });
+  }
+  const monthlySlider = document.getElementById('monthly-limit');
+  const monthlyDisplay = document.getElementById('monthly-limit-display');
+  if (monthlySlider) {
+    monthlySlider.addEventListener('input', () => {
+      monthlyDisplay.textContent = '$' + Number(monthlySlider.value).toLocaleString();
+    });
+  }
+</script>
+</body>
+</html>

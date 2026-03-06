@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deposit USDC — CryptoCard</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .network-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .network-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+    .network-tab:hover { border-color: var(--border-accent); color: var(--text-primary); }
+    .network-tab.active {
+      background: rgba(99,102,241,0.12);
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+    .network-tab .tab-icon { font-size: 1.2rem; }
+
+    .deposit-main {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 24px;
+    }
+    .qr-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 32px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+    }
+    .qr-title { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; }
+    .qr-svg {
+      width: 180px;
+      height: 180px;
+      background: white;
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .address-box {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-primary);
+      word-break: break-all;
+      line-height: 1.8;
+      position: relative;
+    }
+    .network-info-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+    .network-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .network-info-row:last-child { border-bottom: none; }
+    .network-info-row .label { color: var(--text-muted); }
+    .network-info-row .val { color: var(--text-primary); font-weight: 500; }
+    .network-info-row .val.green { color: var(--accent-green); }
+
+    @media (max-width: 768px) {
+      .deposit-main { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo"><div class="nav-logo-icon">💳</div>CryptoCard</a>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a></li>
+      <li><a href="deposit.html" class="active"><span class="nav-icon">⬇</span> Deposit USDC</a></li>
+      <li><a href="card.html"><span class="nav-icon">💳</span> Card Management</a></li>
+      <li><a href="transactions.html"><span class="nav-icon">↕</span> Transactions</a></li>
+      <li><a href="kyc.html"><span class="nav-icon">🪪</span> KYC Verification</a></li>
+      <li><a href="settings.html"><span class="nav-icon">⚙</span> Settings</a></li>
+    </ul>
+    <div style="padding: 24px 12px; position: absolute; bottom: 0; left: 0; right: 0; border-top: 1px solid var(--border);">
+      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%; justify-content:center;">← Logout</a>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Deposit USDC</div>
+        <div style="font-size:0.8rem; color:var(--text-muted);">Send USDC to your wallet address below</div>
+      </div>
+      <div class="topbar-actions">
+        <div class="rate-ticker">
+          <span class="rate-blink"></span>
+          USDC: <span class="rate-value usdc-rate-val">$1.0002</span>
+        </div>
+        <div class="notification-btn">🔔<div class="notification-dot"></div></div>
+        <div class="avatar-btn">K</div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <!-- Warning Notice -->
+      <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius-md);padding:16px 20px;margin-bottom:24px;display:flex;gap:12px;align-items:center;">
+        <span style="font-size:1.2rem;">⚠️</span>
+        <div>
+          <div style="font-weight:600;font-size:0.9rem;color:var(--accent-yellow);margin-bottom:2px;">Only send USDC to this address</div>
+          <div style="font-size:0.82rem;color:var(--text-secondary);">Sending any other token will result in permanent loss. Minimum deposit: 10 USDC.</div>
+        </div>
+      </div>
+
+      <!-- Network Tabs -->
+      <div class="network-tabs">
+        <div class="network-tab active" data-network="eth" onclick="selectNetwork('eth')"><span class="tab-icon">⟠</span>Ethereum (ERC-20)</div>
+        <div class="network-tab" data-network="base" onclick="selectNetwork('base')"><span class="tab-icon">🔵</span>Base</div>
+        <div class="network-tab" data-network="tron" onclick="selectNetwork('tron')"><span class="tab-icon">🔴</span>Tron (TRC-20)</div>
+        <div class="network-tab" data-network="sol" onclick="selectNetwork('sol')"><span class="tab-icon">◎</span>Solana</div>
+        <div class="network-tab" data-network="pol" onclick="selectNetwork('pol')"><span class="tab-icon">🟣</span>Polygon</div>
+      </div>
+
+      <div class="deposit-main">
+        <!-- Left: Addresses -->
+        <div>
+          <!-- ETH -->
+          <div class="network-address section-card" data-network="eth">
+            <div style="margin-bottom:20px;">
+              <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:4px;">Ethereum USDC (ERC-20)</div>
+              <div class="badge badge-pending" style="font-size:0.72rem;">⏱ Confirmation: ~12 min</div>
+            </div>
+            <div class="qr-section" style="flex-direction:row;padding:20px;gap:24px;">
+              <div class="qr-container">
+                <svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="120" height="120" fill="white"/>
+                  <rect x="10" y="10" width="40" height="40" fill="black" rx="2"/>
+                  <rect x="14" y="14" width="32" height="32" fill="white" rx="1"/>
+                  <rect x="18" y="18" width="24" height="24" fill="black" rx="1"/>
+                  <rect x="70" y="10" width="40" height="40" fill="black" rx="2"/>
+                  <rect x="74" y="14" width="32" height="32" fill="white" rx="1"/>
+                  <rect x="78" y="18" width="24" height="24" fill="black" rx="1"/>
+                  <rect x="10" y="70" width="40" height="40" fill="black" rx="2"/>
+                  <rect x="14" y="74" width="32" height="32" fill="white" rx="1"/>
+                  <rect x="18" y="78" width="24" height="24" fill="black" rx="1"/>
+                  <rect x="55" y="55" width="8" height="8" fill="black"/>
+                  <rect x="65" y="55" width="8" height="8" fill="black"/>
+                  <rect x="75" y="55" width="8" height="8" fill="black"/>
+                  <rect x="55" y="65" width="8" height="8" fill="black"/>
+                  <rect x="75" y="65" width="8" height="8" fill="black"/>
+                  <rect x="55" y="75" width="8" height="8" fill="black"/>
+                  <rect x="65" y="75" width="8" height="8" fill="black"/>
+                  <rect x="75" y="75" width="8" height="8" fill="black"/>
+                  <rect x="85" y="55" width="8" height="8" fill="black"/>
+                  <rect x="95" y="65" width="8" height="8" fill="black"/>
+                  <rect x="85" y="75" width="8" height="8" fill="black"/>
+                  <rect x="95" y="75" width="8" height="8" fill="black"/>
+                  <rect x="85" y="95" width="8" height="8" fill="black"/>
+                  <rect x="95" y="85" width="8" height="8" fill="black"/>
+                  <rect x="55" y="85" width="8" height="8" fill="black"/>
+                  <rect x="65" y="95" width="8" height="8" fill="black"/>
+                  <rect x="75" y="85" width="8" height="8" fill="black"/>
+                </svg>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Your Ethereum Deposit Address</div>
+                <div class="address-box" id="ethAddress">0x742d35Cc6634C0532925a3b8D4C9E2d1dE04b9f3</div>
+                <div style="display:flex;gap:8px;margin-top:12px;">
+                  <button class="btn btn-primary btn-sm" onclick="copyToClipboard('0x742d35Cc6634C0532925a3b8D4C9E2d1dE04b9f3')">📋 Copy Address</button>
+                  <button class="btn btn-secondary btn-sm">↗ View on Etherscan</button>
+                </div>
+              </div>
+            </div>
+            <div class="network-info-card" style="margin-top:16px;">
+              <div class="network-info-row"><span class="label">Network</span><span class="val">Ethereum Mainnet</span></div>
+              <div class="network-info-row"><span class="label">Token</span><span class="val">USDC (ERC-20)</span></div>
+              <div class="network-info-row"><span class="label">Minimum</span><span class="val">10 USDC</span></div>
+              <div class="network-info-row"><span class="label">Confirmation Time</span><span class="val">~12 minutes (12 blocks)</span></div>
+              <div class="network-info-row"><span class="label">Network Fee</span><span class="val">~$2–8 ETH gas</span></div>
+              <div class="network-info-row"><span class="label">Credit Status</span><span class="val green">Instant after confirmation</span></div>
+            </div>
+          </div>
+
+          <!-- BASE (hidden by default) -->
+          <div class="network-address section-card" data-network="base" style="display:none;">
+            <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:16px;">Base USDC (Layer 2)</div>
+            <div class="address-box" style="margin-bottom:12px;">0x8a3B5cD9E1f2Ab43c8D4C9E2d1dE04b9f3742d35</div>
+            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('0x8a3B5cD9E1f2Ab43c8D4C9E2d1dE04b9f3742d35')">📋 Copy Address</button>
+            <div class="network-info-card" style="margin-top:16px;">
+              <div class="network-info-row"><span class="label">Network</span><span class="val">Base (Coinbase L2)</span></div>
+              <div class="network-info-row"><span class="label">Minimum</span><span class="val">10 USDC</span></div>
+              <div class="network-info-row"><span class="label">Confirmation</span><span class="val green">~1–2 minutes</span></div>
+              <div class="network-info-row"><span class="label">Network Fee</span><span class="val green">&lt;$0.01</span></div>
+            </div>
+          </div>
+
+          <!-- TRON (hidden) -->
+          <div class="network-address section-card" data-network="tron" style="display:none;">
+            <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:16px;">Tron USDC (TRC-20)</div>
+            <div class="address-box" style="margin-bottom:12px;">TQnEWmN9e1dE04b9f3742d35Cc6634C0532925a3</div>
+            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('TQnEWmN9e1dE04b9f3742d35Cc6634C0532925a3')">📋 Copy Address</button>
+            <div class="network-info-card" style="margin-top:16px;">
+              <div class="network-info-row"><span class="label">Network</span><span class="val">Tron Mainnet</span></div>
+              <div class="network-info-row"><span class="label">Minimum</span><span class="val">10 USDC</span></div>
+              <div class="network-info-row"><span class="label">Confirmation</span><span class="val green">~3 minutes</span></div>
+              <div class="network-info-row"><span class="label">Network Fee</span><span class="val green">~$1 TRX</span></div>
+            </div>
+          </div>
+
+          <!-- SOLANA (hidden) -->
+          <div class="network-address section-card" data-network="sol" style="display:none;">
+            <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:16px;">Solana USDC (SPL)</div>
+            <div class="address-box" style="margin-bottom:12px;">9xjF4mK7pW2nR8sL3vQ6tE1yB5cH0dG4mN8wZ2xV7kP</div>
+            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('9xjF4mK7pW2nR8sL3vQ6tE1yB5cH0dG4mN8wZ2xV7kP')">📋 Copy Address</button>
+            <div class="network-info-card" style="margin-top:16px;">
+              <div class="network-info-row"><span class="label">Network</span><span class="val">Solana Mainnet</span></div>
+              <div class="network-info-row"><span class="label">Minimum</span><span class="val">10 USDC</span></div>
+              <div class="network-info-row"><span class="label">Confirmation</span><span class="val green">&lt;30 seconds</span></div>
+              <div class="network-info-row"><span class="label">Network Fee</span><span class="val green">~$0.001</span></div>
+            </div>
+          </div>
+
+          <!-- POLYGON (hidden) -->
+          <div class="network-address section-card" data-network="pol" style="display:none;">
+            <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:16px;">Polygon USDC</div>
+            <div class="address-box" style="margin-bottom:12px;">0xC0532925a3b8D4b9f3742d35Cc6634C9E2d1dE04</div>
+            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('0xC0532925a3b8D4b9f3742d35Cc6634C9E2d1dE04')">📋 Copy Address</button>
+            <div class="network-info-card" style="margin-top:16px;">
+              <div class="network-info-row"><span class="label">Network</span><span class="val">Polygon (MATIC)</span></div>
+              <div class="network-info-row"><span class="label">Minimum</span><span class="val">10 USDC</span></div>
+              <div class="network-info-row"><span class="label">Confirmation</span><span class="val green">~2 minutes</span></div>
+              <div class="network-info-row"><span class="label">Network Fee</span><span class="val green">&lt;$0.01</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Summary + History -->
+        <div>
+          <div class="section-card" style="margin-bottom:20px;">
+            <div class="section-card-title">Your Balance</div>
+            <div style="font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;color:var(--text-primary);margin-bottom:4px;">1,247.83</div>
+            <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:20px;">USDC Available</div>
+            <div class="divider"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:0.82rem;">
+              <div><div style="color:var(--text-muted);">Total Deposited</div><div style="font-family:'Space Mono',monospace;font-weight:600;margin-top:4px;">5,800.00 USDC</div></div>
+              <div><div style="color:var(--text-muted);">Total Spent</div><div style="font-family:'Space Mono',monospace;font-weight:600;margin-top:4px;">4,552.17 USDC</div></div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-card-title">Deposit History</div>
+            <div class="tx-list">
+              <div class="tx-row" style="padding:12px 0;">
+                <div class="tx-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2);">⬇</div>
+                <div class="tx-info">
+                  <div class="tx-merchant">Ethereum Deposit</div>
+                  <div class="tx-meta">Mar 5, 2025 · ERC-20</div>
+                </div>
+                <div class="tx-amount">
+                  <div class="tx-fiat" style="color:var(--accent-green);">+500 USDC</div>
+                  <span class="badge badge-active" style="font-size:0.62rem;">Confirmed</span>
+                </div>
+              </div>
+              <div class="tx-row" style="padding:12px 0;">
+                <div class="tx-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2);">⬇</div>
+                <div class="tx-info">
+                  <div class="tx-merchant">Solana Deposit</div>
+                  <div class="tx-meta">Feb 28, 2025 · SPL</div>
+                </div>
+                <div class="tx-amount">
+                  <div class="tx-fiat" style="color:var(--accent-green);">+1,000 USDC</div>
+                  <span class="badge badge-active" style="font-size:0.62rem;">Confirmed</span>
+                </div>
+              </div>
+              <div class="tx-row" style="padding:12px 0;">
+                <div class="tx-icon" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.2);">⏳</div>
+                <div class="tx-info">
+                  <div class="tx-merchant">Base Deposit</div>
+                  <div class="tx-meta">Mar 6, 2025 · Base</div>
+                </div>
+                <div class="tx-amount">
+                  <div class="tx-fiat" style="color:var(--accent-yellow);">+200 USDC</div>
+                  <span class="badge badge-pending" style="font-size:0.62rem;">Pending</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="copy-toast" id="copyToast">✓ Copied to clipboard!</div>
+<script src="app.js"></script>
+</body>
+</html>

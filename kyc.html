@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KYC Verification — CryptoCard</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .kyc-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .kyc-panel { display: none; animation: fadeInUp 0.4s ease; }
+    .kyc-panel.active { display: block; }
+
+    .doc-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .doc-type {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .doc-type:hover, .doc-type.selected {
+      border-color: var(--accent-primary);
+      background: rgba(99,102,241,0.08);
+    }
+    .doc-type .doc-icon { font-size: 2rem; margin-bottom: 8px; }
+    .doc-type .doc-label { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+
+    .upload-zone {
+      border: 2px dashed var(--border-bright);
+      border-radius: var(--radius-md);
+      padding: 40px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-bottom: 16px;
+    }
+    .upload-zone:hover {
+      border-color: var(--accent-primary);
+      background: rgba(99,102,241,0.04);
+    }
+    .upload-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .upload-text { font-size: 0.9rem; color: var(--text-secondary); }
+    .upload-limit { font-size: 0.78rem; color: var(--text-muted); margin-top: 6px; }
+
+    .camera-view {
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .camera-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .face-frame {
+      width: 160px;
+      height: 200px;
+      border: 3px solid var(--accent-primary);
+      border-radius: 50%;
+      box-shadow: 0 0 30px var(--accent-glow);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    .spinner-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 40px 0;
+    }
+    .spinner {
+      width: 64px;
+      height: 64px;
+      border: 4px solid rgba(99,102,241,0.2);
+      border-top-color: var(--accent-primary);
+      border-radius: 50%;
+      animation: spin-slow 1s linear infinite;
+    }
+
+    .success-container {
+      text-align: center;
+      padding: 40px 0;
+    }
+    .success-icon-wrap {
+      width: 80px;
+      height: 80px;
+      background: rgba(16,185,129,0.1);
+      border: 2px solid var(--accent-green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto 24px;
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard-layout">
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo"><div class="nav-logo-icon">💳</div>CryptoCard</a>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a></li>
+      <li><a href="deposit.html"><span class="nav-icon">⬇</span> Deposit USDC</a></li>
+      <li><a href="card.html"><span class="nav-icon">💳</span> Card Management</a></li>
+      <li><a href="transactions.html"><span class="nav-icon">↕</span> Transactions</a></li>
+      <li><a href="kyc.html" class="active"><span class="nav-icon">🪪</span> KYC Verification</a></li>
+      <li><a href="settings.html"><span class="nav-icon">⚙</span> Settings</a></li>
+    </ul>
+    <div style="padding:24px 12px;position:absolute;bottom:0;left:0;right:0;border-top:1px solid var(--border);">
+      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">← Logout</a>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">KYC Verification</div>
+        <div style="font-size:0.8rem;color:var(--text-muted);">Identity verification required to unlock your card</div>
+      </div>
+      <div class="topbar-actions">
+        <div class="notification-btn">🔔<div class="notification-dot"></div></div>
+        <div class="avatar-btn">K</div>
+      </div>
+    </div>
+
+    <div class="page-content">
+      <div class="kyc-wrapper">
+
+        <!-- Step Indicators -->
+        <div class="kyc-steps" style="margin-bottom:40px;">
+          <div class="kyc-step active" id="step-dot-1">
+            <div class="kyc-step-dot">1<span class="kyc-step-label">Personal</span></div>
+          </div>
+          <div class="kyc-step-line" id="line-1"></div>
+          <div class="kyc-step" id="step-dot-2">
+            <div class="kyc-step-dot">2<span class="kyc-step-label">Document</span></div>
+          </div>
+          <div class="kyc-step-line" id="line-2"></div>
+          <div class="kyc-step" id="step-dot-3">
+            <div class="kyc-step-dot">3<span class="kyc-step-label">Selfie</span></div>
+          </div>
+          <div class="kyc-step-line" id="line-3"></div>
+          <div class="kyc-step" id="step-dot-4">
+            <div class="kyc-step-dot">4<span class="kyc-step-label">Verify</span></div>
+          </div>
+          <div class="kyc-step-line" id="line-4"></div>
+          <div class="kyc-step" id="step-dot-5">
+            <div class="kyc-step-dot">✓<span class="kyc-step-label">Done</span></div>
+          </div>
+        </div>
+
+        <!-- STEP 1: Personal Info -->
+        <div class="kyc-panel active" id="panel-1">
+          <div class="section-card">
+            <div style="margin-bottom:24px;">
+              <h3>Personal Information</h3>
+              <p style="margin-top:6px;font-size:0.88rem;">Enter your legal name exactly as it appears on your government ID.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div class="form-group">
+                <label class="form-label">First Name *</label>
+                <input class="form-input" type="text" placeholder="John" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name *</label>
+                <input class="form-input" type="text" placeholder="Doe" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date of Birth *</label>
+              <input class="form-input" type="date" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Country of Residence *</label>
+              <select class="form-select">
+                <option>Select Country...</option>
+                <option>India</option><option>United States</option><option>United Kingdom</option>
+                <option>Canada</option><option>Germany</option><option>Singapore</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Residential Address *</label>
+              <input class="form-input" type="text" placeholder="Street Address" style="margin-bottom:10px;" />
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <input class="form-input" type="text" placeholder="City" />
+                <input class="form-input" type="text" placeholder="ZIP / Post Code" />
+              </div>
+            </div>
+            <button class="btn btn-primary" style="width:100%;" onclick="nextKycStep()">Continue →</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Document Upload -->
+        <div class="kyc-panel" id="panel-2">
+          <div class="section-card">
+            <div style="margin-bottom:24px;">
+              <h3>ID Document</h3>
+              <p style="margin-top:6px;font-size:0.88rem;">Upload a clear photo of your government-issued ID document.</p>
+            </div>
+            <div class="doc-type-grid">
+              <div class="doc-type selected" onclick="selectDocType(this)">
+                <div class="doc-icon">📔</div>
+                <div class="doc-label">Passport</div>
+              </div>
+              <div class="doc-type" onclick="selectDocType(this)">
+                <div class="doc-icon">🪪</div>
+                <div class="doc-label">National ID</div>
+              </div>
+              <div class="doc-type" onclick="selectDocType(this)">
+                <div class="doc-icon">🚗</div>
+                <div class="doc-label">Driver's License</div>
+              </div>
+            </div>
+            <div class="upload-zone" onclick="this.querySelector('input').click()">
+              <input type="file" accept="image/*" style="display:none;">
+              <div class="upload-icon">📤</div>
+              <div class="upload-text">Click or drag to upload front of document</div>
+              <div class="upload-limit">JPEG, PNG or PDF · Max 10MB · Min 300 DPI</div>
+            </div>
+            <div class="upload-zone" onclick="this.querySelector('input').click()">
+              <input type="file" accept="image/*" style="display:none;">
+              <div class="upload-icon">📄</div>
+              <div class="upload-text">Click or drag to upload back of document</div>
+              <div class="upload-limit">Required for National ID and Driver's License</div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button class="btn btn-secondary" style="flex:1;" onclick="goToKycStep(1)">← Back</button>
+              <button class="btn btn-primary" style="flex:2;" onclick="nextKycStep()">Continue →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Selfie -->
+        <div class="kyc-panel" id="panel-3">
+          <div class="section-card">
+            <div style="margin-bottom:24px;">
+              <h3>Selfie Verification</h3>
+              <p style="margin-top:6px;font-size:0.88rem;">Take a selfie to verify you're the person in your ID document. Ensure good lighting and face the camera directly.</p>
+            </div>
+            <div class="camera-view">
+              <div style="font-size:3rem;opacity:0.3;">📷</div>
+              <div style="font-size:0.88rem;color:var(--text-muted);margin-top:8px;">Camera preview</div>
+              <div class="camera-overlay">
+                <div class="face-frame"></div>
+              </div>
+            </div>
+            <div style="text-align:center;margin:16px 0;font-size:0.82rem;color:var(--text-muted);">Position your face within the oval frame</div>
+            <div style="display:flex;gap:10px;">
+              <button class="btn btn-secondary" style="flex:1;" onclick="goToKycStep(2)">← Back</button>
+              <button class="btn btn-primary" style="flex:2;" onclick="startVerification()">📸 Capture & Verify</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 4: Processing -->
+        <div class="kyc-panel" id="panel-4">
+          <div class="section-card">
+            <div class="spinner-container">
+              <div class="spinner"></div>
+              <div>
+                <h3 style="text-align:center;margin-bottom:8px;">Verifying Your Identity</h3>
+                <p style="text-align:center;font-size:0.88rem;">AI-powered verification in progress. This usually takes 30–60 seconds...</p>
+              </div>
+              <div style="width:100%;max-width:300px;">
+                <div style="display:flex;flex-direction:column;gap:12px;" id="verifySteps">
+                  <div class="verify-item" style="display:flex;align-items:center;gap:12px;font-size:0.85rem;">
+                    <span id="vs1">⏳</span> Checking document authenticity
+                  </div>
+                  <div class="verify-item" style="display:flex;align-items:center;gap:12px;font-size:0.85rem;">
+                    <span id="vs2">⏳</span> Cross-referencing personal info
+                  </div>
+                  <div class="verify-item" style="display:flex;align-items:center;gap:12px;font-size:0.85rem;">
+                    <span id="vs3">⏳</span> Facial recognition matching
+                  </div>
+                  <div class="verify-item" style="display:flex;align-items:center;gap:12px;font-size:0.85rem;">
+                    <span id="vs4">⏳</span> Sanctions & PEP screening
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 5: Approved -->
+        <div class="kyc-panel" id="panel-5">
+          <div class="section-card">
+            <div class="success-container">
+              <div class="success-icon-wrap">✅</div>
+              <h2 style="color:var(--accent-green);margin-bottom:12px;">Identity Verified!</h2>
+              <p>Your identity has been successfully verified. Your account limits are now fully unlocked.</p>
+              <div style="background:var(--bg-surface);border-radius:var(--radius-md);padding:20px;margin:24px 0;text-align:left;">
+                <div style="font-size:0.82rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;">Unlocked Limits</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:0.88rem;">
+                  <div><div style="color:var(--text-muted);">Daily Limit</div><div style="font-family:'Space Mono',monospace;font-weight:700;color:var(--accent-green);">$5,000</div></div>
+                  <div><div style="color:var(--text-muted);">Monthly Limit</div><div style="font-family:'Space Mono',monospace;font-weight:700;color:var(--accent-green);">$20,000</div></div>
+                  <div><div style="color:var(--text-muted);">Cards Allowed</div><div style="font-family:'Space Mono',monospace;font-weight:700;color:var(--accent-green);">Up to 3</div></div>
+                  <div><div style="color:var(--text-muted);">KYC Level</div><div style="font-family:'Space Mono',monospace;font-weight:700;color:var(--accent-green);">Level 2 ✓</div></div>
+                </div>
+              </div>
+              <a href="dashboard.html" class="btn btn-primary btn-lg" style="width:100%;">Go to Dashboard →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  function selectDocType(el) {
+    document.querySelectorAll('.doc-type').forEach(d => d.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function goToKycStep(step) {
+    // Update panels
+    document.querySelectorAll('.kyc-panel').forEach((p, i) => {
+      p.classList.toggle('active', i + 1 === step);
+    });
+    // Update step dots
+    document.querySelectorAll('.kyc-step').forEach((d, i) => {
+      if (i + 1 < step) {
+        d.classList.add('completed');
+        d.classList.remove('active');
+      } else if (i + 1 === step) {
+        d.classList.add('active');
+        d.classList.remove('completed');
+      } else {
+        d.classList.remove('completed', 'active');
+      }
+    });
+  }
+
+  function nextKycStep() {
+    const current = document.querySelector('.kyc-panel.active');
+    const panels = Array.from(document.querySelectorAll('.kyc-panel'));
+    const idx = panels.indexOf(current);
+    if (idx < panels.length - 1) goToKycStep(idx + 2);
+  }
+
+  function startVerification() {
+    goToKycStep(4);
+    // Simulate verification
+    const steps = ['vs1','vs2','vs3','vs4'];
+    steps.forEach((id, i) => {
+      setTimeout(() => {
+        document.getElementById(id).textContent = '✅';
+      }, (i + 1) * 1200);
+    });
+    setTimeout(() => { goToKycStep(5); }, 5500);
+  }
+</script>
+</body>
+</html>

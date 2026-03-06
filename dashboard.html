@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — CryptoCard</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .balance-card {
+      background: linear-gradient(135deg, #13163a 0%, #0d1117 50%, #1a1035 100%);
+      border: 1px solid rgba(99,102,241,0.3);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .balance-card::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%);
+    }
+    .balance-card::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%);
+    }
+    .balance-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .balance-amount {
+      font-family: 'Space Mono', monospace;
+      font-size: 3.2rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .balance-fiat {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 1;
+    }
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .quick-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 14px 24px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition);
+      color: white;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+    .quick-btn:hover {
+      background: rgba(99,102,241,0.2);
+      border-color: rgba(99,102,241,0.4);
+      transform: translateY(-2px);
+    }
+    .quick-btn .qb-icon { font-size: 1.3rem; }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+
+    .section-card-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .see-all {
+      font-size: 0.8rem;
+      color: var(--accent-primary);
+      text-decoration: none;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Dashboard card compact */
+    .dash-card-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dash-card {
+      width: 100%;
+      max-width: 320px;
+      height: 190px;
+    }
+
+    .card-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Spending chart */
+    .chart-row {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .chart-legend {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-label { color: var(--text-secondary); }
+    .legend-val { color: var(--text-primary); font-weight: 600; margin-left: auto; font-family: 'Space Mono', monospace; font-size: 0.78rem; }
+
+    .savings-bar {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo">
+      <div class="nav-logo-icon">💳</div>
+      CryptoCard
+    </a>
+    <ul class="sidebar-nav">
+      <li><a href="dashboard.html" class="active"><span class="nav-icon">⊞</span> Dashboard</a></li>
+      <li><a href="deposit.html"><span class="nav-icon">⬇</span> Deposit USDC</a></li>
+      <li><a href="card.html"><span class="nav-icon">💳</span> Card Management</a></li>
+      <li><a href="transactions.html"><span class="nav-icon">↕</span> Transactions</a></li>
+      <li><a href="kyc.html"><span class="nav-icon">🪪</span> KYC Verification</a></li>
+      <li><a href="settings.html"><span class="nav-icon">⚙</span> Settings</a></li>
+    </ul>
+    <div style="padding: 24px 12px; margin-top: auto; border-top: 1px solid var(--border); position: absolute; bottom: 0; left: 0; right: 0;">
+      <div style="display:flex; align-items:center; gap: 12px; padding: 0 8px 16px;">
+        <div class="avatar-btn" style="flex-shrink:0;">K</div>
+        <div>
+          <div style="font-size:0.88rem; font-weight:600; color: var(--text-primary);">Krish Dev</div>
+          <div style="font-size:0.75rem; color: var(--text-muted);">Pro Plan ⭐</div>
+        </div>
+      </div>
+      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%; justify-content:center;">← Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div>
+        <div class="topbar-title">Dashboard</div>
+        <div style="font-size:0.8rem; color:var(--text-muted);">Welcome back, Krish 👋</div>
+      </div>
+      <div class="topbar-actions">
+        <div class="rate-ticker">
+          <span class="rate-blink"></span>
+          USDC/USD: <span class="rate-value usdc-rate-val">$1.0002</span>
+        </div>
+        <div class="notification-btn">
+          🔔
+          <div class="notification-dot"></div>
+        </div>
+        <div class="avatar-btn">K</div>
+      </div>
+    </div>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Balance</div>
+          <div class="stat-value"><span id="liveBalance">1,247.83</span></div>
+          <div class="stat-change up">↑ +12.4 USDC today</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Spent This Month</div>
+          <div class="stat-value">$842.50</div>
+          <div class="stat-change down">↓ 68% of $1.2K limit</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cashback Earned</div>
+          <div class="stat-value">8.42</div>
+          <div class="stat-change up">↑ 1% on all purchases</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">FX Fees Saved</div>
+          <div class="stat-value">$23.80</div>
+          <div class="stat-change up">↑ vs traditional cards</div>
+        </div>
+      </div>
+
+      <!-- Balance Card -->
+      <div class="balance-card">
+        <div class="balance-label">USDC Balance</div>
+        <div class="balance-amount" id="dashBalance">1,247.83 <span style="font-size:1.4rem;color:rgba(255,255,255,0.4);">USDC</span></div>
+        <div class="balance-fiat">≈ ₹1,04,498 · ≈ $1,247.83 USD</div>
+        <div class="quick-actions">
+          <a href="deposit.html" class="quick-btn"><span class="qb-icon">⬇</span>Deposit</a>
+          <a href="#" class="quick-btn" onclick="openModal('convertModal'); return false;"><span class="qb-icon">⇄</span>Convert</a>
+          <a href="#" class="quick-btn"><span class="qb-icon">↗</span>Send</a>
+          <a href="transactions.html" class="quick-btn"><span class="qb-icon">📋</span>History</a>
+        </div>
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="dashboard-grid">
+        <!-- Virtual Card Widget -->
+        <div class="section-card">
+          <div class="section-card-title">
+            <span>Your Virtual Card</span>
+            <a href="card.html" class="see-all">Manage →</a>
+          </div>
+          <div class="dash-card-wrap">
+            <div class="card-flip-container dash-card" id="cardFlip" onclick="flipCard()">
+              <div class="card-flip-inner" id="cardFlipInner">
+                <div class="card-face">
+                  <div class="vcard" style="width:100%;height:100%;">
+                    <div class="vcard-shimmer"></div>
+                    <div class="vcard-top">
+                      <div class="vcard-brand" style="font-size:0.85rem;">CryptoCard</div>
+                      <div class="vcard-network" style="font-size:0.9rem;">VISA</div>
+                    </div>
+                    <div style="margin: 10px 0;">
+                      <div class="vcard-chip" style="width:32px;height:24px;"></div>
+                    </div>
+                    <div class="vcard-number" id="dashCardNumber" style="font-size:0.9rem;letter-spacing:2px;">4216 •••• •••• 7291</div>
+                    <div class="vcard-bottom">
+                      <div>
+                        <div class="vcard-label">Card Holder</div>
+                        <div class="vcard-name" style="font-size:0.75rem;">KRISH DEV</div>
+                      </div>
+                      <div style="text-align:right;">
+                        <div class="vcard-label">Expires</div>
+                        <div class="vcard-expiry" style="font-size:0.75rem;">09/28</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-back">
+                  <div class="card-back-strip" style="margin:-10px -28px 16px;"></div>
+                  <div class="card-cvv-row">
+                    <div style="flex:1;height:32px;background:rgba(255,255,255,0.1);border-radius:4px;"></div>
+                    <div>
+                      <div class="card-cvv-label">CVV</div>
+                      <div id="cvvMasked" class="card-cvv-box" style="font-size:0.8rem;">•••</div>
+                      <div id="cvvRevealed" class="card-cvv-box" style="display:none;font-size:0.8rem;">738</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:6px; align-items:center; justify-content:center;">
+              <span id="cardStatusBadge" class="badge badge-active">● ACTIVE</span>
+            </div>
+
+            <div class="card-controls">
+              <button class="btn btn-secondary btn-sm" id="freezeBtn" data-frozen="false" onclick="toggleFreeze()">❄️ Freeze</button>
+              <button class="btn btn-secondary btn-sm" id="revealNumBtn" onclick="toggleCardNumber()">👁 Reveal</button>
+              <button class="btn btn-secondary btn-sm" id="revealCVVBtn" onclick="revealCVV()">🔑 CVV</button>
+              <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('4216884390127291')">📋 Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="section-card">
+          <div class="section-card-title">
+            <span>Recent Transactions</span>
+            <a href="transactions.html" class="see-all">View all →</a>
+          </div>
+          <div class="tx-list">
+            <div class="tx-row">
+              <div class="tx-icon">☕</div>
+              <div class="tx-info">
+                <div class="tx-merchant">Starbucks Coffee</div>
+                <div class="tx-meta">Food & Drink · Today 9:30 AM</div>
+              </div>
+              <div class="tx-amount">
+                <div class="tx-fiat">-$4.50</div>
+                <div class="tx-usdc">4.51 USDC @0.998</div>
+              </div>
+              <span class="badge badge-active" style="font-size:0.65rem;">✓</span>
+            </div>
+            <div class="tx-row">
+              <div class="tx-icon">🛒</div>
+              <div class="tx-info">
+                <div class="tx-merchant">Amazon.com</div>
+                <div class="tx-meta">Shopping · Yesterday 2:15 PM</div>
+              </div>
+              <div class="tx-amount">
+                <div class="tx-fiat">-$89.99</div>
+                <div class="tx-usdc">90.08 USDC @0.999</div>
+              </div>
+              <span class="badge badge-active" style="font-size:0.65rem;">✓</span>
+            </div>
+            <div class="tx-row">
+              <div class="tx-icon">🎬</div>
+              <div class="tx-info">
+                <div class="tx-merchant">Netflix</div>
+                <div class="tx-meta">Entertainment · Mar 4</div>
+              </div>
+              <div class="tx-amount">
+                <div class="tx-fiat">-$15.99</div>
+                <div class="tx-usdc">16.02 USDC @0.998</div>
+              </div>
+              <span class="badge badge-active" style="font-size:0.65rem;">✓</span>
+            </div>
+            <div class="tx-row">
+              <div class="tx-icon">⛽</div>
+              <div class="tx-info">
+                <div class="tx-merchant">Shell Gas Station</div>
+                <div class="tx-meta">Transport · Mar 3</div>
+              </div>
+              <div class="tx-amount">
+                <div class="tx-fiat">-$52.00</div>
+                <div class="tx-usdc">52.10 USDC @0.998</div>
+              </div>
+              <span class="badge badge-active" style="font-size:0.65rem;">✓</span>
+            </div>
+            <div class="tx-row">
+              <div class="tx-icon">🏨</div>
+              <div class="tx-info">
+                <div class="tx-merchant">Marriott Hotel</div>
+                <div class="tx-meta">Travel · Mar 1</div>
+              </div>
+              <div class="tx-amount">
+                <div class="tx-fiat">-$220.00</div>
+                <div class="tx-usdc">220.44 USDC @0.998</div>
+              </div>
+              <span class="badge badge-pending" style="font-size:0.65rem;">⏳</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spend Analytics -->
+      <div class="section-card" style="margin-bottom:24px;">
+        <div class="section-card-title">
+          <span>Spend Analytics — March 2025</span>
+          <select class="form-select" style="width:auto;padding:8px 32px 8px 12px;font-size:0.82rem;">
+            <option>This Month</option>
+            <option>Last Month</option>
+            <option>Last 3 Months</option>
+          </select>
+        </div>
+        <div style="display:grid;grid-template-columns:280px 1fr;gap:32px;align-items:start;">
+          <div>
+            <div class="chart-row" style="flex-direction:column;align-items:center;gap:20px;">
+              <canvas id="donutChart" width="200" height="200"></canvas>
+              <div class="chart-legend">
+                <div class="legend-item"><div class="legend-dot" style="background:#6366F1;"></div><span class="legend-label">Shopping</span><span class="legend-val">$310</span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:#10B981;"></div><span class="legend-label">Food & Drink</span><span class="legend-val">$185</span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:#F59E0B;"></div><span class="legend-label">Transport</span><span class="legend-val">$140</span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:#8B5CF6;"></div><span class="legend-label">Entertainment</span><span class="legend-val">$95</span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:#EF4444;"></div><span class="legend-label">Travel</span><span class="legend-val">$220</span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:#6B7280;"></div><span class="legend-label">Other</span><span class="legend-val">$89</span></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:0.82rem; color:var(--text-muted); margin-bottom:16px; font-weight:500; text-transform:uppercase; letter-spacing:0.5px;">Monthly Spending (USDC)</div>
+            <canvas id="barChart" width="500" height="200"></canvas>
+            <div class="savings-bar">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                <span style="font-size:0.82rem;color:var(--text-secondary);">FX Fees Saved vs Traditional Cards</span>
+                <span style="font-family:'Space Mono',monospace;font-weight:700;color:var(--accent-green);font-size:0.88rem;">$23.80 saved</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width:68%;"></div>
+              </div>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:8px;">You've spent $842 of your $2,000 monthly limit</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Convert Modal -->
+<div class="modal-overlay" id="convertModal">
+  <div class="modal">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+      <h3>Convert USDC</h3>
+      <button onclick="closeModal('convertModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">From (USDC)</label>
+      <input class="form-input" type="number" placeholder="100.00" value="100" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">To Currency</label>
+      <select class="form-select">
+        <option>USD ($)</option><option>INR (₹)</option><option>EUR (€)</option><option>GBP (£)</option>
+      </select>
+    </div>
+    <div style="background:var(--bg-surface);border-radius:var(--radius-md);padding:16px;margin-bottom:20px;font-size:0.85rem;color:var(--text-secondary);">
+      1 USDC ≈ $<span class="usdc-rate-val">1.0002</span> · You'll receive: <strong style="color:var(--text-primary);">$100.02</strong>
+    </div>
+    <button class="btn btn-primary" style="width:100%;">Convert Now</button>
+  </div>
+</div>
+
+<!-- Copy Toast -->
+<div class="copy-toast" id="copyToast">✓ Copied to clipboard!</div>
+
+<script src="app.js"></script>
+<script>
+  // Draw charts after load
+  window.addEventListener('load', () => {
+    drawDonutChart('donutChart', [
+      { value: 310, color: '#6366F1' },
+      { value: 185, color: '#10B981' },
+      { value: 140, color: '#F59E0B' },
+      { value: 95, color: '#8B5CF6' },
+      { value: 220, color: '#EF4444' },
+      { value: 89, color: '#4B5563' },
+    ]);
+    drawBarChart('barChart', [
+      { label: 'Oct', value: 620 },
+      { label: 'Nov', value: 890 },
+      { label: 'Dec', value: 1240 },
+      { label: 'Jan', value: 780 },
+      { label: 'Feb', value: 1050 },
+      { label: 'Mar', value: 842 },
+    ]);
+  });
+</script>
+</body>
+</html>

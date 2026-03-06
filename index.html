@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CryptoCard — USDC-Powered Virtual Debit Card</title>
+  <meta name="description" content="Get a virtual Visa/Mastercard debit card powered by USDC. Spend your crypto anywhere in the world — we convert to local currency instantly." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ===== HERO SECTION ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content { }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .hero-label .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-primary);
+      border-radius: 50%;
+      animation: blink 1.5s infinite;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 5vw, 4rem);
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease 0.1s both;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 500px;
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+      animation: fadeInUp 0.6s ease 0.3s both;
+    }
+
+    .trust-row {
+      animation: fadeInUp 0.6s ease 0.4s both;
+    }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 460px;
+      animation: fadeInRight 0.8s ease 0.2s both;
+    }
+
+    .hero-card-wrap {
+      position: relative;
+    }
+
+    .hero-card-wrap .vcard {
+      animation: float 5s ease-in-out infinite;
+      animation-delay: 0s;
+    }
+
+    /* Floating transaction badges */
+    .fb1 {
+      top: -20px;
+      left: -80px;
+      animation-delay: 0s;
+    }
+    .fb2 {
+      bottom: 30px;
+      right: -70px;
+      animation-delay: 1.5s;
+    }
+    .fb3 {
+      top: 130px;
+      right: -90px;
+      animation-delay: 0.8s;
+    }
+
+    /* Glow rings around card */
+    .card-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(99,102,241,0.15);
+      animation: pulse-ring 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.08); opacity: 0.2; }
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .how-it-works {
+      background: var(--bg-secondary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .how-it-works::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .flow-steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0;
+      row-gap: 40px;
+    }
+
+    .flow-arrow {
+      font-size: 1.4rem;
+      color: var(--accent-primary);
+      opacity: 0.5;
+      margin: 0 8px;
+    }
+
+    /* ===== CARD TOGGLE ===== */
+    .network-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px;
+      margin-bottom: 28px;
+    }
+
+    .network-toggle-btn {
+      padding: 8px 24px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+
+    .network-toggle-btn.active {
+      background: var(--accent-primary);
+      color: white;
+    }
+
+    /* ===== HERO BACKGROUND ===== */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .hero-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+    }
+
+    /* ===== ANIMATED COUNTER ===== */
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hero-stat-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .hero-stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      .trust-badges {
+        justify-content: center;
+      }
+      .hero-visual {
+        order: -1;
+        min-height: 380px;
+      }
+      .fb1, .fb2, .fb3 {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="navbar-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">💳</div>
+        CryptoCard
+      </a>
+      <ul class="nav-menu">
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="dashboard.html" class="nav-login">Login</a>
+        <a href="dashboard.html" class="btn btn-primary btn-sm">Get Your Card →</a>
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#how-it-works" class="mobile-link">How It Works</a>
+  <a href="#features" class="mobile-link">Features</a>
+  <a href="#pricing" class="mobile-link">Pricing</a>
+  <a href="#faq" class="mobile-link">FAQ</a>
+  <a href="dashboard.html" class="btn btn-primary">Get Your Card →</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="hero-bg-grid"></div>
+    <div class="glow-orb glow-orb-indigo" style="width:600px;height:600px;top:-100px;right:-100px;opacity:0.6;"></div>
+    <div class="glow-orb glow-orb-purple" style="width:400px;height:400px;bottom:0;left:-100px;opacity:0.5;"></div>
+  </div>
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="container">
+    <div class="hero-inner">
+      <!-- Left: Text Content -->
+      <div class="hero-content">
+        <div class="hero-label">
+          <span class="dot"></span>
+          Now Live — USDC Virtual Debit Cards
+        </div>
+
+        <h1>Your USDC.<br><span class="gradient-text">Spendable Everywhere.</span></h1>
+
+        <p class="hero-sub">
+          Get a virtual Visa/Mastercard debit card. Deposit USDC, swipe anywhere, we convert to local currency instantly — no bank needed.
+        </p>
+
+        <div class="hero-actions">
+          <a href="dashboard.html" class="btn btn-primary btn-lg">Get Your Card Free →</a>
+          <a href="#how-it-works" class="btn btn-secondary btn-lg">See How It Works</a>
+        </div>
+
+        <div class="trust-row">
+          <div class="trust-badges">
+            <div class="trust-badge">🔵 Visa</div>
+            <div class="trust-badge">🔴 Mastercard</div>
+            <div class="trust-badge">🔐 256-bit Encrypted</div>
+            <div class="trust-badge">🏛️ Non-Custodial</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 36px;" class="hero-stats">
+          <div class="hero-stat-item">
+            <span class="hero-stat-num" id="counter1">0</span>
+            <span class="hero-stat-label">Active Cards</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num" id="counter2">$0M</span>
+            <span class="hero-stat-label">USDC Processed</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num" id="counter3">0+</span>
+            <span class="hero-stat-label">Countries</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Card Visual -->
+      <div class="hero-visual">
+        <!-- Rings -->
+        <div class="card-ring" style="width:500px;height:500px;"></div>
+        <div class="card-ring" style="width:580px;height:580px;animation-delay:1s;"></div>
+
+        <div class="hero-card-wrap">
+          <!-- Floating Badges -->
+          <div class="floating-badge fb1">
+            <span class="fb-icon">☕</span>
+            <div>
+              <div>Coffee Shop</div>
+              <div class="fb-amount">$4.50 · 4.51 USDC</div>
+            </div>
+          </div>
+          <div class="floating-badge fb2">
+            <span class="fb-icon">🛒</span>
+            <div>
+              <div>Amazon Purchase</div>
+              <div class="fb-amount">$89.99 · 90.08 USDC</div>
+            </div>
+          </div>
+          <div class="floating-badge fb3">
+            <span class="fb-icon">✈️</span>
+            <div>
+              <div>Flight Booking</div>
+              <div class="fb-amount">$412.00 · 412.82 USDC</div>
+            </div>
+          </div>
+
+          <!-- Virtual Card -->
+          <div class="vcard" id="heroCard">
+            <div class="vcard-shimmer"></div>
+            <div class="vcard-top">
+              <div class="vcard-brand">CryptoCard</div>
+              <div class="vcard-network" id="heroCardNetwork">VISA</div>
+            </div>
+            <div style="margin: 18px 0;">
+              <div class="vcard-chip"></div>
+            </div>
+            <div class="vcard-number">4216 •••• •••• 7291</div>
+            <div class="vcard-bottom">
+              <div>
+                <div class="vcard-label">Card Holder</div>
+                <div class="vcard-name">CRYPTO USER</div>
+              </div>
+              <div style="text-align:right;">
+                <div class="vcard-label">Expires</div>
+                <div class="vcard-expiry">09/28</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="how-it-works" id="how-it-works">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">✦ Simple Process</div>
+      <h2>How It Works</h2>
+      <p>Three simple steps to start spending your USDC anywhere in the world</p>
+    </div>
+
+    <div class="flow-steps stagger">
+      <div class="step-item reveal">
+        <div class="step-num">🏦</div>
+        <div class="step-title">1. Deposit USDC</div>
+        <div class="step-desc">Connect your wallet or send USDC to your account address. Supports ETH, Base, Tron, Solana networks.</div>
+      </div>
+      <div class="flow-arrow reveal">→</div>
+
+      <div class="step-item reveal">
+        <div class="step-num">💳</div>
+        <div class="step-title">2. Get Your Card</div>
+        <div class="step-desc">Instantly receive a virtual Visa or Mastercard debit card with your name on it.</div>
+      </div>
+      <div class="flow-arrow reveal">→</div>
+
+      <div class="step-item reveal">
+        <div class="step-num">🌍</div>
+        <div class="step-title">3. Spend Anywhere</div>
+        <div class="step-desc">Use card number online or tap-to-pay via Apple Pay / Google Pay at any physical store.</div>
+      </div>
+    </div>
+
+    <!-- Journey Flow -->
+    <div style="margin-top: 80px; max-width: 720px; margin-left: auto; margin-right: auto;" class="reveal">
+      <div class="glass-card" style="text-align: center;">
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Full Payment Journey</div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; font-size: 0.82rem; color: var(--text-secondary); line-height: 2.5;">
+          <span class="badge badge-active">You Swipe</span>
+          <span style="color:var(--text-muted)">→</span>
+          <span class="badge badge-pending">Auth Request Sent</span>
+          <span style="color:var(--text-muted)">→</span>
+          <span class="badge" style="background:rgba(99,102,241,0.15);color:#818CF8;border:1px solid rgba(99,102,241,0.3);">Live Rate Fetched</span>
+          <span style="color:var(--text-muted)">→</span>
+          <span class="badge" style="background:rgba(99,102,241,0.15);color:#818CF8;border:1px solid rgba(99,102,241,0.3);">USDC Converted</span>
+          <span style="color:var(--text-muted)">→</span>
+          <span class="badge badge-active">Merchant Paid</span>
+        </div>
+        <div style="margin-top: 16px; font-size: 0.82rem; color: var(--text-muted);">⚡ Entire process completes in &lt;200ms</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section id="features">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">✦ Why CryptoCard</div>
+      <h2>Everything You Need</h2>
+      <p>A complete crypto-to-card spending solution with powerful features built for the modern user</p>
+    </div>
+
+    <div class="features-grid stagger">
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">⚡</div>
+        <div class="feature-title">Instant Conversion</div>
+        <div class="feature-desc">USDC converts to fiat at the exact moment of swipe — best live rate guaranteed via Chainlink price feeds.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">🌍</div>
+        <div class="feature-title">Works Worldwide</div>
+        <div class="feature-desc">Accepted at 50M+ Visa/Mastercard merchants globally. All currencies supported automatically.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">🔒</div>
+        <div class="feature-title">Non-Custodial</div>
+        <div class="feature-desc">Your USDC stays in your wallet until the very moment you spend. We never hold your funds.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">💸</div>
+        <div class="feature-title">Zero FX Fees</div>
+        <div class="feature-desc">No foreign transaction fees when spending in any currency. What you see is what you pay.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">❄️</div>
+        <div class="feature-title">Instant Freeze</div>
+        <div class="feature-desc">Freeze/unfreeze your card in one tap from the app. Lost card? You're covered instantly.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">📊</div>
+        <div class="feature-title">Spend Limits</div>
+        <div class="feature-desc">Set daily/monthly limits and merchant category blocks to control your spending completely.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">🪪</div>
+        <div class="feature-title">ZK-KYC</div>
+        <div class="feature-desc">Privacy-first identity verification powered by zero-knowledge proofs. Your data is never shared.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">📱</div>
+        <div class="feature-title">Apple/Google Pay</div>
+        <div class="feature-desc">Add your virtual card to Apple Wallet or Google Pay instantly. Tap to pay anywhere contactless.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">🔔</div>
+        <div class="feature-title">Real-time Alerts</div>
+        <div class="feature-desc">Push notification for every transaction with exact conversion details and merchant info.</div>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">💰</div>
+        <div class="feature-title">USDC Cashback</div>
+        <div class="feature-desc">Earn 1% USDC cashback on every Pro plan purchase. Your spending compounds your holdings.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SUPPORTED NETWORKS ===== -->
+<section style="padding: 60px 0; background: var(--bg-secondary);">
+  <div class="container">
+    <div class="section-header reveal" style="margin-bottom: 40px;">
+      <div class="section-label">✦ Deposit Networks</div>
+      <h2>Supported Blockchains</h2>
+      <p>Deposit USDC from any major blockchain network</p>
+    </div>
+
+    <div class="networks-row stagger">
+      <div class="network-pill reveal">
+        <span class="network-icon">⟠</span>
+        <span class="network-name">Ethereum</span>
+        <span class="badge badge-active" style="font-size:0.65rem;padding:2px 8px;">ERC-20</span>
+      </div>
+      <div class="network-pill reveal">
+        <span class="network-icon">🔵</span>
+        <span class="network-name">Base</span>
+        <span class="badge badge-active" style="font-size:0.65rem;padding:2px 8px;">L2</span>
+      </div>
+      <div class="network-pill reveal">
+        <span class="network-icon">🔴</span>
+        <span class="network-name">Tron</span>
+        <span class="badge badge-active" style="font-size:0.65rem;padding:2px 8px;">TRC-20</span>
+      </div>
+      <div class="network-pill reveal">
+        <span class="network-icon">◎</span>
+        <span class="network-name">Solana</span>
+        <span class="badge badge-active" style="font-size:0.65rem;padding:2px 8px;">SPL</span>
+      </div>
+      <div class="network-pill reveal">
+        <span class="network-icon">🟣</span>
+        <span class="network-name">Polygon</span>
+        <span class="badge badge-active" style="font-size:0.65rem;padding:2px 8px;">MATIC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CARD PREVIEW ===== -->
+<section id="card-preview">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">✦ Your Card</div>
+      <h2>Premium Virtual Card</h2>
+      <p>A sleek, dark-themed virtual card that works everywhere Visa or Mastercard is accepted</p>
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 32px;">
+      <!-- Network Toggle -->
+      <div class="network-toggle reveal">
+        <button class="network-toggle-btn active" id="visaBtn" onclick="switchCardNetwork('visa')">🔵 Visa</button>
+        <button class="network-toggle-btn" id="mcBtn" onclick="switchCardNetwork('mastercard')">🔴 Mastercard</button>
+      </div>
+
+      <!-- Card Preview -->
+      <div class="card-flip-container reveal" id="cardFlip" style="width:380px;height:230px;" onclick="flipCard()">
+        <div class="card-flip-inner" id="cardFlipInner">
+          <div class="card-face">
+            <div class="vcard" style="width:100%;height:100%;animation: float 5s ease-in-out infinite;">
+              <div class="vcard-shimmer"></div>
+              <div class="vcard-top">
+                <div class="vcard-brand">CryptoCard</div>
+                <div class="vcard-network" id="previewNetwork">VISA</div>
+              </div>
+              <div style="margin: 18px 0;">
+                <div class="vcard-chip"></div>
+              </div>
+              <div class="vcard-number">4216 •••• •••• 7291</div>
+              <div class="vcard-bottom">
+                <div>
+                  <div class="vcard-label">Card Holder</div>
+                  <div class="vcard-name">CRYPTO USER</div>
+                </div>
+                <div style="text-align:right;">
+                  <div class="vcard-label">Expires</div>
+                  <div class="vcard-expiry">09/28</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-back">
+            <div class="card-back-strip"></div>
+            <div style="margin-bottom: 16px;">
+              <div class="vcard-label" style="margin-bottom:8px;">CVV</div>
+              <div class="card-cvv-row">
+                <div style="flex:1; height:36px; background:rgba(255,255,255,0.1); border-radius:4px;"></div>
+                <div class="card-cvv-box">•••</div>
+              </div>
+            </div>
+            <div style="font-size:0.65rem; color:rgba(255,255,255,0.3); line-height:1.5; text-align:center;">
+              This card is issued by CryptoCard Technologies. By using this card you agree to our terms of service. 
+              For support: support@cryptocard.io
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center; color: var(--text-muted); font-size: 0.82rem;" class="reveal">
+        👆 Click the card to flip and see the back
+      </div>
+
+      <a href="dashboard.html" class="btn btn-primary btn-lg reveal">Get This Card Free →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section id="pricing" style="background: var(--bg-secondary);">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">✦ Simple Pricing</div>
+      <h2>Choose Your Plan</h2>
+      <p>Start free and upgrade when you need more power</p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Free Plan -->
+      <div class="pricing-card reveal">
+        <div class="section-label" style="margin-bottom:16px;">Free</div>
+        <div class="price-amount">$0</div>
+        <div class="price-period">Forever free · No hidden fees</div>
+
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> 1 Virtual Debit Card</li>
+          <li><span class="check">✓</span> $500/day spend limit</li>
+          <li><span class="check">✓</span> $2,000/month spend limit</li>
+          <li><span class="check">✓</span> 1.5% conversion fee</li>
+          <li><span class="check">✓</span> Real-time alerts</li>
+          <li><span class="check">✓</span> Card freeze/unfreeze</li>
+          <li><span class="cross" style="color:var(--text-muted);">✕</span> <span style="color:var(--text-muted);">Cashback rewards</span></li>
+          <li><span class="cross" style="color:var(--text-muted);">✕</span> <span style="color:var(--text-muted);">Apple/Google Pay</span></li>
+          <li><span class="cross" style="color:var(--text-muted);">✕</span> <span style="color:var(--text-muted);">Priority support</span></li>
+        </ul>
+
+        <a href="dashboard.html" class="btn btn-secondary" style="width:100%; justify-content:center;">Get Free Card</a>
+      </div>
+
+      <!-- Pro Plan -->
+      <div class="pricing-card featured reveal">
+        <div class="pricing-badge">Most Popular</div>
+        <div class="section-label" style="margin-bottom:16px; background:rgba(99,102,241,0.15); border-color:rgba(99,102,241,0.4);">Pro</div>
+        <div class="price-amount">$9.99</div>
+        <div class="price-period">Per month · Cancel anytime</div>
+
+        <ul class="pricing-features">
+          <li><span class="check">✓</span> 3 Virtual Debit Cards</li>
+          <li><span class="check">✓</span> $5,000/day spend limit</li>
+          <li><span class="check">✓</span> $20,000/month spend limit</li>
+          <li><span class="check">✓</span> <strong>0.5% conversion fee</strong></li>
+          <li><span class="check">✓</span> Real-time alerts</li>
+          <li><span class="check">✓</span> Card freeze/unfreeze</li>
+          <li><span class="check">✓</span> <strong>1% USDC cashback</strong></li>
+          <li><span class="check">✓</span> <strong>Apple/Google Pay</strong></li>
+          <li><span class="check">✓</span> <strong>Priority support</strong></li>
+        </ul>
+
+        <a href="dashboard.html" class="btn btn-primary" style="width:100%; justify-content:center;">Start Pro Trial</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">✦ FAQ</div>
+      <h2>Common Questions</h2>
+      <p>Everything you need to know about CryptoCard</p>
+    </div>
+
+    <div style="max-width: 740px; margin: 0 auto;" class="stagger">
+      <div class="faq-item reveal" data-faq>
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          How does the USDC to fiat conversion work at point of sale?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          When you swipe your card, the merchant's terminal sends an authorization request to Visa/Mastercard. We intercept this via a webhook in &lt;200ms, fetch the live USDC/fiat rate from Chainlink price feeds, calculate the exact USDC to deduct, and approve or decline the transaction. The rate is locked at that exact moment, so you always know what you're paying.
+        </div>
+      </div>
+
+      <div class="faq-item reveal" data-faq>
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Which countries and currencies are supported?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          CryptoCard works in 180+ countries anywhere Visa/Mastercard is accepted. All major fiat currencies are supported including USD, EUR, GBP, INR, BRL, JPY, AUD, CAD and more. Your USDC is automatically converted to the local currency at the best available rate.
+        </div>
+      </div>
+
+      <div class="faq-item reveal" data-faq>
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Is there a minimum USDC deposit amount?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          The minimum deposit is 10 USDC. There is no maximum deposit limit. For ERC-20 deposits, you'll need a small amount of ETH for gas fees. Base and Tron deposits have much lower network fees.
+        </div>
+      </div>
+
+      <div class="faq-item reveal" data-faq>
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          How long does it take to get my virtual card?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          Your virtual card is issued instantly after completing KYC verification. KYC typically takes 2–5 minutes using our automated AI-powered verification system. Once your identity is verified, your virtual card details appear immediately in your dashboard.
+        </div>
+      </div>
+
+      <div class="faq-item reveal" data-faq>
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          What happens if a transaction is declined?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          A transaction may be declined if your USDC balance is insufficient, you've exceeded your daily/monthly spend limit, or the merchant category is blocked in your settings. You'll receive an instant push notification explaining the reason. No USDC is deducted for declined transactions.
+        </div>
+      </div>
+
+      <div class="faq-item reveal" data-faq>
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Is my USDC safe if the platform goes down?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          Yes. CryptoCard uses a non-custodial architecture — your USDC remains in your self-custody wallet until the exact moment you spend. We never hold your funds in our treasury. Even if the platform goes offline, your USDC is always under your control.
+        </div>
+      </div>
+
+      <div class="faq-item reveal" data-faq>
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Do I need to complete KYC?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          Yes, KYC is legally required for card issuance in most jurisdictions. We use ZK-KYC technology, which means your identity is verified using zero-knowledge proofs. Your personal data is never stored on our servers or shared with third parties beyond the legal minimum.
+        </div>
+      </div>
+
+      <div class="faq-item reveal" data-faq>
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          Can I use this card for subscriptions and recurring payments?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          Yes! Your CryptoCard works for all recurring payments, subscriptions, and scheduled billing. Just ensure you maintain sufficient USDC balance. You can also set up automatic USDC top-ups to prevent subscription failures.
+        </div>
+      </div>
+
+      <div class="faq-item reveal" data-faq>
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          How do refunds work?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          Refunds are processed back to your USDC balance. The refund amount is calculated at the current USDC rate at the time of refund, not the original purchase rate — this is standard for all card products due to currency conversion. Refunds typically appear within 3–5 business days.
+        </div>
+      </div>
+
+      <div class="faq-item reveal" data-faq>
+        <div class="faq-question" onclick="toggleFAQ(this)">
+          What is the conversion rate and when is it locked in?
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-answer">
+          The conversion rate is sourced from Chainlink decentralized price feeds and locked at the exact millisecond your card authorization is processed. This prevents any slippage and ensures you pay exactly what you expect. The rate used is always displayed in your transaction details.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:1.2rem;">
+          <div class="nav-logo-icon">💳</div>
+          CryptoCard
+        </a>
+        <p>The next-generation platform for spending your USDC anywhere in the world using virtual Visa and Mastercard debit cards.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" title="Twitter">𝕏</a>
+          <a href="#" class="social-btn" title="Telegram">✈</a>
+          <a href="#" class="social-btn" title="Discord">💬</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul class="footer-links">
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="deposit.html">Deposit USDC</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press Kit</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal & Support</h4>
+        <ul class="footer-links">
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Docs / API</a></li>
+          <li><a href="mailto:support@cryptocard.io">support@cryptocard.io</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>
+        <p>© 2025 CryptoCard Technologies Inc. All Rights Reserved.</p>
+        <p style="margin-top:6px; font-size:0.75rem; max-width:560px; line-height:1.6;">
+          CryptoCard is not a bank. Card services provided by our issuing bank partners. Visa and Mastercard are registered trademarks of their respective owners. Crypto investments carry risk.
+        </p>
+      </div>
+      <div class="footer-logos">
+        <div class="payment-logo" style="color:#1a1aff; font-weight:900; font-style:italic; letter-spacing:2px;">VISA</div>
+        <div class="payment-logo" style="color:var(--text-secondary);">
+          <span style="color:#EB001B;">●</span><span style="color:#F79E1B; margin-left:-4px;">●</span>
+          &nbsp;Mastercard
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Copy Toast -->
+<div class="copy-toast" id="copyToast">✓ Copied to clipboard!</div>
+
+<script src="app.js"></script>
+<script>
+  // ===== PARTICLE BACKGROUND =====
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 1.5 + 0.3;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+      this.opacity = Math.random() * 0.4 + 0.1;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x < 0) this.x = canvas.width;
+      if (this.x > canvas.width) this.x = 0;
+      if (this.y < 0) this.y = canvas.height;
+      if (this.y > canvas.height) this.y = 0;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(99,102,241,${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+  function connectParticles() {
+    for (let a = 0; a < particles.length; a++) {
+      for (let b = a; b < particles.length; b++) {
+        const dx = particles[a].x - particles[b].x;
+        const dy = particles[a].y - particles[b].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 120) {
+          ctx.strokeStyle = `rgba(99,102,241,${0.05 * (1 - dist/120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[a].x, particles[a].y);
+          ctx.lineTo(particles[b].x, particles[b].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    connectParticles();
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  // ===== COUNTERS =====
+  function animateCounter(el, target, suffix = '', prefix = '') {
+    let start = 0;
+    const step = target / 80;
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) {
+        start = target;
+        clearInterval(timer);
+      }
+      el.textContent = prefix + Math.floor(start).toLocaleString() + suffix;
+    }, 20);
+  }
+
+  setTimeout(() => {
+    animateCounter(document.getElementById('counter1'), 24738, '+');
+    animateCounter(document.getElementById('counter2'), 12, 'M', '$');
+    animateCounter(document.getElementById('counter3'), 180, '+');
+  }, 600);
+
+  // ===== CARD PREVIEW =====
+  function switchCardNetwork(type) {
+    const visaBtn = document.getElementById('visaBtn');
+    const mcBtn = document.getElementById('mcBtn');
+    const previewNet = document.getElementById('previewNetwork');
+    if (type === 'visa') {
+      visaBtn.classList.add('active');
+      mcBtn.classList.remove('active');
+      previewNet.textContent = 'VISA';
+    } else {
+      mcBtn.classList.add('active');
+      visaBtn.classList.remove('active');
+      previewNet.textContent = 'MC';
+    }
+  }
+
+  function flipCard() {
+    document.getElementById('cardFlip').classList.toggle('flipped');
+  }
+</script>
+</body>
+</html>
