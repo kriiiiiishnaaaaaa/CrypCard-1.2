@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Sign In — CryptoCard</title>
+  <title>Sign In â€” CryptoCard</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="icons.js"></script>
   <style>
     /* ====== AUTH PAGE STYLES ====== */
     .auth-bg {
@@ -137,7 +138,7 @@
     }
     .auth-error.show { display: block; }
 
-    /* ── PIN NUMPAD ── */
+    /* â”€â”€ PIN NUMPAD â”€â”€ */
     .pin-dots {
       display: flex;
       justify-content: center;
@@ -189,7 +190,7 @@
     .numpad-key.delete { font-size: 1rem; color: var(--text-muted); }
     .numpad-key.delete:hover { color: var(--accent-red); border-color: rgba(239,68,68,0.3); }
 
-    /* ── RECOVERY PHRASE GRID ── */
+    /* â”€â”€ RECOVERY PHRASE GRID â”€â”€ */
     .phrase-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -218,7 +219,7 @@
       font-family: var(--font-body);
     }
 
-    /* ── VERIFY WORD INPUTS ── */
+    /* â”€â”€ VERIFY WORD INPUTS â”€â”€ */
     .verify-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -234,7 +235,7 @@
       margin-bottom: 5px;
     }
 
-    /* ── PROGRESS BAR ── */
+    /* â”€â”€ PROGRESS BAR â”€â”€ */
     .auth-progress {
       display: flex;
       gap: 4px;
@@ -249,7 +250,7 @@
     }
     .auth-progress-dot.done { background: var(--accent-primary); }
 
-    /* ── SUCCESS SCREEN ── */
+    /* â”€â”€ SUCCESS SCREEN â”€â”€ */
     .auth-success {
       text-align: center;
       padding: 12px 0;
@@ -263,7 +264,7 @@
       animation: pulse-glow 2s ease-in-out infinite;
     }
 
-    /* ── DIVIDER ── */
+    /* â”€â”€ DIVIDER â”€â”€ */
     .auth-divider {
       display: flex;
       align-items: center;
@@ -276,7 +277,7 @@
       content: ''; flex: 1; height: 1px; background: var(--border);
     }
 
-    /* ── BACK LINK ── */
+    /* â”€â”€ BACK LINK â”€â”€ */
     .auth-back {
       display: inline-flex;
       align-items: center;
@@ -348,10 +349,10 @@
       CryptoCard
     </a>
 
-    <!-- ═══════ STEP: WELCOME ═══════ -->
+    <!-- â•â•â•â•â•â•â• STEP: WELCOME â•â•â•â•â•â•â• -->
     <div class="auth-step active" id="step-welcome">
-      <div class="step-title">Welcome Back</div>
-      <div class="step-subtitle">Sign in to your account or create a new one to get started.</div>
+      <div class="step-title">Welcome to CryptoCard</div>
+      <div class="step-subtitle">Sign in to your account or create a new one to start spending your USDC anywhere.</div>
       <div class="auth-choice">
         <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="goTo('step-login-email')">Sign In</button>
         <button class="btn btn-secondary" style="width:100%;justify-content:center;" onclick="goTo('step-signup-info')">Create Account</button>
@@ -361,7 +362,7 @@
       </div>
     </div>
 
-    <!-- ═══════ STEP: LOGIN EMAIL ═══════ -->
+    <!-- â•â•â•â•â•â•â• STEP: LOGIN EMAIL â•â•â•â•â•â•â• -->
     <div class="auth-step" id="step-login-email">
       <button class="auth-back" onclick="goTo('step-welcome')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -376,14 +377,14 @@
       </div>
       <div class="auth-input-group">
         <label>Password</label>
-        <input class="auth-input" type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+        <input class="auth-input" type="password" id="login-password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" autocomplete="current-password" />
       </div>
       <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:8px;" onclick="handleLoginEmail()">Continue</button>
       <div class="auth-divider">or</div>
       <button class="btn btn-secondary" style="width:100%;justify-content:center;" onclick="goTo('step-welcome')">Back to Welcome</button>
     </div>
 
-    <!-- ═══════ STEP: LOGIN PIN ═══════ -->
+    <!-- â•â•â•â•â•â•â• STEP: LOGIN PIN â•â•â•â•â•â•â• -->
     <div class="auth-step" id="step-login-pin">
       <button class="auth-back" onclick="goTo('step-login-email')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -403,7 +404,7 @@
       <div class="numpad" id="login-numpad"></div>
     </div>
 
-    <!-- ═══════ STEP: SIGNUP INFO ═══════ -->
+    <!-- â•â•â•â•â•â•â• STEP: SIGNUP INFO â•â•â•â•â•â•â• -->
     <div class="auth-step" id="step-signup-info">
       <button class="auth-back" onclick="goTo('step-welcome')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -437,7 +438,7 @@
       <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;" onclick="handleSignupInfo()">Continue</button>
     </div>
 
-    <!-- ═══════ STEP: CREATE PIN ═══════ -->
+    <!-- â•â•â•â•â•â•â• STEP: CREATE PIN â•â•â•â•â•â•â• -->
     <div class="auth-step" id="step-create-pin">
       <div class="auth-progress">
         <div class="auth-progress-dot done"></div>
@@ -460,7 +461,7 @@
       <div class="numpad" id="create-numpad"></div>
     </div>
 
-    <!-- ═══════ STEP: RECOVERY PHRASE ═══════ -->
+    <!-- â•â•â•â•â•â•â• STEP: RECOVERY PHRASE â•â•â•â•â•â•â• -->
     <div class="auth-step" id="step-recovery">
       <div class="auth-progress">
         <div class="auth-progress-dot done"></div>
@@ -481,7 +482,7 @@
       <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="goTo('step-verify')">I have saved them safely</button>
     </div>
 
-    <!-- ═══════ STEP: VERIFY PHRASE ═══════ -->
+    <!-- â•â•â•â•â•â•â• STEP: VERIFY PHRASE â•â•â•â•â•â•â• -->
     <div class="auth-step" id="step-verify">
       <div class="auth-progress">
         <div class="auth-progress-dot done"></div>
@@ -496,7 +497,7 @@
       <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="handleVerify()">Verify & Complete Setup</button>
     </div>
 
-    <!-- ═══════ STEP: SUCCESS ═══════ -->
+    <!-- â•â•â•â•â•â•â• STEP: SUCCESS â•â•â•â•â•â•â• -->
     <div class="auth-step" id="step-success">
       <div class="auth-success">
         <div class="success-ring">
@@ -515,7 +516,7 @@
 
 <script src="auth.js"></script>
 <script>
-  // ─── STATE ───
+  // â”€â”€â”€ STATE â”€â”€â”€
   let signupData = {};
   let recoveryPhrase = [];
   let createPinBuffer = '';
@@ -524,14 +525,14 @@
   let loginPinBuffer = '';
   let verifyPositions = [];
 
-  // ─── NAVIGATE STEPS ───
+  // â”€â”€â”€ NAVIGATE STEPS â”€â”€â”€
   function goTo(stepId) {
     document.querySelectorAll('.auth-step').forEach(s => s.classList.remove('active'));
     document.getElementById(stepId).classList.add('active');
     window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
-  // ─── CHECK URL MODE (pin re-entry for existing session) ───
+  // â”€â”€â”€ CHECK URL MODE (pin re-entry for existing session) â”€â”€â”€
   window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const user = getCurrentUser();
@@ -552,7 +553,7 @@
     return pinUserId && pinUserId === localStorage.getItem('cc_current_user');
   }
 
-  // ─── TOAST ───
+  // â”€â”€â”€ TOAST â”€â”€â”€
   function showToast(msg) {
     const t = document.getElementById('authToast');
     t.textContent = msg;
@@ -560,7 +561,7 @@
     setTimeout(() => t.classList.remove('show'), 2500);
   }
 
-  // ─── LOGIN: EMAIL/PASSWORD STEP ───
+  // â”€â”€â”€ LOGIN: EMAIL/PASSWORD STEP â”€â”€â”€
   function handleLoginEmail() {
     const email = document.getElementById('login-email').value.trim();
     const pass = document.getElementById('login-password').value;
@@ -580,7 +581,7 @@
     goTo('step-login-pin');
   }
 
-  // ─── SIGNUP: INFO STEP ───
+  // â”€â”€â”€ SIGNUP: INFO STEP â”€â”€â”€
   function handleSignupInfo() {
     const name = document.getElementById('signup-name').value.trim();
     const email = document.getElementById('signup-email').value.trim();
@@ -602,7 +603,7 @@
     goTo('step-create-pin');
   }
 
-  // ─── NUMPAD BUILDER ───
+  // â”€â”€â”€ NUMPAD BUILDER â”€â”€â”€
   function buildNumpad(containerId, prefix) {
     const keys = ['1','2','3','4','5','6','7','8','9','empty','0','del'];
     const container = document.getElementById(containerId);
@@ -632,7 +633,7 @@
     }
   }
 
-  // ─── CREATE PIN ───
+  // â”€â”€â”€ CREATE PIN â”€â”€â”€
   function numpadPress(prefix, digit) {
     if (prefix === 'c') {
       if (createPinStep === 'create') {
@@ -711,7 +712,7 @@
     }
   }
 
-  // ─── RECOVERY PHRASE ───
+  // â”€â”€â”€ RECOVERY PHRASE â”€â”€â”€
   function renderPhraseGrid() {
     const grid = document.getElementById('phrase-grid');
     grid.innerHTML = recoveryPhrase.map((w, i) => `
@@ -728,7 +729,7 @@
     showToast('Recovery phrase copied');
   }
 
-  // ─── VERIFY PHRASE ───
+  // â”€â”€â”€ VERIFY PHRASE â”€â”€â”€
   function setupVerify() {
     // Pick 4 random unique positions (1-indexed)
     const positions = [];
@@ -748,7 +749,7 @@
     `).join('');
   }
 
-  // Wire up the recovery → verify transition
+  // Wire up the recovery â†’ verify transition
   document.addEventListener('DOMContentLoaded', () => {
     const btn = document.querySelector('#step-recovery .btn-primary');
     if (btn) btn.onclick = () => { setupVerify(); goTo('step-verify'); };
@@ -783,3 +784,6 @@
 </script>
 </body>
 </html>
+
+
+

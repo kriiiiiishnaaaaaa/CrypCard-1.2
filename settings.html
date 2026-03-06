@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Settings â€” CryptoCard</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="icons.js"></script>
   <style>
     .settings-layout { display: grid; grid-template-columns: 220px 1fr; gap: 24px; }
     .settings-tabs-nav { display: flex; flex-direction: column; gap: 4px; }
@@ -387,7 +388,7 @@
     });
   }
 </script>
-<script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+<script src="icons.js"></script>
 
 <script>
   // Personalize avatar from auth
@@ -400,8 +401,56 @@
     if(window.lucide) lucide.createIcons();
   })();
 </script>
-</body>
+<script>
+// 3x Confirmation for Danger Zone actions
+var _freezeCount = 0, _deleteCount = 0;
+function confirmFreezeAccount() {
+  _freezeCount++;
+  if (_freezeCount === 1) {
+    alert('WARNING: Freezing your account will immediately block your card and prevent all transactions.\nClick the button again to confirm.');
+    return;
+  }
+  if (_freezeCount === 2) {
+    alert('Are you absolutely sure? This will freeze your account and disable your virtual card.\nClick once more to confirm.');
+    return;
+  }
+  if (_freezeCount >= 3) {
+    _freezeCount = 0;
+    alert('Account freeze request submitted. Please check your email for confirmation.');
+  }
+}
+function confirmDeleteAccount() {
+  _deleteCount++;
+  if (_deleteCount === 1) {
+    alert('DANGER: Deleting your account will permanently remove all your data, including your balance and card.\nThis action CANNOT be undone. Click the button again to proceed.');
+    return;
+  }
+  if (_deleteCount === 2) {
+    var input = prompt('Type "DELETE" (in capitals) to confirm you want to permanently delete your account:');
+    if (input !== 'DELETE') { _deleteCount = 0; alert('Account deletion cancelled.'); return; }
+    alert('Last warning: Your USDC balance and all data will be permanently deleted.\nClick Delete Account one final time to confirm.');
+    return;
+  }
+  if (_deleteCount >= 3) {
+    _deleteCount = 0;
+    // Actually delete the account
+    if (typeof logout === 'function') {
+      var users = JSON.parse(localStorage.getItem('cc_users') || '[]');
+      var uid = localStorage.getItem('cc_current_user');
+      var filtered = users.filter(function(u){ return u.id !== uid; });
+      localStorage.setItem('cc_users', JSON.stringify(filtered));
+      logout();
+    }
+  }
+}
+window.confirmFreezeAccount = confirmFreezeAccount;
+window.confirmDeleteAccount = confirmDeleteAccount;
+</script></body>
 </html>
+
+
+
+
 
 
 

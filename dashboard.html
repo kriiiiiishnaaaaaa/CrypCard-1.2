@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard — CryptoCard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Dashboard â€” CryptoCard</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="icons.js"></script>
   <style>
     .dashboard-grid {
       display: grid;
@@ -19,13 +20,6 @@
       margin-bottom: 24px;
       position: relative;
       overflow: hidden;
-    }
-    .balance-card::before {
-      content: '';
-      position: absolute; top: -50px; right: -50px;
-      width: 220px; height: 220px;
-      background: radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%);
-      pointer-events: none;
     }
     .balance-greeting {
       font-size: 0.82rem;
@@ -76,6 +70,9 @@
     .quick-btn:hover { background: rgba(99,102,241,0.2); border-color: rgba(99,102,241,0.4); }
     .quick-btn svg { color: rgba(255,255,255,0.7); }
 
+    /* prevent card overflow */
+    .vcard-wrap-safe { width:100%; max-width:360px; overflow:hidden; }
+
     /* card widget */
     .card-flip-container { perspective: 1000px; cursor: pointer; user-select: none; }
     .card-flip-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); }
@@ -89,11 +86,14 @@
 
     /* rate ticker */
     .rate-ticker {
-      display: flex; align-items: center; gap: 6px;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
       background: var(--bg-surface); border: 1px solid var(--border);
-      border-radius: 100px; padding: 6px 14px;
-      font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-secondary);
+      border-radius: var(--radius-md); padding: 8px 14px;
+      font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-secondary);
+      max-width: 100%; overflow-x: auto;
     }
+    .rate-item { display:flex;align-items:center;gap:5px;white-space:nowrap; }
+    .rate-sep { color: var(--border-bright); }
     .rate-blink {
       width: 6px; height: 6px; background: var(--accent-green);
       border-radius: 50%; animation: blink 1.5s infinite;
@@ -143,9 +143,13 @@
         <div style="font-size:0.78rem;color:var(--text-muted);" id="dashDate"></div>
       </div>
       <div class="topbar-actions">
-        <div class="rate-ticker">
+        <div class="rate-ticker" id="liveTicker">
           <span class="rate-blink"></span>
-          USDC: <span class="usdc-rate-val">$1.0002</span>
+          <span class="rate-item">BTC <strong id="r-btc" style="color:var(--text-primary);">...</strong></span>
+          <span class="rate-sep">|</span>
+          <span class="rate-item">ETH <strong id="r-eth" style="color:var(--text-primary);">...</strong></span>
+          <span class="rate-sep">|</span>
+          <span class="rate-item">SOL <strong id="r-sol" style="color:var(--text-primary);">...</strong></span>
         </div>
         <button class="notification-btn" aria-label="Notifications">
           <i data-lucide="bell"></i>
@@ -160,18 +164,18 @@
       <div class="stats-grid" style="margin-bottom:24px;">
         <div class="stat-card">
           <div class="stat-label">USDC Balance</div>
-          <div class="stat-value" id="liveBalance">0.00</div>
+          <div class="stat-value" id="dispBalance">$0.00</div>
           <div class="stat-change" style="color:var(--text-muted);">Available to spend</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Spent This Month</div>
-          <div class="stat-value">$0.00</div>
-          <div class="stat-change" style="color:var(--text-muted);">0 transactions</div>
+          <div class="stat-label">Daily Limit</div>
+          <div class="stat-value">$300</div>
+          <div class="stat-change" style="color:var(--text-muted);">Fixed limit</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">USDC Cashback</div>
+          <div class="stat-label">Spent Today</div>
           <div class="stat-value">$0.00</div>
-          <div class="stat-change up">Upgrade to Pro to earn</div>
+          <div class="stat-change" style="color:var(--text-muted);">of $300 limit</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">FX Saved</div>
@@ -211,7 +215,8 @@
           <!-- Virtual Card -->
           <div class="section-card" style="margin-bottom:24px;">
             <div class="section-card-title">Your Card</div>
-            <div class="card-flip-container" id="cardFlip" style="width:100%;max-width:360px;height:220px;" onclick="flipCard()">
+            <div class="vcard-wrap-safe">
+            <div class="card-flip-container" id="cardFlip" style="width:100%;height:220px;" onclick="flipCard()">
               <div class="card-flip-inner" id="cardFlipInner">
                 <div class="card-face">
                   <div class="vcard" style="width:100%;height:100%;">
@@ -221,7 +226,7 @@
                       <div class="vcard-network" id="dashCardNetworkLogo">VISA</div>
                     </div>
                     <div style="margin:14px 0;"><div class="vcard-chip"></div></div>
-                    <div class="vcard-number" id="dashCardNumber">•••• •••• •••• ••••</div>
+                    <div class="vcard-number" id="dashCardNumber">â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢</div>
                     <div class="vcard-bottom">
                       <div><div class="vcard-label">Card Holder</div><div class="vcard-name" id="dashCardName">YOUR NAME</div></div>
                       <div style="text-align:right;"><div class="vcard-label">Expires</div><div class="vcard-expiry">09/28</div></div>
@@ -234,13 +239,14 @@
                     <div style="flex:1;height:36px;background:rgba(255,255,255,0.1);border-radius:4px;"></div>
                     <div>
                       <div class="card-cvv-label">CVV</div>
-                      <div id="cvvMasked" class="card-cvv-box">•••</div>
+                      <div id="cvvMasked" class="card-cvv-box">â€¢â€¢â€¢</div>
                       <div id="cvvRevealed" class="card-cvv-box" style="display:none;">738</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            </div><!-- /vcard-wrap-safe -->
             <div style="font-size:0.75rem;color:var(--text-muted);margin:10px 0 16px;">Tap card to flip</div>
             <div class="card-controls">
               <button class="btn btn-secondary btn-sm" id="freezeBtn" data-frozen="false" onclick="toggleFreeze()">
@@ -249,7 +255,7 @@
               <button class="btn btn-secondary btn-sm" id="revealNumBtn" onclick="toggleCardNumber()">
                 <i data-lucide="eye"></i> Reveal
               </button>
-              <button class="btn btn-secondary btn-sm" id="revealCVVBtn" onclick="revealCVV()">
+              <button class="btn btn-secondary btn-sm" id="revealCVVBtn" onclick="flipAndShowCVV()">
                 <i data-lucide="key"></i> CVV
               </button>
               <button class="btn btn-secondary btn-sm" onclick="copyCardNumber()">
@@ -291,13 +297,13 @@
 
           <!-- Spend Progress -->
           <div class="section-card">
-            <div class="section-card-title">Monthly Limit</div>
+            <div class="section-card-title">Daily Limit</div>
             <div style="font-size:0.85rem;margin-bottom:8px;">
               <span style="font-family:var(--font-mono);font-weight:600;">$0</span>
-              <span style="color:var(--text-muted);font-size:0.8rem;"> / $2,000.00</span>
+              <span style="color:var(--text-muted);font-size:0.8rem;"> / $300.00</span>
             </div>
             <div class="progress-bar"><div class="progress-fill" style="width:0%;"></div></div>
-            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;">0% of monthly limit used</div>
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;">Daily limit: $300 (fixed)</div>
 
             <!-- KYC Banner -->
             <div style="margin-top:20px;padding:14px;background:rgba(99,102,241,0.07);border:1px solid rgba(99,102,241,0.2);border-radius:var(--radius-md);">
@@ -334,7 +340,9 @@
 
 <div class="copy-toast" id="copyToast">Copied to clipboard</div>
 
-<script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+<script src="icons.js"></script>
+<script src="auth.js"></script>
+<script>if(!authGuard()){}</script>
 <script src="app.js"></script>
 <script>
   lucide.createIcons();
@@ -342,39 +350,71 @@
   // Personalize from auth
   const user = getCurrentUser();
   if (user) {
-    document.getElementById('dashGreeting').textContent = 'Hey, ' + user.name.split(' ')[0] + '! Welcome back';
-    document.getElementById('balanceGreeting').textContent = 'Hey ' + user.name.split(' ')[0] + ', welcome back!';
-    document.getElementById('avatarBtn').textContent = user.name.charAt(0).toUpperCase();
-    const cardName = user.name.toUpperCase().slice(0, 22);
-    document.getElementById('dashCardName').textContent = cardName;
-    // Show balance
-    const bal = (user.balance || 0).toFixed(2);
-    document.getElementById('balanceDisplay').textContent = bal;
-    document.getElementById('liveBalance').parentElement.querySelector('.stat-value').textContent = bal;
-    // Show card number
-    const masked = maskCardNumber(user.cardNumber || '0000000000000000');
-    document.getElementById('dashCardNumber').textContent = masked;
+    const firstName = user.name.split(' ')[0];
+    document.getElementById('dashGreeting').textContent = 'Hey, ' + firstName + '! Welcome back';
+    document.getElementById('balanceGreeting').textContent = 'Hey ' + firstName + ', welcome back!';
+    document.getElementById('avatarBtn').textContent = firstName.charAt(0).toUpperCase();
+    document.getElementById('dashCardName').textContent = user.name.toUpperCase().slice(0, 22);
+    // Balance is always real from DB, starts at $0
+    const bal = '$' + (user.balance || 0).toFixed(2);
+    document.getElementById('dispBalance').textContent = bal;
+    document.getElementById('balanceDisplay').textContent = (user.balance || 0).toFixed(2);
+    // Card number masked
+    document.getElementById('dashCardNumber').textContent = maskCardNumber(user.cardNumber || '0000000000000000');
   }
 
   // Date
   const now = new Date();
   document.getElementById('dashDate').textContent = now.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
-  function copyCardNumber() {
-    const user = getCurrentUser();
-    if (!user) return;
-    copyToClipboard(user.cardNumber);
+  // CVV: flip card to back then show CVV
+  function flipAndShowCVV() {
+    const container = document.getElementById('cardFlip');
+    if (!container.classList.contains('flipped')) {
+      container.classList.add('flipped');
+    }
+    // Show CVV after flip animation
+    setTimeout(() => {
+      document.getElementById('cvvMasked').style.display = 'none';
+      document.getElementById('cvvRevealed').style.display = 'block';
+      // Auto-hide after 10s
+      setTimeout(() => {
+        document.getElementById('cvvMasked').style.display = 'block';
+        document.getElementById('cvvRevealed').style.display = 'none';
+      }, 10000);
+    }, 400);
   }
 
-  // Draw empty charts
-  drawDonutChart('donutChart', [
-    { value: 1, color: 'rgba(99,102,241,0.15)', label: 'None' }
-  ]);
+  function copyCardNumber() {
+    const u = getCurrentUser();
+    if (u) copyToClipboard(u.cardNumber);
+  }
+
+  // Binance public API â€“ no auth needed for ticker data
+  function fetchLiveRates() {
+    const pairs = ['BTCUSDT','ETHUSDT','SOLUSDT'];
+    const ids = ['r-btc','r-eth','r-sol'];
+    fetch('https://api.binance.com/api/v3/ticker/price?symbols=["BTCUSDT","ETHUSDT","SOLUSDT"]')
+      .then(r => r.json())
+      .then(data => {
+        data.forEach((item, i) => {
+          const el = document.getElementById(ids[i]);
+          if (el) el.textContent = '$' + parseFloat(item.price).toLocaleString('en-US', {maximumFractionDigits: 2});
+        });
+      })
+      .catch(() => { /* silently fail â€“ ticker shows ... */ });
+  }
+  fetchLiveRates();
+  setInterval(fetchLiveRates, 15000); // refresh every 15s
+
+  // Draw charts (empty state for new users)
+  drawDonutChart('donutChart', [{ value: 1, color: 'rgba(99,102,241,0.12)', label: 'No data' }]);
   drawBarChart('barChart', [
-    { value: 0, label: 'Jan' }, { value: 0, label: 'Feb' },
-    { value: 0, label: 'Mar' }, { value: 0, label: 'Apr' },
-    { value: 0, label: 'May' }, { value: 0, label: 'Jun' }
+    { value: 0, label: 'Jan' },{ value: 0, label: 'Feb' },{ value: 0, label: 'Mar' },
+    { value: 0, label: 'Apr' },{ value: 0, label: 'May' },{ value: 0, label: 'Jun' }
   ]);
 </script>
 </body>
 </html>
+
+

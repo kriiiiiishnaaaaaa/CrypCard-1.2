@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Card Management â€” CryptoCard</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="icons.js"></script>
   <style>
     .card-management-grid {
       display: grid;
@@ -160,22 +161,24 @@
             <div style="margin-bottom:24px;">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
                 <div class="control-label">Daily Limit</div>
-                <div class="limit-display" id="daily-limit-display">$500</div>
+                <div class="limit-display" id="daily-limit-display">$300</div>
               </div>
-              <input type="range" id="daily-limit" min="100" max="5000" step="100" value="500" />
+              <input type="range" disabled style="opacity:0.5;cursor:not-allowed;" id="daily-limit" min="100" max="5000" step="100" value="500" />
+<div style="font-size:0.75rem;color:var(--accent-yellow);margin-top:6px;display:flex;align-items:center;gap:5px;"><i data-lucide=\"lock\" style=\"width:12px;height:12px;\"></i> Limit is fixed at $300/day and cannot be changed.</div>
               <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-top:6px;">
-                <span>$100</span><span>$5,000</span>
+                <span>$100</span><span>$300</span>
               </div>
             </div>
 
             <div>
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
                 <div class="control-label">Monthly Limit</div>
-                <div class="limit-display" id="monthly-limit-display">$2,000</div>
+                <div class="limit-display" id="monthly-limit-display">$300</div>
               </div>
-              <input type="range" id="monthly-limit" min="500" max="20000" step="500" value="2000" />
+              <input type="range" disabled style="opacity:0.5;cursor:not-allowed;" id="monthly-limit" min="500" max="20000" step="500" value="2000" />
+<div style="font-size:0.75rem;color:var(--accent-yellow);margin-top:6px;display:flex;align-items:center;gap:5px;"><i data-lucide=\"lock\" style=\"width:12px;height:12px;\"></i> Limit is fixed at $300/day and cannot be changed.</div>
               <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-muted);margin-top:6px;">
-                <span>$500</span><span>$20,000</span>
+                <span>$300</span><span>$20,000</span>
               </div>
             </div>
 
@@ -183,7 +186,7 @@
               <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:8px;">Spend This Month</div>
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
                 <span style="font-size:0.9rem;font-weight:600;">$842.50</span>
-                <span style="font-size:0.8rem;color:var(--text-muted);">/ $2,000</span>
+                <span style="font-size:0.8rem;color:var(--text-muted);">/ $300</span>
               </div>
               <div class="progress-bar"><div class="progress-fill" style="width:42%;"></div></div>
             </div>
@@ -362,7 +365,7 @@
     });
   }
 </script>
-<script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+<script src="icons.js"></script>
 
 <script>
   // Personalize avatar from auth
@@ -377,6 +380,9 @@
 </script>
 </body>
 </html>
+
+
+
 
 
 
