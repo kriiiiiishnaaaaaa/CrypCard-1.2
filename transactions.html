@@ -19,8 +19,8 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 .sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.07);}
 .logout-btn{width:100%;display:flex;align-items:center;gap:8px;padding:10px 14px;background:none;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(255,255,255,.4);font-size:.84rem;cursor:pointer;font-family:inherit;transition:all .2s;}
 .logout-btn:hover{border-color:rgba(239,68,68,.4);color:#EF4444;}
-.page-main{margin-left:220px;flex:1;padding:28px 24px 80px;}
-.page-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;position:sticky;top:0;background:#0B0E11;z-index:50;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.page-main{margin-left:220px;flex:1;padding:72px 24px 80px;}
+.page-topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:fixed;top:0;left:220px;right:0;z-index:50;background:#0B0E11;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);}
 .page-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.4rem;color:#fff;}
 .page-subtitle{font-size:.8rem;color:rgba(255,255,255,.35);margin-top:4px;}
 .avatar-circle{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;font-family:'Space Grotesk',sans-serif;}
@@ -33,7 +33,7 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 .tx-empty{text-align:center;padding:60px 20px;}
 .mob-menu-btn{display:none;position:fixed;bottom:20px;left:20px;z-index:200;width:44px;height:44px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
 .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;}
-@media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.page-main{margin-left:0}.mob-menu-btn{display:flex}.sidebar-backdrop.show{display:block}}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.page-main{margin-left:0;padding-left:16px;padding-right:16px}.page-topbar{left:0;}.mob-menu-btn{display:flex}.sidebar-backdrop.show{display:block}}
 @media(max-width:500px){.page-main{padding:12px 14px 80px}}
 </style>
 </head>
