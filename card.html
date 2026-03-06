@@ -65,8 +65,8 @@
         <div style="font-size:0.8rem;color:var(--text-muted);">Control your virtual card settings</div>
       </div>
       <div class="topbar-actions">
-        <div class="notification-btn">ðŸ””<div class="notification-dot"></div></div>
-        <div class="avatar-btn">K</div>
+        <div class="notification-btn">ðŸ””<div class="notification-dot"></div></button>
+        <div class="avatar-btn" id="avatarBtn">K</div>
       </div>
     </div>
 
@@ -343,6 +343,7 @@
 <!-- Mobile Sidebar Toggle -->
 <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 <button class="sidebar-mobile-toggle" id="sidebarToggle" aria-label="Menu">☰</button>
+<script src="auth.js"></script><script>if(!authGuard()){};</script>
 <script src="app.js"></script>
 <script>
   // Range slider live display
@@ -361,6 +362,22 @@
     });
   }
 </script>
+<script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+
+<script>
+  // Personalize avatar from auth
+  (function(){
+    var user = (typeof getCurrentUser === 'function') ? getCurrentUser() : null;
+    if (user) {
+      var el = document.getElementById('avatarBtn');
+      if (el) el.textContent = user.name.charAt(0).toUpperCase();
+    }
+    if(window.lucide) lucide.createIcons();
+  })();
+</script>
 </body>
 </html>
+
+
+
 

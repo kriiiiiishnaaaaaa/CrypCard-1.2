@@ -1,5 +1,5 @@
 /* ===== GOOGLE FONTS ===== */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap');
 
 /* ===== DESIGN TOKENS ===== */
 :root {
@@ -30,6 +30,10 @@
   --radius-xl: 28px;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  /* ─ Professional Font Stack ─ */
+  --font-heading: 'Space Grotesk', -apple-system, sans-serif;
+  --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
 }
 
 /* ===== RESET & BASE ===== */
@@ -45,12 +49,13 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
@@ -71,18 +76,19 @@ body {
 
 /* ===== TYPOGRAPHY ===== */
 h1, h2, h3, h4, h5 {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: var(--font-heading);
+  font-weight: 700;
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
-h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); }
-h2 { font-size: clamp(1.8rem, 3.5vw, 2.25rem); }
-h3 { font-size: 1.5rem; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.6rem, 3.5vw, 2.25rem); }
+h3 { font-size: 1.3rem; font-weight: 600; }
 p { color: var(--text-secondary); }
 
 .mono {
-  font-family: 'Space Mono', monospace;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-weight: 600;
 }
 
 /* ===== LAYOUT ===== */
@@ -103,7 +109,7 @@ section {
   gap: 8px;
   padding: 14px 28px;
   border-radius: var(--radius-md);
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
@@ -113,6 +119,7 @@ section {
   position: relative;
   overflow: hidden;
   white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn::before {
@@ -355,11 +362,12 @@ section {
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: 1.25rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.2rem;
   color: var(--text-primary);
   flex-shrink: 0;
+  letter-spacing: -0.01em;
 }
 
 .nav-logo-icon {
@@ -579,13 +587,14 @@ section {
   align-items: center;
   gap: 10px;
   padding: 0 24px 28px;
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: 1.2rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.15rem;
   color: var(--text-primary);
   text-decoration: none;
   border-bottom: 1px solid var(--border);
   margin-bottom: 16px;
+  letter-spacing: -0.01em;
 }
 
 .sidebar-nav {
@@ -642,9 +651,10 @@ section {
 }
 
 .topbar-title {
-  font-family: 'Syne', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .topbar-actions {
