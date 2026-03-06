@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Card Management — CryptoCard</title>
+  <title>Card Management â€” CryptoCard</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     .card-management-grid {
@@ -44,17 +44,17 @@
 <body>
 <div class="dashboard-layout">
   <aside class="sidebar">
-    <a href="index.html" class="sidebar-logo"><div class="nav-logo-icon">💳</div>CryptoCard</a>
+    <a href="index.html" class="sidebar-logo"><div class="nav-logo-icon">ðŸ’³</div>CryptoCard</a>
     <ul class="sidebar-nav">
-      <li><a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a></li>
-      <li><a href="deposit.html"><span class="nav-icon">⬇</span> Deposit USDC</a></li>
-      <li><a href="card.html" class="active"><span class="nav-icon">💳</span> Card Management</a></li>
-      <li><a href="transactions.html"><span class="nav-icon">↕</span> Transactions</a></li>
-      <li><a href="kyc.html"><span class="nav-icon">🪪</span> KYC Verification</a></li>
-      <li><a href="settings.html"><span class="nav-icon">⚙</span> Settings</a></li>
+      <li><a href="dashboard.html"><span class="nav-icon">âŠž</span> Dashboard</a></li>
+      <li><a href="deposit.html"><span class="nav-icon">â¬‡</span> Deposit USDC</a></li>
+      <li><a href="card.html" class="active"><span class="nav-icon">ðŸ’³</span> Card Management</a></li>
+      <li><a href="transactions.html"><span class="nav-icon">â†•</span> Transactions</a></li>
+      <li><a href="kyc.html"><span class="nav-icon">ðŸªª</span> KYC Verification</a></li>
+      <li><a href="settings.html"><span class="nav-icon">âš™</span> Settings</a></li>
     </ul>
     <div style="padding:24px 12px;position:absolute;bottom:0;left:0;right:0;border-top:1px solid var(--border);">
-      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">← Logout</a>
+      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">â† Logout</a>
     </div>
   </aside>
 
@@ -65,7 +65,7 @@
         <div style="font-size:0.8rem;color:var(--text-muted);">Control your virtual card settings</div>
       </div>
       <div class="topbar-actions">
-        <div class="notification-btn">🔔<div class="notification-dot"></div></div>
+        <div class="notification-btn">ðŸ””<div class="notification-dot"></div></div>
         <div class="avatar-btn">K</div>
       </div>
     </div>
@@ -87,7 +87,7 @@
                       <div class="vcard-network">VISA</div>
                     </div>
                     <div style="margin:12px 0;"><div class="vcard-chip"></div></div>
-                    <div class="vcard-number" id="dashCardNumber">4216 •••• •••• 7291</div>
+                    <div class="vcard-number" id="dashCardNumber">4216 â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ 7291</div>
                     <div class="vcard-bottom">
                       <div><div class="vcard-label">Card Holder</div><div class="vcard-name">KRISH DEV</div></div>
                       <div style="text-align:right;"><div class="vcard-label">Expires</div><div class="vcard-expiry">09/28</div></div>
@@ -100,7 +100,7 @@
                     <div style="flex:1;height:36px;background:rgba(255,255,255,0.1);border-radius:4px;"></div>
                     <div>
                       <div class="card-cvv-label">CVV</div>
-                      <div id="cvvMasked" class="card-cvv-box">•••</div>
+                      <div id="cvvMasked" class="card-cvv-box">â€¢â€¢â€¢</div>
                       <div id="cvvRevealed" class="card-cvv-box" style="display:none;">738</div>
                     </div>
                   </div>
@@ -108,17 +108,17 @@
               </div>
             </div>
             <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;">
-              <span id="cardStatusBadge" class="badge badge-active">● ACTIVE</span>
+              <span id="cardStatusBadge" class="badge badge-active">â— ACTIVE</span>
               <span class="badge" style="background:rgba(99,102,241,0.1);color:var(--accent-primary);border:1px solid rgba(99,102,241,0.3);">Visa Virtual</span>
             </div>
             <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-              <button class="btn btn-secondary btn-sm" id="freezeBtn" data-frozen="false" onclick="toggleFreeze()">❄️ Freeze Card</button>
-              <button class="btn btn-secondary btn-sm" id="revealNumBtn" onclick="toggleCardNumber()">👁 Reveal Number</button>
-              <button class="btn btn-secondary btn-sm" id="revealCVVBtn" onclick="revealCVV()">🔑 Show CVV</button>
-              <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('4216884390127291')">📋 Copy</button>
+              <button class="btn btn-secondary btn-sm" id="freezeBtn" data-frozen="false" onclick="toggleFreeze()">â„ï¸ Freeze Card</button>
+              <button class="btn btn-secondary btn-sm" id="revealNumBtn" onclick="toggleCardNumber()">ðŸ‘ Reveal Number</button>
+              <button class="btn btn-secondary btn-sm" id="revealCVVBtn" onclick="revealCVV()">ðŸ”‘ Show CVV</button>
+              <button class="btn btn-secondary btn-sm" onclick="copyToClipboard('4216884390127291')">ðŸ“‹ Copy</button>
             </div>
             <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
-              <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="openModal('physicalCardModal')">📮 Request Physical Card (Coming Soon)</button>
+              <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="openModal('physicalCardModal')">ðŸ“® Request Physical Card (Coming Soon)</button>
             </div>
           </div>
 
@@ -128,7 +128,7 @@
             <div>
               <div class="control-row">
                 <div><div class="control-label">Card Number</div></div>
-                <div style="font-family:'Space Mono',monospace;font-size:0.82rem;color:var(--text-secondary);">4216 •••• •••• 7291</div>
+                <div style="font-family:'Space Mono',monospace;font-size:0.82rem;color:var(--text-secondary);">4216 â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ 7291</div>
               </div>
               <div class="control-row">
                 <div><div class="control-label">Expiry Date</div></div>
@@ -243,7 +243,7 @@
             <div class="section-card-title">Merchant Category Blocks</div>
             <div class="block-row">
               <div style="display:flex;align-items:center;gap:12px;">
-                <span style="font-size:1.2rem;">🎰</span>
+                <span style="font-size:1.2rem;">ðŸŽ°</span>
                 <div><div class="control-label">Gambling & Casinos</div><div class="control-desc">Block payments to gambling services</div></div>
               </div>
               <label class="toggle">
@@ -254,7 +254,7 @@
             </div>
             <div class="block-row">
               <div style="display:flex;align-items:center;gap:12px;">
-                <span style="font-size:1.2rem;">🍺</span>
+                <span style="font-size:1.2rem;">ðŸº</span>
                 <div><div class="control-label">Alcohol & Tobacco</div></div>
               </div>
               <label class="toggle">
@@ -265,7 +265,7 @@
             </div>
             <div class="block-row">
               <div style="display:flex;align-items:center;gap:12px;">
-                <span style="font-size:1.2rem;">💊</span>
+                <span style="font-size:1.2rem;">ðŸ’Š</span>
                 <div><div class="control-label">Adult Content</div></div>
               </div>
               <label class="toggle">
@@ -276,7 +276,7 @@
             </div>
             <div class="block-row">
               <div style="display:flex;align-items:center;gap:12px;">
-                <span style="font-size:1.2rem;">⛽</span>
+                <span style="font-size:1.2rem;">â›½</span>
                 <div><div class="control-label">Cryptocurrency Exchanges</div></div>
               </div>
               <label class="toggle">
@@ -309,12 +309,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td>Starbucks</td><td>☕ Food</td><td>$4.50</td><td>4.51 USDC</td><td>0.998</td><td>Mar 6 09:30</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
-            <tr><td>Amazon.com</td><td>🛒 Shopping</td><td>$89.99</td><td>90.08 USDC</td><td>0.999</td><td>Mar 5 14:12</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
-            <tr><td>Netflix</td><td>🎬 Entertainment</td><td>$15.99</td><td>16.02 USDC</td><td>0.998</td><td>Mar 4 00:01</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
-            <tr><td>Shell Station</td><td>⛽ Transport</td><td>$52.00</td><td>52.10 USDC</td><td>0.998</td><td>Mar 3 11:44</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
-            <tr><td>Marriott Hotel</td><td>🏨 Travel</td><td>$220.00</td><td>220.44 USDC</td><td>0.998</td><td>Mar 1 15:00</td><td><span class="badge badge-pending" style="font-size:0.7rem;">Pending</span></td></tr>
-            <tr><td>Unknown Merchant</td><td>❓ Other</td><td>$250.00</td><td>—</td><td>—</td><td>Feb 28 22:15</td><td><span class="badge badge-declined" style="font-size:0.7rem;">Declined</span></td></tr>
+            <tr><td>Starbucks</td><td>â˜• Food</td><td>$4.50</td><td>4.51 USDC</td><td>0.998</td><td>Mar 6 09:30</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
+            <tr><td>Amazon.com</td><td>ðŸ›’ Shopping</td><td>$89.99</td><td>90.08 USDC</td><td>0.999</td><td>Mar 5 14:12</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
+            <tr><td>Netflix</td><td>ðŸŽ¬ Entertainment</td><td>$15.99</td><td>16.02 USDC</td><td>0.998</td><td>Mar 4 00:01</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
+            <tr><td>Shell Station</td><td>â›½ Transport</td><td>$52.00</td><td>52.10 USDC</td><td>0.998</td><td>Mar 3 11:44</td><td><span class="badge badge-active" style="font-size:0.7rem;">Approved</span></td></tr>
+            <tr><td>Marriott Hotel</td><td>ðŸ¨ Travel</td><td>$220.00</td><td>220.44 USDC</td><td>0.998</td><td>Mar 1 15:00</td><td><span class="badge badge-pending" style="font-size:0.7rem;">Pending</span></td></tr>
+            <tr><td>Unknown Merchant</td><td>â“ Other</td><td>$250.00</td><td>â€”</td><td>â€”</td><td>Feb 28 22:15</td><td><span class="badge badge-declined" style="font-size:0.7rem;">Declined</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -327,10 +327,10 @@
   <div class="modal">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
       <h3>Physical Card</h3>
-      <button onclick="closeModal('physicalCardModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">✕</button>
+      <button onclick="closeModal('physicalCardModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">âœ•</button>
     </div>
     <div style="text-align:center;padding:20px 0;">
-      <div style="font-size:3rem;margin-bottom:16px;">📮</div>
+      <div style="font-size:3rem;margin-bottom:16px;">ðŸ“®</div>
       <h3>Coming Soon!</h3>
       <p style="margin-top:12px;">Physical card issuance is currently in beta. Join the waitlist to be notified when it's available in your country.</p>
       <button class="btn btn-primary" style="margin-top:24px;width:100%;">Join Waitlist</button>
@@ -338,7 +338,11 @@
   </div>
 </div>
 
-<div class="copy-toast" id="copyToast">✓ Copied to clipboard!</div>
+<div class="copy-toast" id="copyToast">âœ“ Copied to clipboard!</div>
+
+<!-- Mobile Sidebar Toggle -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<button class="sidebar-mobile-toggle" id="sidebarToggle" aria-label="Menu">☰</button>
 <script src="app.js"></script>
 <script>
   // Range slider live display
@@ -359,3 +363,4 @@
 </script>
 </body>
 </html>
+

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Settings — CryptoCard</title>
+  <title>Settings â€” CryptoCard</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     .settings-layout { display: grid; grid-template-columns: 220px 1fr; gap: 24px; }
@@ -57,17 +57,17 @@
 <body>
 <div class="dashboard-layout">
   <aside class="sidebar">
-    <a href="index.html" class="sidebar-logo"><div class="nav-logo-icon">💳</div>CryptoCard</a>
+    <a href="index.html" class="sidebar-logo"><div class="nav-logo-icon">ðŸ’³</div>CryptoCard</a>
     <ul class="sidebar-nav">
-      <li><a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a></li>
-      <li><a href="deposit.html"><span class="nav-icon">⬇</span> Deposit USDC</a></li>
-      <li><a href="card.html"><span class="nav-icon">💳</span> Card Management</a></li>
-      <li><a href="transactions.html"><span class="nav-icon">↕</span> Transactions</a></li>
-      <li><a href="kyc.html"><span class="nav-icon">🪪</span> KYC Verification</a></li>
-      <li><a href="settings.html" class="active"><span class="nav-icon">⚙</span> Settings</a></li>
+      <li><a href="dashboard.html"><span class="nav-icon">âŠž</span> Dashboard</a></li>
+      <li><a href="deposit.html"><span class="nav-icon">â¬‡</span> Deposit USDC</a></li>
+      <li><a href="card.html"><span class="nav-icon">ðŸ’³</span> Card Management</a></li>
+      <li><a href="transactions.html"><span class="nav-icon">â†•</span> Transactions</a></li>
+      <li><a href="kyc.html"><span class="nav-icon">ðŸªª</span> KYC Verification</a></li>
+      <li><a href="settings.html" class="active"><span class="nav-icon">âš™</span> Settings</a></li>
     </ul>
     <div style="padding:24px 12px;position:absolute;bottom:0;left:0;right:0;border-top:1px solid var(--border);">
-      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">← Logout</a>
+      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">â† Logout</a>
     </div>
   </aside>
 
@@ -78,7 +78,7 @@
         <div style="font-size:0.8rem;color:var(--text-muted);">Manage your account preferences</div>
       </div>
       <div class="topbar-actions">
-        <div class="notification-btn">🔔<div class="notification-dot"></div></div>
+        <div class="notification-btn">ðŸ””<div class="notification-dot"></div></div>
         <div class="avatar-btn">K</div>
       </div>
     </div>
@@ -88,11 +88,11 @@
         <!-- Left: Tab Nav -->
         <div>
           <div class="settings-tabs-nav">
-            <div class="settings-tab active" data-tab="profile" onclick="activateTab('profile')">👤 Profile</div>
-            <div class="settings-tab" data-tab="security" onclick="activateTab('security')">🔐 Security</div>
-            <div class="settings-tab" data-tab="notifications" onclick="activateTab('notifications')">🔔 Notifications</div>
-            <div class="settings-tab" data-tab="wallets" onclick="activateTab('wallets')">🔗 Linked Wallets</div>
-            <div class="settings-tab" data-tab="danger" onclick="activateTab('danger')" style="color:var(--accent-red);">⚠️ Danger Zone</div>
+            <div class="settings-tab active" data-tab="profile" onclick="activateTab('profile')">ðŸ‘¤ Profile</div>
+            <div class="settings-tab" data-tab="security" onclick="activateTab('security')">ðŸ” Security</div>
+            <div class="settings-tab" data-tab="notifications" onclick="activateTab('notifications')">ðŸ”” Notifications</div>
+            <div class="settings-tab" data-tab="wallets" onclick="activateTab('wallets')">ðŸ”— Linked Wallets</div>
+            <div class="settings-tab" data-tab="danger" onclick="activateTab('danger')" style="color:var(--accent-red);">âš ï¸ Danger Zone</div>
           </div>
         </div>
 
@@ -105,12 +105,12 @@
               <div style="display:flex;align-items:center;gap:20px;margin-bottom:28px;">
                 <div class="profile-avatar">
                   K
-                  <div class="profile-avatar-edit">✏️</div>
+                  <div class="profile-avatar-edit">âœï¸</div>
                 </div>
                 <div>
                   <div style="font-weight:700;font-size:1rem;">Krish Dev</div>
                   <div style="font-size:0.82rem;color:var(--text-muted);">krish@example.com</div>
-                  <div style="margin-top:6px;"><span class="badge badge-active" style="font-size:0.7rem;">✓ KYC Verified</span> <span class="badge badge-frozen" style="font-size:0.7rem;">⭐ Pro Plan</span></div>
+                  <div style="margin-top:6px;"><span class="badge badge-active" style="font-size:0.7rem;">âœ“ KYC Verified</span> <span class="badge badge-frozen" style="font-size:0.7rem;">â­ Pro Plan</span></div>
                 </div>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
@@ -134,7 +134,7 @@
               <div class="form-group">
                 <label class="form-label">Display Currency</label>
                 <select class="form-select">
-                  <option>USD ($)</option><option selected>INR (₹)</option><option>EUR (€)</option>
+                  <option>USD ($)</option><option selected>INR (â‚¹)</option><option>EUR (â‚¬)</option>
                 </select>
               </div>
               <button class="btn btn-primary">Save Changes</button>
@@ -162,9 +162,9 @@
                   <span class="badge badge-active">Enabled</span>
                 </div>
                 <div style="display:flex;gap:8px;">
-                  <button class="btn btn-secondary btn-sm">📱 Google Auth</button>
-                  <button class="btn btn-secondary btn-sm">💬 SMS OTP</button>
-                  <button class="btn btn-secondary btn-sm">🔑 Hardware Key</button>
+                  <button class="btn btn-secondary btn-sm">ðŸ“± Google Auth</button>
+                  <button class="btn btn-secondary btn-sm">ðŸ’¬ SMS OTP</button>
+                  <button class="btn btn-secondary btn-sm">ðŸ”‘ Hardware Key</button>
                 </div>
               </div>
 
@@ -177,22 +177,22 @@
                 </div>
                 <div class="session-row">
                   <div>
-                    <div style="font-size:0.88rem;font-weight:600;color:var(--text-primary);">💻 Chrome · Mumbai, India</div>
-                    <div style="font-size:0.75rem;color:var(--text-muted);">This device · Active now</div>
+                    <div style="font-size:0.88rem;font-weight:600;color:var(--text-primary);">ðŸ’» Chrome Â· Mumbai, India</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">This device Â· Active now</div>
                   </div>
                   <span class="badge badge-active" style="font-size:0.7rem;">Current</span>
                 </div>
                 <div class="session-row">
                   <div>
-                    <div style="font-size:0.88rem;font-weight:600;color:var(--text-primary);">📱 Safari · iPhone 15</div>
-                    <div style="font-size:0.75rem;color:var(--text-muted);">Mumbai, India · 2h ago</div>
+                    <div style="font-size:0.88rem;font-weight:600;color:var(--text-primary);">ðŸ“± Safari Â· iPhone 15</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Mumbai, India Â· 2h ago</div>
                   </div>
                   <button class="btn btn-secondary btn-sm">Revoke</button>
                 </div>
                 <div class="session-row">
                   <div>
-                    <div style="font-size:0.88rem;font-weight:600;color:var(--text-primary);">🖥️ Firefox · Windows PC</div>
-                    <div style="font-size:0.75rem;color:var(--text-muted);">Delhi, India · 1d ago</div>
+                    <div style="font-size:0.88rem;font-weight:600;color:var(--text-primary);">ðŸ–¥ï¸ Firefox Â· Windows PC</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Delhi, India Â· 1d ago</div>
                   </div>
                   <button class="btn btn-secondary btn-sm">Revoke</button>
                 </div>
@@ -254,7 +254,7 @@
               <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
                 <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
                   <div style="display:flex;align-items:center;gap:12px;">
-                    <span style="font-size:1.4rem;">⟠</span>
+                    <span style="font-size:1.4rem;">âŸ </span>
                     <div>
                       <div style="font-size:0.88rem;font-weight:600;">MetaMask Wallet</div>
                       <div style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--text-muted);">0x742d...b9f3</div>
@@ -264,7 +264,7 @@
                 </div>
                 <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
                   <div style="display:flex;align-items:center;gap:12px;">
-                    <span style="font-size:1.4rem;">◎</span>
+                    <span style="font-size:1.4rem;">â—Ž</span>
                     <div>
                       <div style="font-size:0.88rem;font-weight:600;">Phantom Wallet</div>
                       <div style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--text-muted);">9xjF4...7kP</div>
@@ -280,7 +280,7 @@
           <!-- DANGER ZONE -->
           <div class="settings-panel" id="danger">
             <div class="danger-zone">
-              <h3 style="color:var(--accent-red);margin-bottom:8px;">⚠️ Danger Zone</h3>
+              <h3 style="color:var(--accent-red);margin-bottom:8px;">âš ï¸ Danger Zone</h3>
               <p style="margin-bottom:24px;font-size:0.88rem;">These actions are irreversible. Proceed with caution.</p>
               <div style="display:flex;flex-direction:column;gap:16px;">
                 <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:var(--radius-md);padding:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
@@ -311,9 +311,9 @@
   <div class="modal">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
       <h3>Change Password</h3>
-      <button onclick="closeModal('passwordModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">✕</button>
+      <button onclick="closeModal('passwordModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">âœ•</button>
     </div>
-    <div class="form-group"><label class="form-label">Current Password</label><input class="form-input" type="password" placeholder="••••••••" /></div>
+    <div class="form-group"><label class="form-label">Current Password</label><input class="form-input" type="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" /></div>
     <div class="form-group"><label class="form-label">New Password</label><input class="form-input" type="password" placeholder="Min 12 characters" /></div>
     <div class="form-group"><label class="form-label">Confirm New Password</label><input class="form-input" type="password" placeholder="Repeat new password" /></div>
     <button class="btn btn-primary" style="width:100%;">Update Password</button>
@@ -324,7 +324,7 @@
   <div class="modal">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
       <h3>Link Wallet</h3>
-      <button onclick="closeModal('linkWalletModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">✕</button>
+      <button onclick="closeModal('linkWalletModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">âœ•</button>
     </div>
     <div class="form-group"><label class="form-label">Blockchain Network</label>
       <select class="form-select"><option>Ethereum</option><option>Solana</option><option>Tron</option><option>Base</option></select>
@@ -338,8 +338,8 @@
 <div class="modal-overlay" id="deleteAccountModal">
   <div class="modal">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
-      <h3 style="color:var(--accent-red);">⚠️ Delete Account</h3>
-      <button onclick="closeModal('deleteAccountModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">✕</button>
+      <h3 style="color:var(--accent-red);">âš ï¸ Delete Account</h3>
+      <button onclick="closeModal('deleteAccountModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">âœ•</button>
     </div>
     <p style="margin-bottom:16px;font-size:0.88rem;">This will permanently delete your account. Any remaining USDC balance will be sent to your linked wallet within 24 hours.</p>
     <div class="form-group"><label class="form-label">Type DELETE to confirm</label><input class="form-input" type="text" placeholder="DELETE" /></div>
@@ -370,7 +370,11 @@
   </div>
 </div>
 
-<div class="copy-toast" id="copyToast">✓ Copied!</div>
+<div class="copy-toast" id="copyToast">âœ“ Copied!</div>
+
+<!-- Mobile Sidebar Toggle -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<button class="sidebar-mobile-toggle" id="sidebarToggle" aria-label="Menu">☰</button>
 <script src="app.js"></script>
 <script>
   function activateTab(tabId) {
@@ -384,3 +388,4 @@
 </script>
 </body>
 </html>
+

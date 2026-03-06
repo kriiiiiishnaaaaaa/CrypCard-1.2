@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Transactions — CryptoCard</title>
+  <title>Transactions â€” CryptoCard</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     .filter-row {
@@ -42,17 +42,17 @@
 <body>
 <div class="dashboard-layout">
   <aside class="sidebar">
-    <a href="index.html" class="sidebar-logo"><div class="nav-logo-icon">💳</div>CryptoCard</a>
+    <a href="index.html" class="sidebar-logo"><div class="nav-logo-icon">ðŸ’³</div>CryptoCard</a>
     <ul class="sidebar-nav">
-      <li><a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a></li>
-      <li><a href="deposit.html"><span class="nav-icon">⬇</span> Deposit USDC</a></li>
-      <li><a href="card.html"><span class="nav-icon">💳</span> Card Management</a></li>
-      <li><a href="transactions.html" class="active"><span class="nav-icon">↕</span> Transactions</a></li>
-      <li><a href="kyc.html"><span class="nav-icon">🪪</span> KYC Verification</a></li>
-      <li><a href="settings.html"><span class="nav-icon">⚙</span> Settings</a></li>
+      <li><a href="dashboard.html"><span class="nav-icon">âŠž</span> Dashboard</a></li>
+      <li><a href="deposit.html"><span class="nav-icon">â¬‡</span> Deposit USDC</a></li>
+      <li><a href="card.html"><span class="nav-icon">ðŸ’³</span> Card Management</a></li>
+      <li><a href="transactions.html" class="active"><span class="nav-icon">â†•</span> Transactions</a></li>
+      <li><a href="kyc.html"><span class="nav-icon">ðŸªª</span> KYC Verification</a></li>
+      <li><a href="settings.html"><span class="nav-icon">âš™</span> Settings</a></li>
     </ul>
     <div style="padding:24px 12px;position:absolute;bottom:0;left:0;right:0;border-top:1px solid var(--border);">
-      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">← Logout</a>
+      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">â† Logout</a>
     </div>
   </aside>
 
@@ -63,8 +63,8 @@
         <div style="font-size:0.8rem;color:var(--text-muted);">Full history of your card activity</div>
       </div>
       <div class="topbar-actions">
-        <button class="btn btn-secondary btn-sm">📤 Export CSV</button>
-        <div class="notification-btn">🔔<div class="notification-dot"></div></div>
+        <button class="btn btn-secondary btn-sm">ðŸ“¤ Export CSV</button>
+        <div class="notification-btn">ðŸ””<div class="notification-dot"></div></div>
         <div class="avatar-btn">K</div>
       </div>
     </div>
@@ -80,7 +80,7 @@
         <div class="stat-card">
           <div class="stat-label">Transactions</div>
           <div class="stat-value">47</div>
-          <div class="stat-change up">↑ 12 new this week</div>
+          <div class="stat-change up">â†‘ 12 new this week</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">USDC Spent</div>
@@ -90,14 +90,14 @@
         <div class="stat-card">
           <div class="stat-label">Avg. Conversion Rate</div>
           <div class="stat-value">0.999</div>
-          <div class="stat-change up">↑ vs $1.000 target</div>
+          <div class="stat-change up">â†‘ vs $1.000 target</div>
         </div>
       </div>
 
       <!-- Filters -->
       <div class="section-card" style="margin-bottom:24px;">
         <div class="filter-row">
-          <input class="search-input" type="text" placeholder="🔍 Search merchant, amount..." id="txSearch" oninput="filterTransactions()" />
+          <input class="search-input" type="text" placeholder="ðŸ” Search merchant, amount..." id="txSearch" oninput="filterTransactions()" />
           <select class="form-select" style="width:auto;padding:12px 36px 12px 14px;" id="statusFilter" onchange="filterTransactions()">
             <option value="">All Status</option>
             <option value="approved">Approved</option>
@@ -132,74 +132,74 @@
           <!-- Mar 6 -->
           <div style="padding:20px 0 8px;font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);">March 6, 2025</div>
           <div class="tx-row" onclick="openTxDetail('tx1')" style="cursor:pointer;">
-            <div class="tx-icon">☕</div>
-            <div class="tx-info"><div class="tx-merchant">Starbucks Coffee</div><div class="tx-meta">☕ Food & Drink · 09:30 AM · Mumbai</div></div>
-            <div class="tx-amount"><div class="tx-fiat">-$4.50</div><div class="tx-usdc">4.51 USDC · @0.998</div></div>
-            <span class="badge badge-active" style="font-size:0.65rem;">✓ Approved</span>
+            <div class="tx-icon">â˜•</div>
+            <div class="tx-info"><div class="tx-merchant">Starbucks Coffee</div><div class="tx-meta">â˜• Food & Drink Â· 09:30 AM Â· Mumbai</div></div>
+            <div class="tx-amount"><div class="tx-fiat">-$4.50</div><div class="tx-usdc">4.51 USDC Â· @0.998</div></div>
+            <span class="badge badge-active" style="font-size:0.65rem;">âœ“ Approved</span>
           </div>
           <div class="tx-row" onclick="openTxDetail('tx2')" style="cursor:pointer;">
-            <div class="tx-icon">🛒</div>
-            <div class="tx-info"><div class="tx-merchant">Swiggy Food Delivery</div><div class="tx-meta">☕ Food & Drink · 01:15 PM · Online</div></div>
-            <div class="tx-amount"><div class="tx-fiat">-₹480 (~$5.72)</div><div class="tx-usdc">5.73 USDC · @0.998</div></div>
-            <span class="badge badge-active" style="font-size:0.65rem;">✓ Approved</span>
+            <div class="tx-icon">ðŸ›’</div>
+            <div class="tx-info"><div class="tx-merchant">Swiggy Food Delivery</div><div class="tx-meta">â˜• Food & Drink Â· 01:15 PM Â· Online</div></div>
+            <div class="tx-amount"><div class="tx-fiat">-â‚¹480 (~$5.72)</div><div class="tx-usdc">5.73 USDC Â· @0.998</div></div>
+            <span class="badge badge-active" style="font-size:0.65rem;">âœ“ Approved</span>
           </div>
 
           <!-- Mar 5 -->
           <div style="padding:20px 0 8px;font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);">March 5, 2025</div>
           <div class="tx-row" onclick="openTxDetail('tx3')" style="cursor:pointer;">
-            <div class="tx-icon">🛒</div>
-            <div class="tx-info"><div class="tx-merchant">Amazon.com</div><div class="tx-meta">🛒 Shopping · 02:15 PM · Online</div></div>
-            <div class="tx-amount"><div class="tx-fiat">-$89.99</div><div class="tx-usdc">90.08 USDC · @0.999</div></div>
-            <span class="badge badge-active" style="font-size:0.65rem;">✓ Approved</span>
+            <div class="tx-icon">ðŸ›’</div>
+            <div class="tx-info"><div class="tx-merchant">Amazon.com</div><div class="tx-meta">ðŸ›’ Shopping Â· 02:15 PM Â· Online</div></div>
+            <div class="tx-amount"><div class="tx-fiat">-$89.99</div><div class="tx-usdc">90.08 USDC Â· @0.999</div></div>
+            <span class="badge badge-active" style="font-size:0.65rem;">âœ“ Approved</span>
           </div>
           <div class="tx-row" onclick="openTxDetail('tx4')" style="cursor:pointer;">
-            <div class="tx-icon">🎮</div>
-            <div class="tx-info"><div class="tx-merchant">Steam Game Store</div><div class="tx-meta">🎬 Entertainment · 07:00 PM · Online</div></div>
-            <div class="tx-amount"><div class="tx-fiat">-$29.99</div><div class="tx-usdc">30.02 USDC · @0.999</div></div>
-            <span class="badge badge-active" style="font-size:0.65rem;">✓ Approved</span>
+            <div class="tx-icon">ðŸŽ®</div>
+            <div class="tx-info"><div class="tx-merchant">Steam Game Store</div><div class="tx-meta">ðŸŽ¬ Entertainment Â· 07:00 PM Â· Online</div></div>
+            <div class="tx-amount"><div class="tx-fiat">-$29.99</div><div class="tx-usdc">30.02 USDC Â· @0.999</div></div>
+            <span class="badge badge-active" style="font-size:0.65rem;">âœ“ Approved</span>
           </div>
 
           <!-- Mar 4 -->
           <div style="padding:20px 0 8px;font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);">March 4, 2025</div>
           <div class="tx-row" onclick="openTxDetail('tx5')" style="cursor:pointer;">
-            <div class="tx-icon">🎬</div>
-            <div class="tx-info"><div class="tx-merchant">Netflix</div><div class="tx-meta">🎬 Entertainment · 12:01 AM · Online</div></div>
-            <div class="tx-amount"><div class="tx-fiat">-$15.99</div><div class="tx-usdc">16.02 USDC · @0.998</div></div>
-            <span class="badge badge-active" style="font-size:0.65rem;">✓ Approved</span>
+            <div class="tx-icon">ðŸŽ¬</div>
+            <div class="tx-info"><div class="tx-merchant">Netflix</div><div class="tx-meta">ðŸŽ¬ Entertainment Â· 12:01 AM Â· Online</div></div>
+            <div class="tx-amount"><div class="tx-fiat">-$15.99</div><div class="tx-usdc">16.02 USDC Â· @0.998</div></div>
+            <span class="badge badge-active" style="font-size:0.65rem;">âœ“ Approved</span>
           </div>
           <div class="tx-row" onclick="openTxDetail('tx6')" style="cursor:pointer;">
-            <div class="tx-icon">⛽</div>
-            <div class="tx-info"><div class="tx-merchant">Shell Gas Station</div><div class="tx-meta">🚗 Transport · 11:44 AM · Delhi</div></div>
-            <div class="tx-amount"><div class="tx-fiat">-$52.00</div><div class="tx-usdc">52.10 USDC · @0.998</div></div>
-            <span class="badge badge-active" style="font-size:0.65rem;">✓ Approved</span>
+            <div class="tx-icon">â›½</div>
+            <div class="tx-info"><div class="tx-merchant">Shell Gas Station</div><div class="tx-meta">ðŸš— Transport Â· 11:44 AM Â· Delhi</div></div>
+            <div class="tx-amount"><div class="tx-fiat">-$52.00</div><div class="tx-usdc">52.10 USDC Â· @0.998</div></div>
+            <span class="badge badge-active" style="font-size:0.65rem;">âœ“ Approved</span>
           </div>
 
           <!-- Mar 3 -->
           <div style="padding:20px 0 8px;font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);">March 3, 2025</div>
           <div class="tx-row" onclick="openTxDetail('tx7')" style="cursor:pointer;">
-            <div class="tx-icon">✈️</div>
-            <div class="tx-info"><div class="tx-merchant">IndiGo Airlines</div><div class="tx-meta">✈️ Travel · 10:00 AM · Online</div></div>
-            <div class="tx-amount"><div class="tx-fiat">-₹8,200 (~$97.62)</div><div class="tx-usdc">97.77 USDC · @0.998</div></div>
-            <span class="badge badge-pending" style="font-size:0.65rem;">⏳ Pending</span>
+            <div class="tx-icon">âœˆï¸</div>
+            <div class="tx-info"><div class="tx-merchant">IndiGo Airlines</div><div class="tx-meta">âœˆï¸ Travel Â· 10:00 AM Â· Online</div></div>
+            <div class="tx-amount"><div class="tx-fiat">-â‚¹8,200 (~$97.62)</div><div class="tx-usdc">97.77 USDC Â· @0.998</div></div>
+            <span class="badge badge-pending" style="font-size:0.65rem;">â³ Pending</span>
           </div>
           <div class="tx-row" style="cursor:pointer;">
-            <div class="tx-icon">🏥</div>
-            <div class="tx-info"><div class="tx-merchant">OnlineMeds Rx</div><div class="tx-meta">💊 Health · 04:30 PM · Online</div></div>
-            <div class="tx-amount"><div class="tx-fiat">-$35.00</div><div class="tx-usdc">—</div></div>
-            <span class="badge badge-declined" style="font-size:0.65rem;">✕ Declined</span>
+            <div class="tx-icon">ðŸ¥</div>
+            <div class="tx-info"><div class="tx-merchant">OnlineMeds Rx</div><div class="tx-meta">ðŸ’Š Health Â· 04:30 PM Â· Online</div></div>
+            <div class="tx-amount"><div class="tx-fiat">-$35.00</div><div class="tx-usdc">â€”</div></div>
+            <span class="badge badge-declined" style="font-size:0.65rem;">âœ• Declined</span>
           </div>
 
           <!-- Mar 1 -->
           <div style="padding:20px 0 8px;font-size:0.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);">March 1, 2025</div>
           <div class="tx-row" style="cursor:pointer;">
-            <div class="tx-icon">🏨</div>
-            <div class="tx-info"><div class="tx-merchant">Marriott Mumbai</div><div class="tx-meta">🏨 Travel · 03:00 PM · Mumbai</div></div>
-            <div class="tx-amount"><div class="tx-fiat">-$220.00</div><div class="tx-usdc">220.44 USDC · @0.998</div></div>
-            <span class="badge badge-active" style="font-size:0.65rem;">✓ Approved</span>
+            <div class="tx-icon">ðŸ¨</div>
+            <div class="tx-info"><div class="tx-merchant">Marriott Mumbai</div><div class="tx-meta">ðŸ¨ Travel Â· 03:00 PM Â· Mumbai</div></div>
+            <div class="tx-amount"><div class="tx-fiat">-$220.00</div><div class="tx-usdc">220.44 USDC Â· @0.998</div></div>
+            <span class="badge badge-active" style="font-size:0.65rem;">âœ“ Approved</span>
           </div>
 
           <div style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.85rem;">
-            <a href="#" style="color:var(--accent-primary);text-decoration:none;" onclick="return false;">Load More Transactions →</a>
+            <a href="#" style="color:var(--accent-primary);text-decoration:none;" onclick="return false;">Load More Transactions â†’</a>
           </div>
         </div>
       </div>
@@ -212,19 +212,19 @@
   <div class="modal" style="max-width: 520px;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
       <h3>Transaction Details</h3>
-      <button onclick="closeModal('txDetailModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">✕</button>
+      <button onclick="closeModal('txDetailModal')" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">âœ•</button>
     </div>
     <div style="text-align:center;padding:20px 0;background:var(--bg-surface);border-radius:var(--radius-md);margin-bottom:20px;">
-      <div style="font-size:2.5rem;margin-bottom:8px;">☕</div>
+      <div style="font-size:2.5rem;margin-bottom:8px;">â˜•</div>
       <div style="font-weight:700;font-size:1.1rem;margin-bottom:4px;">Starbucks Coffee</div>
       <div style="font-family:'Space Mono',monospace;font-size:2rem;font-weight:700;color:var(--accent-red);">-$4.50</div>
       <div style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">4.51 USDC deducted</div>
     </div>
     <div class="tx-detail-modal-body">
-      <div class="row"><span class="row-label">Status</span><span class="badge badge-active" style="font-size:0.7rem;">✓ Approved</span></div>
+      <div class="row"><span class="row-label">Status</span><span class="badge badge-active" style="font-size:0.7rem;">âœ“ Approved</span></div>
       <div class="row"><span class="row-label">Merchant</span><span class="row-val">Starbucks Coffee</span></div>
       <div class="row"><span class="row-label">Category</span><span class="row-val">Food & Drink</span></div>
-      <div class="row"><span class="row-label">Date & Time</span><span class="row-val">Mar 6, 2025 · 09:30:14 AM</span></div>
+      <div class="row"><span class="row-label">Date & Time</span><span class="row-val">Mar 6, 2025 Â· 09:30:14 AM</span></div>
       <div class="row"><span class="row-label">Fiat Amount</span><span class="row-val">$4.50 USD</span></div>
       <div class="row"><span class="row-label">USDC Deducted</span><span class="row-val">4.51 USDC</span></div>
       <div class="row"><span class="row-label">Conversion Rate</span><span class="row-val">1 USDC = $0.9978</span></div>
@@ -236,6 +236,10 @@
   </div>
 </div>
 
+
+<!-- Mobile Sidebar Toggle -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<button class="sidebar-mobile-toggle" id="sidebarToggle" aria-label="Menu">☰</button>
 <script src="app.js"></script>
 <script>
   function openTxDetail(id) { openModal('txDetailModal'); }
@@ -245,3 +249,4 @@
 </script>
 </body>
 </html>
+

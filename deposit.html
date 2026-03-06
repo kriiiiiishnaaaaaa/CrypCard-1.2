@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deposit USDC — CryptoCard</title>
+  <title>Deposit USDC â€” CryptoCard</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     .network-tabs {
@@ -97,17 +97,17 @@
 <body>
 <div class="dashboard-layout">
   <aside class="sidebar">
-    <a href="index.html" class="sidebar-logo"><div class="nav-logo-icon">💳</div>CryptoCard</a>
+    <a href="index.html" class="sidebar-logo"><div class="nav-logo-icon">ðŸ’³</div>CryptoCard</a>
     <ul class="sidebar-nav">
-      <li><a href="dashboard.html"><span class="nav-icon">⊞</span> Dashboard</a></li>
-      <li><a href="deposit.html" class="active"><span class="nav-icon">⬇</span> Deposit USDC</a></li>
-      <li><a href="card.html"><span class="nav-icon">💳</span> Card Management</a></li>
-      <li><a href="transactions.html"><span class="nav-icon">↕</span> Transactions</a></li>
-      <li><a href="kyc.html"><span class="nav-icon">🪪</span> KYC Verification</a></li>
-      <li><a href="settings.html"><span class="nav-icon">⚙</span> Settings</a></li>
+      <li><a href="dashboard.html"><span class="nav-icon">âŠž</span> Dashboard</a></li>
+      <li><a href="deposit.html" class="active"><span class="nav-icon">â¬‡</span> Deposit USDC</a></li>
+      <li><a href="card.html"><span class="nav-icon">ðŸ’³</span> Card Management</a></li>
+      <li><a href="transactions.html"><span class="nav-icon">â†•</span> Transactions</a></li>
+      <li><a href="kyc.html"><span class="nav-icon">ðŸªª</span> KYC Verification</a></li>
+      <li><a href="settings.html"><span class="nav-icon">âš™</span> Settings</a></li>
     </ul>
     <div style="padding: 24px 12px; position: absolute; bottom: 0; left: 0; right: 0; border-top: 1px solid var(--border);">
-      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%; justify-content:center;">← Logout</a>
+      <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%; justify-content:center;">â† Logout</a>
     </div>
   </aside>
 
@@ -122,7 +122,7 @@
           <span class="rate-blink"></span>
           USDC: <span class="rate-value usdc-rate-val">$1.0002</span>
         </div>
-        <div class="notification-btn">🔔<div class="notification-dot"></div></div>
+        <div class="notification-btn">ðŸ””<div class="notification-dot"></div></div>
         <div class="avatar-btn">K</div>
       </div>
     </div>
@@ -130,7 +130,7 @@
     <div class="page-content">
       <!-- Warning Notice -->
       <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius-md);padding:16px 20px;margin-bottom:24px;display:flex;gap:12px;align-items:center;">
-        <span style="font-size:1.2rem;">⚠️</span>
+        <span style="font-size:1.2rem;">âš ï¸</span>
         <div>
           <div style="font-weight:600;font-size:0.9rem;color:var(--accent-yellow);margin-bottom:2px;">Only send USDC to this address</div>
           <div style="font-size:0.82rem;color:var(--text-secondary);">Sending any other token will result in permanent loss. Minimum deposit: 10 USDC.</div>
@@ -139,11 +139,11 @@
 
       <!-- Network Tabs -->
       <div class="network-tabs">
-        <div class="network-tab active" data-network="eth" onclick="selectNetwork('eth')"><span class="tab-icon">⟠</span>Ethereum (ERC-20)</div>
-        <div class="network-tab" data-network="base" onclick="selectNetwork('base')"><span class="tab-icon">🔵</span>Base</div>
-        <div class="network-tab" data-network="tron" onclick="selectNetwork('tron')"><span class="tab-icon">🔴</span>Tron (TRC-20)</div>
-        <div class="network-tab" data-network="sol" onclick="selectNetwork('sol')"><span class="tab-icon">◎</span>Solana</div>
-        <div class="network-tab" data-network="pol" onclick="selectNetwork('pol')"><span class="tab-icon">🟣</span>Polygon</div>
+        <div class="network-tab active" data-network="eth" onclick="selectNetwork('eth')"><span class="tab-icon">âŸ </span>Ethereum (ERC-20)</div>
+        <div class="network-tab" data-network="base" onclick="selectNetwork('base')"><span class="tab-icon">ðŸ”µ</span>Base</div>
+        <div class="network-tab" data-network="tron" onclick="selectNetwork('tron')"><span class="tab-icon">ðŸ”´</span>Tron (TRC-20)</div>
+        <div class="network-tab" data-network="sol" onclick="selectNetwork('sol')"><span class="tab-icon">â—Ž</span>Solana</div>
+        <div class="network-tab" data-network="pol" onclick="selectNetwork('pol')"><span class="tab-icon">ðŸŸ£</span>Polygon</div>
       </div>
 
       <div class="deposit-main">
@@ -153,7 +153,7 @@
           <div class="network-address section-card" data-network="eth">
             <div style="margin-bottom:20px;">
               <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:4px;">Ethereum USDC (ERC-20)</div>
-              <div class="badge badge-pending" style="font-size:0.72rem;">⏱ Confirmation: ~12 min</div>
+              <div class="badge badge-pending" style="font-size:0.72rem;">â± Confirmation: ~12 min</div>
             </div>
             <div class="qr-section" style="flex-direction:row;padding:20px;gap:24px;">
               <div class="qr-container">
@@ -191,8 +191,8 @@
                 <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Your Ethereum Deposit Address</div>
                 <div class="address-box" id="ethAddress">0x742d35Cc6634C0532925a3b8D4C9E2d1dE04b9f3</div>
                 <div style="display:flex;gap:8px;margin-top:12px;">
-                  <button class="btn btn-primary btn-sm" onclick="copyToClipboard('0x742d35Cc6634C0532925a3b8D4C9E2d1dE04b9f3')">📋 Copy Address</button>
-                  <button class="btn btn-secondary btn-sm">↗ View on Etherscan</button>
+                  <button class="btn btn-primary btn-sm" onclick="copyToClipboard('0x742d35Cc6634C0532925a3b8D4C9E2d1dE04b9f3')">ðŸ“‹ Copy Address</button>
+                  <button class="btn btn-secondary btn-sm">â†— View on Etherscan</button>
                 </div>
               </div>
             </div>
@@ -201,7 +201,7 @@
               <div class="network-info-row"><span class="label">Token</span><span class="val">USDC (ERC-20)</span></div>
               <div class="network-info-row"><span class="label">Minimum</span><span class="val">10 USDC</span></div>
               <div class="network-info-row"><span class="label">Confirmation Time</span><span class="val">~12 minutes (12 blocks)</span></div>
-              <div class="network-info-row"><span class="label">Network Fee</span><span class="val">~$2–8 ETH gas</span></div>
+              <div class="network-info-row"><span class="label">Network Fee</span><span class="val">~$2â€“8 ETH gas</span></div>
               <div class="network-info-row"><span class="label">Credit Status</span><span class="val green">Instant after confirmation</span></div>
             </div>
           </div>
@@ -210,11 +210,11 @@
           <div class="network-address section-card" data-network="base" style="display:none;">
             <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:16px;">Base USDC (Layer 2)</div>
             <div class="address-box" style="margin-bottom:12px;">0x8a3B5cD9E1f2Ab43c8D4C9E2d1dE04b9f3742d35</div>
-            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('0x8a3B5cD9E1f2Ab43c8D4C9E2d1dE04b9f3742d35')">📋 Copy Address</button>
+            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('0x8a3B5cD9E1f2Ab43c8D4C9E2d1dE04b9f3742d35')">ðŸ“‹ Copy Address</button>
             <div class="network-info-card" style="margin-top:16px;">
               <div class="network-info-row"><span class="label">Network</span><span class="val">Base (Coinbase L2)</span></div>
               <div class="network-info-row"><span class="label">Minimum</span><span class="val">10 USDC</span></div>
-              <div class="network-info-row"><span class="label">Confirmation</span><span class="val green">~1–2 minutes</span></div>
+              <div class="network-info-row"><span class="label">Confirmation</span><span class="val green">~1â€“2 minutes</span></div>
               <div class="network-info-row"><span class="label">Network Fee</span><span class="val green">&lt;$0.01</span></div>
             </div>
           </div>
@@ -223,7 +223,7 @@
           <div class="network-address section-card" data-network="tron" style="display:none;">
             <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:16px;">Tron USDC (TRC-20)</div>
             <div class="address-box" style="margin-bottom:12px;">TQnEWmN9e1dE04b9f3742d35Cc6634C0532925a3</div>
-            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('TQnEWmN9e1dE04b9f3742d35Cc6634C0532925a3')">📋 Copy Address</button>
+            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('TQnEWmN9e1dE04b9f3742d35Cc6634C0532925a3')">ðŸ“‹ Copy Address</button>
             <div class="network-info-card" style="margin-top:16px;">
               <div class="network-info-row"><span class="label">Network</span><span class="val">Tron Mainnet</span></div>
               <div class="network-info-row"><span class="label">Minimum</span><span class="val">10 USDC</span></div>
@@ -236,7 +236,7 @@
           <div class="network-address section-card" data-network="sol" style="display:none;">
             <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:16px;">Solana USDC (SPL)</div>
             <div class="address-box" style="margin-bottom:12px;">9xjF4mK7pW2nR8sL3vQ6tE1yB5cH0dG4mN8wZ2xV7kP</div>
-            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('9xjF4mK7pW2nR8sL3vQ6tE1yB5cH0dG4mN8wZ2xV7kP')">📋 Copy Address</button>
+            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('9xjF4mK7pW2nR8sL3vQ6tE1yB5cH0dG4mN8wZ2xV7kP')">ðŸ“‹ Copy Address</button>
             <div class="network-info-card" style="margin-top:16px;">
               <div class="network-info-row"><span class="label">Network</span><span class="val">Solana Mainnet</span></div>
               <div class="network-info-row"><span class="label">Minimum</span><span class="val">10 USDC</span></div>
@@ -249,7 +249,7 @@
           <div class="network-address section-card" data-network="pol" style="display:none;">
             <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:16px;">Polygon USDC</div>
             <div class="address-box" style="margin-bottom:12px;">0xC0532925a3b8D4b9f3742d35Cc6634C9E2d1dE04</div>
-            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('0xC0532925a3b8D4b9f3742d35Cc6634C9E2d1dE04')">📋 Copy Address</button>
+            <button class="btn btn-primary btn-sm" onclick="copyToClipboard('0xC0532925a3b8D4b9f3742d35Cc6634C9E2d1dE04')">ðŸ“‹ Copy Address</button>
             <div class="network-info-card" style="margin-top:16px;">
               <div class="network-info-row"><span class="label">Network</span><span class="val">Polygon (MATIC)</span></div>
               <div class="network-info-row"><span class="label">Minimum</span><span class="val">10 USDC</span></div>
@@ -276,10 +276,10 @@
             <div class="section-card-title">Deposit History</div>
             <div class="tx-list">
               <div class="tx-row" style="padding:12px 0;">
-                <div class="tx-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2);">⬇</div>
+                <div class="tx-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2);">â¬‡</div>
                 <div class="tx-info">
                   <div class="tx-merchant">Ethereum Deposit</div>
-                  <div class="tx-meta">Mar 5, 2025 · ERC-20</div>
+                  <div class="tx-meta">Mar 5, 2025 Â· ERC-20</div>
                 </div>
                 <div class="tx-amount">
                   <div class="tx-fiat" style="color:var(--accent-green);">+500 USDC</div>
@@ -287,10 +287,10 @@
                 </div>
               </div>
               <div class="tx-row" style="padding:12px 0;">
-                <div class="tx-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2);">⬇</div>
+                <div class="tx-icon" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.2);">â¬‡</div>
                 <div class="tx-info">
                   <div class="tx-merchant">Solana Deposit</div>
-                  <div class="tx-meta">Feb 28, 2025 · SPL</div>
+                  <div class="tx-meta">Feb 28, 2025 Â· SPL</div>
                 </div>
                 <div class="tx-amount">
                   <div class="tx-fiat" style="color:var(--accent-green);">+1,000 USDC</div>
@@ -298,10 +298,10 @@
                 </div>
               </div>
               <div class="tx-row" style="padding:12px 0;">
-                <div class="tx-icon" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.2);">⏳</div>
+                <div class="tx-icon" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.2);">â³</div>
                 <div class="tx-info">
                   <div class="tx-merchant">Base Deposit</div>
-                  <div class="tx-meta">Mar 6, 2025 · Base</div>
+                  <div class="tx-meta">Mar 6, 2025 Â· Base</div>
                 </div>
                 <div class="tx-amount">
                   <div class="tx-fiat" style="color:var(--accent-yellow);">+200 USDC</div>
@@ -316,7 +316,12 @@
   </div>
 </div>
 
-<div class="copy-toast" id="copyToast">✓ Copied to clipboard!</div>
+<div class="copy-toast" id="copyToast">âœ“ Copied to clipboard!</div>
+
+<!-- Mobile Sidebar Toggle -->
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<button class="sidebar-mobile-toggle" id="sidebarToggle" aria-label="Menu">☰</button>
 <script src="app.js"></script>
 </body>
 </html>
+

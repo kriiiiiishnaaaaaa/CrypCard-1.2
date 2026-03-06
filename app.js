@@ -92,15 +92,39 @@ function startRateTicker() {
 }
 startRateTicker();
 
-// ===== SIDEBAR TOGGLE (Dashboard) =====
+// ===== SIDEBAR TOGGLE (Dashboard pages — mobile) =====
 const sidebarToggle = document.getElementById('sidebarToggle');
 const sidebar = document.querySelector('.sidebar');
+const sidebarBackdrop = document.getElementById('sidebarBackdrop');
 
-if (sidebarToggle && sidebar) {
+function openSidebar() {
+  if (sidebar) sidebar.classList.add('open');
+  if (sidebarBackdrop) sidebarBackdrop.classList.add('active');
+}
+function closeSidebar() {
+  if (sidebar) sidebar.classList.remove('open');
+  if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
+}
+
+if (sidebarToggle) {
   sidebarToggle.addEventListener('click', () => {
-    sidebar.classList.toggle('open');
+    if (sidebar && sidebar.classList.contains('open')) {
+      closeSidebar();
+    } else {
+      openSidebar();
+    }
   });
 }
+if (sidebarBackdrop) {
+  sidebarBackdrop.addEventListener('click', closeSidebar);
+}
+
+// Close sidebar when a nav link is clicked on mobile
+document.querySelectorAll('.sidebar-nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= 1024) closeSidebar();
+  });
+});
 
 // ===== CARD FLIP =====
 function flipCard() {
