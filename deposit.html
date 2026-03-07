@@ -116,7 +116,7 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
     <button class="net-tab" onclick="switchNet('trx',this)"><div class="net-dot" style="background:#FF060A;"></div>Tron (TRC-20)</button>
     <button class="net-tab" onclick="switchNet('bnb',this)"><div class="net-dot" style="background:#F0B90B;"></div>BNB Chain (BEP-20)</button>
     <button class="net-tab" onclick="switchNet('sol',this)"><div class="net-dot" style="background:#9945FF;"></div>Solana (SPL)</button>
-    <button class="net-tab" onclick="switchNet('pol',this)"><div class="net-dot" style="background:#8247E5;"></div>Polygon (MATIC)</button>
+    <button class="net-tab" onclick="switchNet('base',this)"><div class="net-dot" style="background:#0052FF;"></div>Base Network</button>
   </div>
 
   <!-- ETHEREUM -->
@@ -128,16 +128,16 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
       </div>
       <div class="qr-addr-row">
         <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4&bgcolor=0D1117&color=EAECEF&margin=8" alt="ETH QR Code" loading="lazy"/>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x890479528f16C8bbC421eF60Bf57a27347b02C04&bgcolor=0D1117&color=EAECEF&margin=8" alt="ETH QR Code" loading="lazy"/>
           <div class="qr-lbl">Scan to copy</div>
         </div>
         <div class="addr-info">
           <div class="addr-label">USDC Deposit Address (ERC-20)</div>
-          <div class="addr-value" id="eth-addr">0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4</div>
+          <div class="addr-value" id="eth-addr">0x890479528f16C8bbC421eF60Bf57a27347b02C04</div>
           <button class="copy-btn" onclick="copyAddr('eth-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
         </div>
       </div>
-      <div class="notice-box">Network fee applies. Use ERC-20 USDC only (contract: 0xA0b8...eB48). Arrives after ~12 block confirmations.</div>
+      <div class="notice-box">Network fee applies. Use ERC-20 USDC only. Arrives after ~12 block confirmations.</div>
     </div>
   </div>
 
@@ -150,16 +150,16 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
       </div>
       <div class="qr-addr-row">
         <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=TKoXyTen4kzPNMQh3e7KpvpK4j8KyUdDaZ&bgcolor=0D1117&color=EAECEF&margin=8" alt="TRX QR Code" loading="lazy"/>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=TNsXmYuCXQV9BVUXVPehGvY6PZ32XikFKv&bgcolor=0D1117&color=EAECEF&margin=8" alt="TRX QR Code" loading="lazy"/>
           <div class="qr-lbl">Scan to copy</div>
         </div>
         <div class="addr-info">
           <div class="addr-label">USDC Deposit Address (TRC-20)</div>
-          <div class="addr-value" id="trx-addr">TKoXyTen4kzPNMQh3e7KpvpK4j8KyUdDaZ</div>
+          <div class="addr-value" id="trx-addr">TNsXmYuCXQV9BVUXVPehGvY6PZ32XikFKv</div>
           <button class="copy-btn" onclick="copyAddr('trx-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
         </div>
       </div>
-      <div class="notice-box">Lowest network fees. TRC-20 USDC only. Funds arrive in ~1 minute. Minimum 10 TRX in your wallet for gas.</div>
+      <div class="notice-box">Lowest network fees. TRC-20 USDC only. Funds arrive in ~1 min. Minimum 10 TRX in wallet for gas.</div>
     </div>
   </div>
 
@@ -172,12 +172,12 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
       </div>
       <div class="qr-addr-row">
         <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4&bgcolor=0D1117&color=EAECEF&margin=8" alt="BNB QR Code" loading="lazy"/>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x890479528f16C8bbC421eF60Bf57a27347b02C04&bgcolor=0D1117&color=EAECEF&margin=8" alt="BNB QR Code" loading="lazy"/>
           <div class="qr-lbl">Scan to copy</div>
         </div>
         <div class="addr-info">
           <div class="addr-label">USDC Deposit Address (BEP-20)</div>
-          <div class="addr-value" id="bnb-addr">0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4</div>
+          <div class="addr-value" id="bnb-addr">0x890479528f16C8bbC421eF60Bf57a27347b02C04</div>
           <button class="copy-btn" onclick="copyAddr('bnb-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
         </div>
       </div>
@@ -194,38 +194,38 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
       </div>
       <div class="qr-addr-row">
         <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU&bgcolor=0D1117&color=EAECEF&margin=8" alt="SOL QR Code" loading="lazy"/>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=4YgbHKMcpqKgtW6pUhLSxPt6L7j8BseZV5f2yDWRZRDP&bgcolor=0D1117&color=EAECEF&margin=8" alt="SOL QR Code" loading="lazy"/>
           <div class="qr-lbl">Scan to copy</div>
         </div>
         <div class="addr-info">
           <div class="addr-label">USDC Deposit Address (SPL)</div>
-          <div class="addr-value" id="sol-addr">7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU</div>
+          <div class="addr-value" id="sol-addr">4YgbHKMcpqKgtW6pUhLSxPt6L7j8BseZV5f2yDWRZRDP</div>
           <button class="copy-btn" onclick="copyAddr('sol-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
         </div>
       </div>
-      <div class="notice-box">Solana USDC (SPL) only. Near-instant settlement. Ensure you have ~0.001 SOL for transaction fees.</div>
+      <div class="notice-box">Solana USDC (SPL) only. Near-instant settlement. Ensure you have ~0.001 SOL in wallet for transaction fees. No memo required.</div>
     </div>
   </div>
 
   <!-- POLYGON -->
-  <div class="net-panel" id="panel-pol">
+  <div class="net-panel" id="panel-base">
     <div class="addr-card">
       <div class="addr-header">
-        <div class="addr-icon" style="background:rgba(130,71,229,.15);color:#8247E5;">POL</div>
-        <div><div class="addr-net-name">Polygon Network</div><div class="addr-net-sub">MATIC/POL &bull; Confirmation: ~5 sec &bull; Min: 10 USDC</div></div>
+        <div class="addr-icon" style="background:rgba(0,82,255,.15);color:#0052FF;">BASE</div>
+        <div><div class="addr-net-name">Base Network</div><div class="addr-net-sub">L2 (Coinbase) &bull; Confirmation: ~5 sec &bull; Min: 10 USDC</div></div>
       </div>
       <div class="qr-addr-row">
         <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4&bgcolor=0D1117&color=EAECEF&margin=8" alt="POL QR Code" loading="lazy"/>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x890479528f16C8bbC421eF60Bf57a27347b02C04&bgcolor=0D1117&color=EAECEF&margin=8" alt="BASE QR Code" loading="lazy"/>
           <div class="qr-lbl">Scan to copy</div>
         </div>
         <div class="addr-info">
-          <div class="addr-label">USDC Deposit Address (Polygon)</div>
-          <div class="addr-value" id="pol-addr">0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4</div>
-          <button class="copy-btn" onclick="copyAddr('pol-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
+          <div class="addr-label">USDC Deposit Address (Base)</div>
+          <div class="addr-value" id="base-addr">0x890479528f16C8bbC421eF60Bf57a27347b02C04</div>
+          <button class="copy-btn" onclick="copyAddr('base-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
         </div>
       </div>
-      <div class="notice-box">Polygon USDC only. Very low fees. Ensure you are on Polygon mainnet, not Ethereum mainnet.</div>
+      <div class="notice-box">Base (Coinbase L2) USDC only. Very low fees. Confirm you are on Base mainnet, not Ethereum mainnet.</div>
     </div>
   </div>
 
