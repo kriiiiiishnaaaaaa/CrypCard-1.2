@@ -31,10 +31,13 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
 .avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
 
 /* WALLET */
-.wallet-section{text-align:center;padding:24px 20px 10px;}
-.wallet-lbl{font-size:.78rem;color:rgba(255,255,255,.4);margin-bottom:10px;letter-spacing:.4px;}
-.wallet-bal{font-size:2.8rem;font-weight:700;font-family:'Space Grotesk',sans-serif;letter-spacing:-1px;color:#fff;}
-.wallet-chg{font-size:.82rem;color:rgba(255,255,255,.35);margin-top:6px;}
+.wallet-section{text-align:center;padding:28px 20px 14px;}
+.wallet-lbl{font-size:.78rem;color:rgba(255,255,255,.4);margin-bottom:12px;letter-spacing:.4px;}
+.wallet-bal{font-size:3.6rem;font-weight:700;font-family:'Space Grotesk',sans-serif;letter-spacing:-2px;color:#fff;line-height:1;}
+.wallet-chg{font-size:.82rem;color:rgba(255,255,255,.35);margin-top:10px;}
+/* SECTION CARDS */
+.sec-card{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:16px;margin:0 16px 16px;overflow:hidden;}
+.sec-card-title{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.35);padding:16px 20px 4px;text-transform:uppercase;letter-spacing:.8px;}
 
 /* QUICK ACTIONS */
 .quick-actions{display:flex;justify-content:center;gap:28px;padding:20px;border-bottom:1px solid rgba(255,255,255,.06);}
@@ -57,7 +60,6 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
 .coin-row{display:flex;align-items:center;gap:12px;padding:12px 20px;cursor:pointer;transition:background .15s;}
 .coin-row:hover{background:rgba(255,255,255,.03);}
 .coin-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.84rem;flex-shrink:0;font-family:'Space Grotesk',sans-serif;}
-.rk{width:18px;font-size:.72rem;color:rgba(255,255,255,.25);text-align:right;flex-shrink:0;}
 .coin-info{flex:1;min-width:0;}
 .coin-name{font-size:.92rem;font-weight:600;color:#fff;}
 .coin-sub{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:2px;}
@@ -80,7 +82,7 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
 .dash-toast.show{transform:translateX(-50%) translateY(0);}
 
 /* MOBILE */
-.mob-btn{display:none;position:fixed;bottom:22px;left:18px;z-index:200;width:46px;height:46px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
+.mob-btn{display:none !important;}
 .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:99;}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:900;padding:56px 16px 16px;overflow-y:auto;}
 .panel{display:none;position:fixed;top:60px;right:12px;background:#161A1F;border:1px solid rgba(255,255,255,.1);border-radius:16px;z-index:800;box-shadow:0 20px 60px rgba(0,0,0,.8);overflow:hidden;}
@@ -89,7 +91,6 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
   .dash-main{margin-left:0}
-  .mob-btn{display:flex}
   .sidebar-backdrop.show{display:block}
   .dash-center{max-width:100%}
 }
@@ -175,30 +176,38 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
 
   <!-- CRYPTO TAB -->
   <div class="tab-pane active" id="tab-crypto">
-    <div class="sec-title">Your Holdings</div>
-    <div class="coin-row">
-      <div class="rk"></div>
-      <div class="coin-icon" style="background:rgba(38,161,123,.15);color:#26A17B;font-size:.78rem;">USDC</div>
-      <div class="coin-info"><div class="coin-name">USD Coin</div><div class="coin-sub">USDC &bull; Stablecoin</div></div>
-      <div class="coin-right">
-        <div class="coin-price">$1.00</div>
-        <div class="coin-chg pos">+0.01%</div>
-        <div class="coin-vol" id="usdcBal">0.00 USDC</div>
+
+    <!-- YOUR HOLDINGS CARD -->
+    <div class="sec-card">
+      <div class="sec-card-title">Your Holdings</div>
+      <div class="coin-row">
+        <div class="coin-icon" style="background:rgba(38,161,123,.15);color:#26A17B;font-size:.78rem;">USDC</div>
+        <div class="coin-info"><div class="coin-name">USD Coin</div><div class="coin-sub">USDC &bull; Stablecoin</div></div>
+        <div class="coin-right">
+          <div class="coin-price">$1.00</div>
+          <div class="coin-chg pos">+0.01%</div>
+          <div class="coin-vol" id="usdcBal">0.00 USDC</div>
+        </div>
       </div>
     </div>
-    <div class="divider"></div>
 
-    <div class="sec-title">Top Movers</div>
-    <div class="sub-tabs">
-      <button class="sub-tab active" onclick="setMover('top',this)">Top</button>
-      <button class="sub-tab" onclick="setMover('gainers',this)">Gainers</button>
-      <button class="sub-tab" onclick="setMover('losers',this)">Losers</button>
+    <!-- TOP MOVERS CARD -->
+    <div class="sec-card">
+      <div class="sec-card-title">Top Movers</div>
+      <div class="sub-tabs">
+        <button class="sub-tab active" onclick="setMover('top',this)">Top</button>
+        <button class="sub-tab" onclick="setMover('gainers',this)">Gainers</button>
+        <button class="sub-tab" onclick="setMover('losers',this)">Losers</button>
+      </div>
+      <div id="moversList"><div style="padding:24px;text-align:center;color:rgba(255,255,255,.25);font-size:.82rem;">Loading live prices...</div></div>
     </div>
-    <div id="moversList"><div style="padding:24px;text-align:center;color:rgba(255,255,255,.25);font-size:.82rem;">Loading live prices...</div></div>
 
-    <div class="divider"></div>
-    <div class="sec-title">Popular Tokens</div>
-    <div id="popularList"></div>
+    <!-- POPULAR TOKENS CARD -->
+    <div class="sec-card">
+      <div class="sec-card-title">Popular Tokens</div>
+      <div id="popularList"></div>
+    </div>
+
   </div>
 
   <!-- ACTIVITY TAB -->
@@ -252,7 +261,6 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
 </div>
 
 <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
-<button class="mob-btn" onclick="toggleSidebar()" aria-label="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
 <div class="dash-toast" id="dashToast"></div>
 
 <script src="app.js"></script>
@@ -283,7 +291,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeSearch();close
 const COINS={BTCUSDT:{n:'Bitcoin',s:'BTC',bg:'rgba(247,147,26,.15)',c:'#F7931A'},ETHUSDT:{n:'Ethereum',s:'ETH',bg:'rgba(98,126,234,.15)',c:'#627EEA'},BNBUSDT:{n:'BNB',s:'BNB',bg:'rgba(240,185,11,.15)',c:'#F0B90B'},SOLUSDT:{n:'Solana',s:'SOL',bg:'rgba(153,69,255,.15)',c:'#9945FF'},XRPUSDT:{n:'XRP',s:'XRP',bg:'rgba(0,170,228,.15)',c:'#00AAE4'},ADAUSDT:{n:'Cardano',s:'ADA',bg:'rgba(0,51,173,.15)',c:'#6677FF'},DOGEUSDT:{n:'Dogecoin',s:'DOGE',bg:'rgba(195,161,73,.15)',c:'#C3A149'},AVAXUSDT:{n:'Avalanche',s:'AVAX',bg:'rgba(232,65,66,.15)',c:'#E84142'},DOTUSDT:{n:'Polkadot',s:'DOT',bg:'rgba(230,0,122,.15)',c:'#E6007A'},MATICUSDT:{n:'Polygon',s:'MATIC',bg:'rgba(130,71,229,.15)',c:'#8247E5'},LINKUSDT:{n:'Chainlink',s:'LINK',bg:'rgba(55,91,210,.15)',c:'#375BD2'},UNIUSDT:{n:'Uniswap',s:'UNI',bg:'rgba(255,0,122,.15)',c:'#FF007A'},LTCUSDT:{n:'Litecoin',s:'LTC',bg:'rgba(183,183,183,.15)',c:'#B7B7B7'},NEARUSDT:{n:'NEAR',s:'NEAR',bg:'rgba(0,236,151,.15)',c:'#00EC97'},OPUSDT:{n:'Optimism',s:'OP',bg:'rgba(255,4,32,.15)',c:'#FF0420'},ARBUSDT:{n:'Arbitrum',s:'ARB',bg:'rgba(40,160,240,.15)',c:'#28A0F0'},INJUSDT:{n:'Injective',s:'INJ',bg:'rgba(0,136,255,.15)',c:'#0088FF'},SUIUSDT:{n:'Sui',s:'SUI',bg:'rgba(78,144,255,.15)',c:'#4E90FF'},APTUSDT:{n:'Aptos',s:'APT',bg:'rgba(85,85,255,.15)',c:'#5555FF'},SHIBUSDT:{n:'Shiba Inu',s:'SHIB',bg:'rgba(255,165,0,.15)',c:'#FFA500'},PEPEUSDT:{n:'Pepe',s:'PEPE',bg:'rgba(0,200,0,.15)',c:'#00C800'},WIFUSDT:{n:'dogwifhat',s:'WIF',bg:'rgba(255,145,0,.15)',c:'#FF9100'},BONKUSDT:{n:'Bonk',s:'BONK',bg:'rgba(255,180,0,.15)',c:'#FFB400'},TRXUSDT:{n:'TRON',s:'TRX',bg:'rgba(255,6,10,.15)',c:'#FF060A'},ATOMUSDT:{n:'Cosmos',s:'ATOM',bg:'rgba(111,88,182,.15)',c:'#6F58B6'},FILUSDT:{n:'Filecoin',s:'FIL',bg:'rgba(0,120,235,.15)',c:'#0078EB'},RNDRUSDT:{n:'Render',s:'RNDR',bg:'rgba(255,60,0,.15)',c:'#FF3C00'},FETUSDT:{n:'Fetch.ai',s:'FET',bg:'rgba(0,120,255,.15)',c:'#0078FF'},CAKEUSDT:{n:'PancakeSwap',s:'CAKE',bg:'rgba(255,175,0,.15)',c:'#FFAF00'},LDOUSDT:{n:'Lido DAO',s:'LDO',bg:'rgba(246,190,44,.15)',c:'#F6BE2C'},AAVEUSDT:{n:'Aave',s:'AAVE',bg:'rgba(183,136,231,.15)',c:'#B788E7'},MKRUSDT:{n:'Maker',s:'MKR',bg:'rgba(30,133,102,.15)',c:'#1E8566'},TIAUSDT:{n:'Celestia',s:'TIA',bg:'rgba(126,60,215,.15)',c:'#7E3CD7'},JUPUSDT:{n:'Jupiter',s:'JUP',bg:'rgba(0,200,150,.15)',c:'#00C896'},ENAUSDT:{n:'Ethena',s:'ENA',bg:'rgba(100,200,255,.15)',c:'#64C8FF'},STRKUSDT:{n:'Starknet',s:'STRK',bg:'rgba(180,0,255,.15)',c:'#B400FF'},RUNEUSDT:{n:'THORChain',s:'RUNE',bg:'rgba(0,255,200,.15)',c:'#00FFC8'},GMXUSDT:{n:'GMX',s:'GMX',bg:'rgba(0,180,100,.15)',c:'#00B464'},EGLDUSDT:{n:'MultiversX',s:'EGLD',bg:'rgba(30,190,60,.15)',c:'#1EBE3C'},HBARUSDT:{n:'Hedera',s:'HBAR',bg:'rgba(0,0,200,.15)',c:'#5555CC'},XLMUSDT:{n:'Stellar',s:'XLM',bg:'rgba(20,108,205,.15)',c:'#148CCD'},BCHUSDT:{n:'Bitcoin Cash',s:'BCH',bg:'rgba(138,209,99,.15)',c:'#8AD163'},ETCUSDT:{n:'Ethereum Classic',s:'ETC',bg:'rgba(0,154,68,.15)',c:'#009A44'},SANDUSDT:{n:'Sandbox',s:'SAND',bg:'rgba(0,168,107,.15)',c:'#00A86B'},MANAUSDT:{n:'Decentraland',s:'MANA',bg:'rgba(255,70,85,.15)',c:'#FF4655'},VETUSDT:{n:'VeChain',s:'VET',bg:'rgba(0,150,255,.15)',c:'#0096FF'},FLOWUSDT:{n:'Flow',s:'FLOW',bg:'rgba(0,240,125,.15)',c:'#00F07D'},COMPUSDT:{n:'Compound',s:'COMP',bg:'rgba(0,215,95,.15)',c:'#00D75F'},PENDLEUSDT:{n:'Pendle',s:'PENDLE',bg:'rgba(0,180,255,.15)',c:'#00B4FF'},DYDXUSDT:{n:'dYdX',s:'DYDX',bg:'rgba(100,50,200,.15)',c:'#6432C8'}};
 function fmt(n){const v=parseFloat(n);return v>9999?v.toLocaleString('en-US',{maximumFractionDigits:0}):v>99?v.toLocaleString('en-US',{maximumFractionDigits:2}):v.toLocaleString('en-US',{maximumFractionDigits:4});}
 function fmtV(v){const n=parseFloat(v);return n>1e9?'$'+(n/1e9).toFixed(1)+'B':n>1e6?'$'+(n/1e6).toFixed(1)+'M':'$'+(n/1e3).toFixed(0)+'K';}
-function mkRow(i,m,price,chg,vol){const pos=chg>=0;return '<div class="coin-row"><div class="rk">'+(i||'')+'</div><div class="coin-icon" style="background:'+m.bg+';color:'+m.c+';">'+m.s.charAt(0)+'</div><div class="coin-info"><div class="coin-name">'+m.n+'</div><div class="coin-sub">'+m.s+'</div></div><div class="coin-right"><div class="coin-price">$'+fmt(price)+'</div><div class="coin-chg '+(pos?'pos':'neg')+'">'+(pos?'+':'')+chg.toFixed(2)+'%</div>'+(vol?'<div class="coin-vol">'+fmtV(vol)+'</div>':'')+'</div></div>';}
+function mkRow(i,m,price,chg,vol){const pos=chg>=0;return '<div class="coin-row"><div class="coin-icon" style="background:'+m.bg+';color:'+m.c+';">'+m.s.charAt(0)+'</div><div class="coin-info"><div class="coin-name">'+m.n+'</div><div class="coin-sub">'+m.s+'</div></div><div class="coin-right"><div class="coin-price">$'+fmt(price)+'</div><div class="coin-chg '+(pos?'pos':'neg')+'">'+(pos?'+':'')+chg.toFixed(2)+'%</div>'+(vol?'<div class="coin-vol">'+fmtV(vol)+'</div>':'')+'</div></div>';}
 let _moverMode='top';
 function setMover(t,btn){btn.closest('.sub-tabs').querySelectorAll('.sub-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');_moverMode=t;if(window._tickers)renderMovers();}
 function renderMovers(){let d=[...window._tickers];if(_moverMode==='gainers')d=d.filter(x=>parseFloat(x.priceChangePercent)>0).sort((a,b)=>parseFloat(b.priceChangePercent)-parseFloat(a.priceChangePercent));else if(_moverMode==='losers')d=d.filter(x=>parseFloat(x.priceChangePercent)<0).sort((a,b)=>parseFloat(a.priceChangePercent)-parseFloat(b.priceChangePercent));else d=d.sort((a,b)=>Math.abs(parseFloat(b.priceChangePercent))-Math.abs(parseFloat(a.priceChangePercent)));document.getElementById('moversList').innerHTML=d.filter(x=>COINS[x.symbol]).slice(0,8).map((x,i)=>{const m=COINS[x.symbol];const chg=parseFloat(x.priceChangePercent);return mkRow(i+1,m,x.lastPrice,chg,x.quoteVolume);}).join('');}
