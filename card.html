@@ -69,13 +69,13 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
 .limit-fill{height:100%;background:linear-gradient(90deg,#F0B90B,#F8D12F);border-radius:3px;}
 .page-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:999;white-space:nowrap;}
 .page-toast.show{transform:translateX(-50%) translateY(0);}
-.mob-menu-btn{display:none;position:fixed;bottom:20px;left:20px;z-index:200;width:44px;height:44px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
+.mob-menu-btn{display:none !important;position:fixed;bottom:20px;left:20px;z-index:200;width:44px;height:44px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
 .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;}
 @media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.page-main{margin-left:0;padding-left:16px;padding-right:16px}.page-topbar{left:0;}
 .icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
 .icon-btn:hover{background:rgba(255,255,255,.1);}
 .search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:150px;}
-.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}.mob-menu-btn{display:flex}.sidebar-backdrop.show{display:block}}
+.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}.sidebar-backdrop.show{display:block}}
 @media(max-width:720px){.two-col{grid-template-columns:1fr}}
 @media(max-width:500px){.page-main{padding:12px 14px 80px}.card-btn{font-size:.74rem;padding:10px 6px}}
 </style>
@@ -213,7 +213,7 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
 </div>
 
 <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
-<button class="mob-menu-btn" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+
 <div class="page-toast" id="pageToast"></div>
 
 <script src="app.js"></script>

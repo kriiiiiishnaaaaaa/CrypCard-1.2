@@ -2416,3 +2416,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
   position: relative;
   z-index: 2;
 }
+-e 
+/* Remove floating mobile menu button globally */
+.mob-btn, .mob-menu-btn { display: none !important; }
