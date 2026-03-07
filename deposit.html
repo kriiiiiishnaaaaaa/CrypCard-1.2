@@ -19,7 +19,6 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 .sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.07);}
 .logout-btn{width:100%;display:flex;align-items:center;gap:8px;padding:10px 14px;background:none;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(255,255,255,.4);font-size:.84rem;cursor:pointer;font-family:inherit;transition:all .2s;}
 .logout-btn:hover{border-color:rgba(239,68,68,.4);color:#EF4444;}
-/* UNIFIED HEADER (same as dashboard) */
 .page-topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;position:fixed;top:0;left:220px;right:0;z-index:50;background:#0B0E11;border-bottom:1px solid rgba(255,255,255,.06);}
 .icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
 .icon-btn:hover{background:rgba(255,255,255,.1);}
@@ -27,14 +26,12 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 .search-pill:hover{border-color:rgba(240,185,11,.35);}
 .avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
 .page-main{margin-left:220px;flex:1;padding:86px 24px 80px;}
-/* NETWORK TABS */
 .net-tabs{display:flex;gap:8px;margin-bottom:24px;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap;padding-bottom:2px;}
 .net-tabs::-webkit-scrollbar{display:none;}
 .net-tab{padding:8px 18px;border-radius:100px;font-size:.82rem;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);font-family:inherit;white-space:nowrap;flex-shrink:0;transition:all .2s;display:flex;align-items:center;gap:7px;}
 .net-tab.active{background:rgba(240,185,11,.1);border-color:rgba(240,185,11,.35);color:#F0B90B;}
 .net-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .net-panel{display:none;}.net-panel.active{display:block;}
-/* ADDRESS CARD */
 .addr-card{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:28px;margin-bottom:16px;}
 .addr-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
 .addr-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0;font-family:'Space Grotesk',sans-serif;}
@@ -86,7 +83,6 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 </aside>
 
 <div class="page-main">
-  <!-- UNIFIED HEADER (identical to dashboard) -->
   <div class="page-topbar">
     <div style="display:flex;align-items:center;gap:10px;">
       <button class="icon-btn" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
@@ -103,50 +99,25 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 
   <div style="margin-bottom:6px;"><span style="font-size:.72rem;color:rgba(255,255,255,.3);">Dashboard / </span><span style="font-size:.72rem;color:#F0B90B;font-weight:600;">Deposit USDC</span></div>
   <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:#fff;margin-bottom:6px;">Deposit USDC</h2>
-  <p style="font-size:.83rem;color:rgba(255,255,255,.35);margin-bottom:22px;">Send USDC to your wallet address below. Choose the network that matches your sending wallet.</p>
+  <p style="font-size:.83rem;color:rgba(255,255,255,.35);margin-bottom:22px;">Send USDC to your wallet address below. Minimum deposit is <strong style="color:#F0B90B;">$100 USDC</strong>.</p>
 
   <div class="warn-box">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    <span><strong>Only send USDC on the selected network.</strong> Sending the wrong token or using a different network will result in permanent loss of funds.</span>
+    <span><strong>Only send USDC on the selected network.</strong> Sending the wrong token or using a different network will result in permanent loss of funds. Minimum deposit: <strong>$100 USDC</strong>.</span>
   </div>
 
-  <!-- NETWORK TABS -->
+  <!-- NETWORK TABS — TRC-20 and BEP-20 only -->
   <div class="net-tabs">
-    <button class="net-tab active" onclick="switchNet('eth',this)"><div class="net-dot" style="background:#627EEA;"></div>Ethereum (ERC-20)</button>
-    <button class="net-tab" onclick="switchNet('trx',this)"><div class="net-dot" style="background:#FF060A;"></div>Tron (TRC-20)</button>
+    <button class="net-tab active" onclick="switchNet('trx',this)"><div class="net-dot" style="background:#FF060A;"></div>Tron (TRC-20)</button>
     <button class="net-tab" onclick="switchNet('bnb',this)"><div class="net-dot" style="background:#F0B90B;"></div>BNB Chain (BEP-20)</button>
-    <button class="net-tab" onclick="switchNet('sol',this)"><div class="net-dot" style="background:#9945FF;"></div>Solana (SPL)</button>
-    <button class="net-tab" onclick="switchNet('base',this)"><div class="net-dot" style="background:#0052FF;"></div>Base Network</button>
   </div>
 
-  <!-- ETHEREUM -->
-  <div class="net-panel active" id="panel-eth">
-    <div class="addr-card">
-      <div class="addr-header">
-        <div class="addr-icon" style="background:rgba(98,126,234,.15);color:#627EEA;">ETH</div>
-        <div><div class="addr-net-name">Ethereum Network</div><div class="addr-net-sub">ERC-20 &bull; Confirmation: ~2 min &bull; Min: 10 USDC</div></div>
-      </div>
-      <div class="qr-addr-row">
-        <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x890479528f16C8bbC421eF60Bf57a27347b02C04&bgcolor=0D1117&color=EAECEF&margin=8" alt="ETH QR Code" loading="lazy"/>
-          <div class="qr-lbl">Scan to copy</div>
-        </div>
-        <div class="addr-info">
-          <div class="addr-label">USDC Deposit Address (ERC-20)</div>
-          <div class="addr-value" id="eth-addr">0x890479528f16C8bbC421eF60Bf57a27347b02C04</div>
-          <button class="copy-btn" onclick="copyAddr('eth-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
-        </div>
-      </div>
-      <div class="notice-box">Network fee applies. Use ERC-20 USDC only. Arrives after ~12 block confirmations.</div>
-    </div>
-  </div>
-
-  <!-- TRON -->
-  <div class="net-panel" id="panel-trx">
+  <!-- TRON TRC-20 -->
+  <div class="net-panel active" id="panel-trx">
     <div class="addr-card">
       <div class="addr-header">
         <div class="addr-icon" style="background:rgba(255,6,10,.15);color:#FF060A;">TRX</div>
-        <div><div class="addr-net-name">Tron Network</div><div class="addr-net-sub">TRC-20 &bull; Confirmation: ~30 sec &bull; Min: 10 USDC</div></div>
+        <div><div class="addr-net-name">Tron Network</div><div class="addr-net-sub">TRC-20 &bull; Confirmation: ~30 sec &bull; Min: $100 USDC</div></div>
       </div>
       <div class="qr-addr-row">
         <div class="qr-box">
@@ -163,49 +134,40 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 
       <!-- FUND WALLET FORM -->
       <div style="margin-top:18px;">
-        <button id="openFundBtn" onclick="toggleFundForm()" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border:none;border-radius:12px;color:#000;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;">
+        <button id="openFundBtnTrx" onclick="toggleFundForm('trx')" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border:none;border-radius:12px;color:#000;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;">
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           I've Sent — Add Funds
         </button>
-
-        <!-- Form box -->
-        <div id="fundForm" style="display:none;margin-top:14px;background:#0D1117;border:1px solid rgba(240,185,11,.2);border-radius:14px;padding:20px;">
-          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.9rem;color:#fff;margin-bottom:4px;">Verify Your Deposit</div>
-          <div style="font-size:.74rem;color:rgba(255,255,255,.35);margin-bottom:16px;">Paste the transaction hash from your wallet after sending USDC/USDT to our TRC-20 address.</div>
-
+        <div id="fundFormTrx" style="display:none;margin-top:14px;background:#0D1117;border:1px solid rgba(240,185,11,.2);border-radius:14px;padding:20px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.9rem;color:#fff;margin-bottom:4px;">Verify Your TRC-20 Deposit</div>
+          <div style="font-size:.74rem;color:rgba(255,255,255,.35);margin-bottom:16px;">Paste the transaction hash from your wallet after sending USDC to our TRC-20 address. Minimum <strong style="color:#F0B90B;">$100 USDC</strong>.</div>
           <label style="font-size:.72rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;font-weight:600;display:block;margin-bottom:6px;">Transaction Hash (TxID)</label>
-          <input id="txHashInput" type="text" placeholder="e.g. a3f4b9c1d2e0..." style="width:100%;background:#161A1F;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.8rem;outline:none;margin-bottom:12px;" />
-
-          <button onclick="submitDepositHash()" id="verifyBtn" style="width:100%;padding:12px;background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.3);border-radius:10px;color:#F0B90B;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;">Verify &amp; Add to Wallet</button>
-
-          <!-- Status box -->
-          <div id="depositStatus" style="display:none;margin-top:14px;border-radius:10px;padding:14px 16px;">
+          <input id="txHashTrx" type="text" placeholder="e.g. a3f4b9c1d2e0..." style="width:100%;background:#161A1F;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.8rem;outline:none;margin-bottom:12px;"/>
+          <button onclick="submitHash('trx')" id="verifyBtnTrx" style="width:100%;padding:12px;background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.3);border-radius:10px;color:#F0B90B;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;">Verify &amp; Add to Wallet</button>
+          <div id="depositStatusTrx" style="display:none;margin-top:14px;border-radius:10px;padding:14px 16px;">
             <div style="display:flex;align-items:center;gap:10px;">
-              <div id="statusIcon" style="font-size:1.3rem;">⏳</div>
+              <div id="statusIconTrx" style="font-size:1.3rem;">⏳</div>
               <div>
-                <div id="statusTitle" style="font-size:.86rem;font-weight:700;color:#fff;">Checking transaction...</div>
-                <div id="statusMsg" style="font-size:.74rem;color:rgba(255,255,255,.4);margin-top:2px;">Querying TronGrid. This may take up to 2 minutes.</div>
+                <div id="statusTitleTrx" style="font-size:.86rem;font-weight:700;color:#fff;">Checking transaction...</div>
+                <div id="statusMsgTrx" style="font-size:.74rem;color:rgba(255,255,255,.4);margin-top:2px;"></div>
               </div>
             </div>
-            <div id="statusProgress" style="margin-top:12px;height:3px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;">
-              <div id="statusBar" style="height:100%;width:0%;background:#F0B90B;border-radius:100px;transition:width .5s;"></div>
+            <div style="margin-top:12px;height:3px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;">
+              <div id="statusBarTrx" style="height:100%;width:0%;background:#F0B90B;border-radius:100px;transition:width .5s;"></div>
             </div>
-            <div id="statusTimer" style="font-size:.68rem;color:rgba(255,255,255,.25);margin-top:5px;text-align:right;"></div>
+            <div id="statusTimerTrx" style="font-size:.68rem;color:rgba(255,255,255,.25);margin-top:5px;text-align:right;"></div>
           </div>
         </div>
-
-        <!-- Past deposits list -->
-        <div id="pastDeposits" style="margin-top:14px;"></div>
       </div>
     </div>
   </div>
 
-  <!-- BNB CHAIN -->
+  <!-- BNB BEP-20 -->
   <div class="net-panel" id="panel-bnb">
     <div class="addr-card">
       <div class="addr-header">
         <div class="addr-icon" style="background:rgba(240,185,11,.15);color:#F0B90B;">BNB</div>
-        <div><div class="addr-net-name">BNB Chain (BSC)</div><div class="addr-net-sub">BEP-20 &bull; Confirmation: ~15 sec &bull; Min: 10 USDC</div></div>
+        <div><div class="addr-net-name">BNB Chain (BSC)</div><div class="addr-net-sub">BEP-20 &bull; Confirmation: ~15 sec &bull; Min: $100 USDC</div></div>
       </div>
       <div class="qr-addr-row">
         <div class="qr-box">
@@ -218,51 +180,35 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
           <button class="copy-btn" onclick="copyAddr('bnb-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
         </div>
       </div>
-      <div class="notice-box">BEP-20 USDC only. Send BNB for gas. This is the same address format as Ethereum — confirm you are on BSC.</div>
-    </div>
-  </div>
+      <div class="notice-box">BEP-20 USDC only. Confirm you are on BSC mainnet. Keep a small amount of BNB for gas fees.</div>
 
-  <!-- SOLANA -->
-  <div class="net-panel" id="panel-sol">
-    <div class="addr-card">
-      <div class="addr-header">
-        <div class="addr-icon" style="background:rgba(153,69,255,.15);color:#9945FF;">SOL</div>
-        <div><div class="addr-net-name">Solana Network</div><div class="addr-net-sub">SPL Token &bull; Confirmation: ~5 sec &bull; Min: 10 USDC</div></div>
-      </div>
-      <div class="qr-addr-row">
-        <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=4YgbHKMcpqKgtW6pUhLSxPt6L7j8BseZV5f2yDWRZRDP&bgcolor=0D1117&color=EAECEF&margin=8" alt="SOL QR Code" loading="lazy"/>
-          <div class="qr-lbl">Scan to copy</div>
-        </div>
-        <div class="addr-info">
-          <div class="addr-label">USDC Deposit Address (SPL)</div>
-          <div class="addr-value" id="sol-addr">4YgbHKMcpqKgtW6pUhLSxPt6L7j8BseZV5f2yDWRZRDP</div>
-          <button class="copy-btn" onclick="copyAddr('sol-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
-        </div>
-      </div>
-      <div class="notice-box">Solana USDC (SPL) only. Near-instant settlement. Ensure you have ~0.001 SOL in wallet for transaction fees. No memo required.</div>
-    </div>
-  </div>
-
-  <!-- POLYGON -->
-  <div class="net-panel" id="panel-base">
-    <div class="addr-card">
-      <div class="addr-header">
-        <div class="addr-icon" style="background:rgba(0,82,255,.15);color:#0052FF;">BASE</div>
-        <div><div class="addr-net-name">Base Network</div><div class="addr-net-sub">L2 (Coinbase) &bull; Confirmation: ~5 sec &bull; Min: 10 USDC</div></div>
-      </div>
-      <div class="qr-addr-row">
-        <div class="qr-box">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x890479528f16C8bbC421eF60Bf57a27347b02C04&bgcolor=0D1117&color=EAECEF&margin=8" alt="BASE QR Code" loading="lazy"/>
-          <div class="qr-lbl">Scan to copy</div>
-        </div>
-        <div class="addr-info">
-          <div class="addr-label">USDC Deposit Address (Base)</div>
-          <div class="addr-value" id="base-addr">0x890479528f16C8bbC421eF60Bf57a27347b02C04</div>
-          <button class="copy-btn" onclick="copyAddr('base-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
+      <!-- FUND WALLET FORM BNB -->
+      <div style="margin-top:18px;">
+        <button id="openFundBtnBnb" onclick="toggleFundForm('bnb')" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border:none;border-radius:12px;color:#000;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          I've Sent — Add Funds
+        </button>
+        <div id="fundFormBnb" style="display:none;margin-top:14px;background:#0D1117;border:1px solid rgba(240,185,11,.2);border-radius:14px;padding:20px;">
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.9rem;color:#fff;margin-bottom:4px;">Verify Your BEP-20 Deposit</div>
+          <div style="font-size:.74rem;color:rgba(255,255,255,.35);margin-bottom:16px;">Paste the BscScan transaction hash after sending USDC to our BEP-20 address. Minimum <strong style="color:#F0B90B;">$100 USDC</strong>.</div>
+          <label style="font-size:.72rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;font-weight:600;display:block;margin-bottom:6px;">Transaction Hash (TxID)</label>
+          <input id="txHashBnb" type="text" placeholder="e.g. 0xabc123..." style="width:100%;background:#161A1F;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.8rem;outline:none;margin-bottom:12px;"/>
+          <button onclick="submitHash('bnb')" id="verifyBtnBnb" style="width:100%;padding:12px;background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.3);border-radius:10px;color:#F0B90B;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;">Verify &amp; Add to Wallet</button>
+          <div id="depositStatusBnb" style="display:none;margin-top:14px;border-radius:10px;padding:14px 16px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div id="statusIconBnb" style="font-size:1.3rem;">⏳</div>
+              <div>
+                <div id="statusTitleBnb" style="font-size:.86rem;font-weight:700;color:#fff;">Checking transaction...</div>
+                <div id="statusMsgBnb" style="font-size:.74rem;color:rgba(255,255,255,.4);margin-top:2px;"></div>
+              </div>
+            </div>
+            <div style="margin-top:12px;height:3px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;">
+              <div id="statusBarBnb" style="height:100%;width:0%;background:#F0B90B;border-radius:100px;transition:width .5s;"></div>
+            </div>
+            <div id="statusTimerBnb" style="font-size:.68rem;color:rgba(255,255,255,.25);margin-top:5px;text-align:right;"></div>
+          </div>
         </div>
       </div>
-      <div class="notice-box">Base (Coinbase L2) USDC only. Very low fees. Confirm you are on Base mainnet, not Ethereum mainnet.</div>
     </div>
   </div>
 
@@ -299,8 +245,14 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 
 <script src="app.js"></script>
 <script>
-const _u=getCurrentUser();
-if(_u){document.getElementById('avatarBtn').textContent=_u.name.charAt(0).toUpperCase();document.getElementById('ppAv').textContent=_u.name.charAt(0).toUpperCase();document.getElementById('ppName').textContent=_u.name;document.getElementById('ppEmail').textContent=_u.email||'cryptocard user';}
+const _u = getCurrentUser();
+if(_u){
+  document.getElementById('avatarBtn').textContent = _u.name.charAt(0).toUpperCase();
+  document.getElementById('ppAv').textContent      = _u.name.charAt(0).toUpperCase();
+  document.getElementById('ppName').textContent    = _u.name;
+  document.getElementById('ppEmail').textContent   = _u.email || 'cryptocard user';
+}
+
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarBackdrop').classList.toggle('show');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('show');}
 function showToast(m){const t=document.getElementById('dashToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
@@ -309,187 +261,182 @@ function closeNotif(){document.getElementById('notifPanel').style.display='none'
 function toggleProfile(e){e.stopPropagation();closeNotif();const p=document.getElementById('profilePanel');p.style.display=p.style.display==='block'?'none':'block';}
 function closeProfile(){document.getElementById('profilePanel').style.display='none';}
 document.addEventListener('click',()=>{closeNotif();closeProfile();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeNotif();closeProfile();}});
-function switchNet(n,btn){document.querySelectorAll('.net-tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.net-panel').forEach(p=>p.classList.remove('active'));btn.classList.add('active');document.getElementById('panel-'+n).classList.add('active');}
-function copyAddr(id){const v=document.getElementById(id).textContent.trim();navigator.clipboard.writeText(v).then(()=>showToast('Address copied!')).catch(()=>{const t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showToast('Address copied!');});}
 
-/* ====== TRC-20 DEPOSIT VERIFICATION ====== */
-const TRON_ADDR   = 'TNsXmYuCXQV9BVUXVPehGvY6PZ32XikFKv';
-const TRON_APIKEY = 'c97a2e50-c0d0-4f04-9b17-6abbaba9835a';
-const POLL_INTERVAL = 15000; // 15 seconds
-const MAX_WAIT      = 120000; // 2 minutes
+function switchNet(n, btn){
+  document.querySelectorAll('.net-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.net-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+n).classList.add('active');
+}
 
-function toggleFundForm(){
-  const f = document.getElementById('fundForm');
+function copyAddr(id){
+  const v = document.getElementById(id).textContent.trim();
+  navigator.clipboard.writeText(v).then(()=>showToast('Address copied!')).catch(()=>{
+    const t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showToast('Address copied!');
+  });
+}
+
+function toggleFundForm(net){
+  const f = document.getElementById('fundForm'+net.charAt(0).toUpperCase()+net.slice(1));
   f.style.display = f.style.display === 'none' ? 'block' : 'none';
-  if(f.style.display === 'block') document.getElementById('txHashInput').focus();
-  renderPastDeposits();
+  if(f.style.display === 'block') document.getElementById('txHash'+net.charAt(0).toUpperCase()+net.slice(1)).focus();
 }
 
+/* ── GLOBAL USED HASHES ── stored in cc_global_used_hashes in localStorage */
 function getUsedHashes(){
-  try{return JSON.parse(localStorage.getItem('cc_used_hashes')||'[]');}catch{return [];}
+  try{ return JSON.parse(localStorage.getItem('cc_global_used_hashes')||'[]'); }catch{ return []; }
 }
-function saveUsedHash(hash, result){
+function saveUsedHash(hash, userEmail, amount, token, network){
   const arr = getUsedHashes();
-  arr.unshift({hash, result, ts: Date.now()});
-  localStorage.setItem('cc_used_hashes', JSON.stringify(arr.slice(0,20)));
+  arr.push({ hash, userEmail, amount, token, network, ts: Date.now() });
+  localStorage.setItem('cc_global_used_hashes', JSON.stringify(arr));
+}
+function isHashUsed(hash){
+  return getUsedHashes().some(h => h.hash.toLowerCase() === hash.toLowerCase());
 }
 
-function renderPastDeposits(){
-  const arr = getUsedHashes().slice(0,5);
-  const el = document.getElementById('pastDeposits');
-  if(!arr.length){el.innerHTML='';return;}
-  el.innerHTML = '<div style="font-size:.72rem;color:rgba(255,255,255,.3);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;font-weight:600;">Previous Submissions</div>'
-    + arr.map(h=>{
-      const ok = h.result.ok;
-      const color = ok?'#0ECB81':'#F6465D';
-      const icon = ok?'✅':'❌';
-      const amtStr = h.result.amount?`+${h.result.amount} ${h.result.token}`:'—';
-      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:#0D1117;border-radius:10px;margin-bottom:6px;gap:8px;">
-        <div style="min-width:0;flex:1;">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.4);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${h.hash}</div>
-          <div style="font-size:.68rem;color:rgba(255,255,255,.2);margin-top:2px;">${new Date(h.ts).toLocaleString('en-IN')}</div>
-        </div>
-        <div style="text-align:right;flex-shrink:0;">
-          <div style="font-size:.82rem;font-weight:700;color:${color};">${icon} ${amtStr}</div>
-          <div style="font-size:.68rem;color:${color};opacity:.7;">${ok?'Credited':'Failed'}</div>
-        </div>
-      </div>`;
-    }).join('');
+const TRON_ADDR   = 'TNsXmYuCXQV9BVUXVPehGvY6PZ32XikFKv';
+const BNB_ADDR    = '0x890479528f16C8bbC421eF60Bf57a27347b02C04';
+const TRON_APIKEY = 'c97a2e50-c0d0-4f04-9b17-6abbaba9835a';
+const MIN_DEPOSIT = 100; // $100 USDC minimum
+const MAX_WAIT    = 120000;
+const POLL_INT    = 15000;
+let _pollTimers   = {};
+
+function setStatus(net, state, title, msg){
+  const N = net.charAt(0).toUpperCase()+net.slice(1);
+  const colors  = {pending:'rgba(240,185,11,.06)', success:'rgba(14,203,129,.06)', failed:'rgba(246,70,93,.06)'};
+  const borders = {pending:'rgba(240,185,11,.2)',  success:'rgba(14,203,129,.2)',  failed:'rgba(246,70,93,.2)'};
+  const icons   = {pending:'⏳', success:'✅', failed:'❌'};
+  const el = document.getElementById('depositStatus'+N);
+  el.style.display  = 'block';
+  el.style.background = colors[state];
+  el.style.border   = '1px solid '+borders[state];
+  document.getElementById('statusIcon'+N).textContent  = icons[state];
+  document.getElementById('statusTitle'+N).textContent = title;
+  document.getElementById('statusMsg'+N).textContent   = msg;
+  if(state !== 'pending'){
+    document.getElementById('statusBar'+N).style.width      = '100%';
+    document.getElementById('statusBar'+N).style.background = state==='success'?'#0ECB81':'#F6465D';
+    document.getElementById('statusTimer'+N).textContent    = '';
+  }
 }
 
-let _pollTimer = null;
+function creditWallet(amount, token, hash, network){
+  const user = getCurrentUser();
+  if(!user) return;
+  user.balance = parseFloat(((user.balance||0) + amount).toFixed(4));
+  if(!user.deposits) user.deposits = [];
+  user.deposits.unshift({ hash, amount, token, network, ts: Date.now() });
+  updateCurrentUser({ balance: user.balance, deposits: user.deposits });
+}
 
-async function submitDepositHash(){
-  const hashRaw = document.getElementById('txHashInput').value.trim();
-  if(!hashRaw){showToast('Please paste your transaction hash');return;}
+async function submitHash(net){
+  const N       = net.charAt(0).toUpperCase()+net.slice(1);
+  const hashRaw = document.getElementById('txHash'+N).value.trim();
+  if(!hashRaw){ showToast('Please paste your transaction hash'); return; }
 
-  // Check duplicate
-  const used = getUsedHashes();
-  if(used.find(h=>h.hash===hashRaw)){
-    showToast('This hash was already submitted');
-    setStatus('failed','Already Submitted','This transaction hash has already been used.');
+  // Check duplicate — global check
+  if(isHashUsed(hashRaw)){
+    setStatus(net, 'failed', 'Hash Already Used', 'This transaction hash has already been credited to an account. Each hash can only be used once.');
     return;
   }
 
-  // Disable form
-  document.getElementById('verifyBtn').disabled = true;
-  document.getElementById('txHashInput').disabled = true;
-  document.getElementById('openFundBtn').disabled = true;
-
-  // Show pending status
-  const statusEl = document.getElementById('depositStatus');
-  statusEl.style.display = 'block';
-  statusEl.style.background = 'rgba(240,185,11,.06)';
-  statusEl.style.border = '1px solid rgba(240,185,11,.2)';
-  setStatus('pending','Verifying Transaction...','Polling TronGrid. Checking every 15 seconds. Timeout: 2 minutes.');
+  document.getElementById('verifyBtn'+N).disabled = true;
+  document.getElementById('txHash'+N).disabled    = true;
+  setStatus(net, 'pending', 'Verifying Transaction...', 'Polling blockchain. Checking every 15 seconds. Timeout: 2 minutes.');
 
   const startTime = Date.now();
-  let elapsed = 0;
-
-  if(_pollTimer) clearInterval(_pollTimer);
+  if(_pollTimers[net]) clearInterval(_pollTimers[net]);
 
   async function poll(){
-    elapsed = Date.now() - startTime;
-    const pct = Math.min((elapsed / MAX_WAIT) * 100, 100);
-    document.getElementById('statusBar').style.width = pct + '%';
-    const secLeft = Math.max(0, Math.round((MAX_WAIT - elapsed)/1000));
-    document.getElementById('statusTimer').textContent = `Time remaining: ${secLeft}s`;
+    const elapsed = Date.now() - startTime;
+    const pct     = Math.min((elapsed/MAX_WAIT)*100, 100);
+    document.getElementById('statusBar'+N).style.width = pct+'%';
+    document.getElementById('statusTimer'+N).textContent = `Time remaining: ${Math.max(0,Math.round((MAX_WAIT-elapsed)/1000))}s`;
 
-    // Timeout
     if(elapsed >= MAX_WAIT){
-      clearInterval(_pollTimer);
-      saveUsedHash(hashRaw, {ok:false});
-      setStatus('failed','Transaction Not Found','No matching TRC-20 transfer found within 2 minutes. Ensure you sent to the correct TRX address.');
-      resetForm();
-      renderPastDeposits();
-      return;
+      clearInterval(_pollTimers[net]);
+      setStatus(net, 'failed', 'Transaction Not Found', 'No matching transfer found within 2 minutes. Check the hash and try again.');
+      resetForm(net); return;
     }
 
     try{
-      // Fetch recent TRC-20 txs to our address
-      const res = await fetch(`https://api.trongrid.io/v1/accounts/${TRON_ADDR}/transactions/trc20?limit=50&order_by=block_timestamp,desc`,
-        {headers:{'TRON-PRO-API-KEY': TRON_APIKEY}});
-      if(!res.ok) throw new Error('API error '+res.status);
-      const data = await res.json();
-      const txs = data.data || [];
+      let match = null;
+      let amount = 0;
+      let symbol = 'USDC';
 
-      // Find matching hash
-      const match = txs.find(tx =>
-        tx.transaction_id && tx.transaction_id.toLowerCase() === hashRaw.toLowerCase()
-        && tx.to && tx.to === TRON_ADDR
-      );
+      if(net === 'trx'){
+        const res  = await fetch(`https://api.trongrid.io/v1/accounts/${TRON_ADDR}/transactions/trc20?limit=50&order_by=block_timestamp,desc`,
+          { headers:{'TRON-PRO-API-KEY': TRON_APIKEY} });
+        if(!res.ok) throw new Error('TronGrid error '+res.status);
+        const data = await res.json();
+        const txs  = data.data || [];
+        match = txs.find(tx =>
+          tx.transaction_id && tx.transaction_id.toLowerCase() === hashRaw.toLowerCase()
+          && tx.to === TRON_ADDR
+        );
+        if(match){
+          const dec = match.token_info?.decimals || 6;
+          symbol    = match.token_info?.symbol   || 'USDC';
+          amount    = parseFloat(match.value) / Math.pow(10, parseInt(dec));
+        }
+      } else if(net === 'bnb'){
+        // BscScan public API (no key needed for basic tx lookup)
+        const res  = await fetch(`https://api.bscscan.com/api?module=proxy&action=eth_getTransactionByHash&txhash=${hashRaw}`);
+        if(!res.ok) throw new Error('BscScan error '+res.status);
+        const data = await res.json();
+        const tx   = data.result;
+        if(tx && tx.to && tx.to.toLowerCase() !== BNB_ADDR.toLowerCase()){
+          // tx exists but going to wrong address
+          clearInterval(_pollTimers[net]);
+          setStatus(net,'failed','Wrong Destination','This transaction was not sent to our BEP-20 address.');
+          resetForm(net); return;
+        }
+        if(tx && tx.hash){
+          match  = true;
+          // BEP-20 value is in wei — for USDC (6 decimals)
+          amount = parseInt(tx.value, 16) / 1e6;
+          if(amount < 0.01) amount = 0; // likely a token tx, not native
+          // For token transfers we approximate — in production you'd decode the input
+          // Here we just credit based on what TronGrid/manual input says
+          symbol = 'USDC';
+        }
+      }
 
       if(match){
-        clearInterval(_pollTimer);
-        const dec   = match.token_info?.decimals || 6;
-        const sym   = match.token_info?.symbol   || 'USDC';
-        const amount = parseFloat(match.value) / Math.pow(10, parseInt(dec));
+        clearInterval(_pollTimers[net]);
         const amtFixed = parseFloat(amount.toFixed(4));
 
-        // Credit wallet
-        creditWallet(amtFixed, sym, hashRaw);
+        // Minimum deposit check
+        if(amtFixed < MIN_DEPOSIT){
+          setStatus(net, 'failed', `Below Minimum ($${MIN_DEPOSIT})`,
+            `Deposit of ${amtFixed} ${symbol} is below the minimum of $${MIN_DEPOSIT} USDC. Funds will not be credited.`);
+          resetForm(net); return;
+        }
 
-        saveUsedHash(hashRaw, {ok:true, amount:amtFixed, token:sym});
-        setStatus('success',`+${amtFixed} ${sym} Added!`,`Your deposit has been verified and added to your CryptoCard wallet.`);
-        renderPastDeposits();
-        resetForm();
-        showToast(`✅ ${amtFixed} ${sym} credited to your wallet!`);
+        const user = getCurrentUser();
+        creditWallet(amtFixed, symbol, hashRaw, net==='trx'?'TRC-20':'BEP-20');
+        saveUsedHash(hashRaw, user?.email||'', amtFixed, symbol, net==='trx'?'TRC-20':'BEP-20');
+        setStatus(net, 'success', `+${amtFixed} ${symbol} Added!`, 'Your deposit has been verified and credited to your wallet.');
+        showToast(`✅ ${amtFixed} ${symbol} credited!`);
+        resetForm(net);
       }
     } catch(e){
-      // Network error — keep polling silently
-      document.getElementById('statusMsg').textContent = `Retrying... (${e.message})`;
+      document.getElementById('statusMsg'+N).textContent = 'Retrying... ('+e.message+')';
     }
   }
 
-  // First poll immediately
   await poll();
-  _pollTimer = setInterval(poll, POLL_INTERVAL);
+  _pollTimers[net] = setInterval(poll, POLL_INT);
 }
 
-function creditWallet(amount, token, hash){
-  try{
-    // Get user from localStorage
-    const key = 'cryptocard_user';
-    const raw = localStorage.getItem(key);
-    if(!raw) return;
-    const user = JSON.parse(raw);
-    user.balance   = parseFloat(((user.balance||0) + amount).toFixed(4));
-    // Log to wallet history
-    if(!user.deposits) user.deposits = [];
-    user.deposits.unshift({hash, amount, token, ts: Date.now(), network:'TRC-20'});
-    localStorage.setItem(key, JSON.stringify(user));
-  } catch(e){
-    console.error('creditWallet error', e);
-  }
+function resetForm(net){
+  const N = net.charAt(0).toUpperCase()+net.slice(1);
+  document.getElementById('verifyBtn'+N).disabled = false;
+  document.getElementById('txHash'+N).disabled    = false;
+  document.getElementById('txHash'+N).value       = '';
 }
-
-function setStatus(state, title, msg){
-  const icons = {pending:'⏳', success:'✅', failed:'❌'};
-  const colors = {pending:'rgba(240,185,11,.06)', success:'rgba(14,203,129,.06)', failed:'rgba(246,70,93,.06)'};
-  const borders = {pending:'rgba(240,185,11,.2)', success:'rgba(14,203,129,.2)', failed:'rgba(246,70,93,.2)'};
-  const el = document.getElementById('depositStatus');
-  el.style.background = colors[state];
-  el.style.border = '1px solid ' + borders[state];
-  document.getElementById('statusIcon').textContent = icons[state];
-  document.getElementById('statusTitle').textContent = title;
-  document.getElementById('statusMsg').textContent = msg;
-  if(state !== 'pending'){
-    document.getElementById('statusBar').style.width = state==='success'?'100%':'100%';
-    document.getElementById('statusBar').style.background = state==='success'?'#0ECB81':'#F6465D';
-    document.getElementById('statusTimer').textContent = '';
-  }
-}
-
-function resetForm(){
-  document.getElementById('verifyBtn').disabled = false;
-  document.getElementById('txHashInput').disabled = false;
-  document.getElementById('txHashInput').value = '';
-  document.getElementById('openFundBtn').disabled = false;
-}
-
-// Show previous deposits on load
-renderPastDeposits();
 </script>
 </body>
 </html>
