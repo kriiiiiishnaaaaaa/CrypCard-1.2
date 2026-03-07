@@ -187,11 +187,17 @@ function toggleCardNumber() {
   const numEl = document.getElementById('dashCardNumber');
   const btn = document.getElementById('revealNumBtn');
   if (!numEl) return;
-  const full = '4216 8843 9012 7291';
-  const masked = '4216 •••• •••• 7291';
+  const u = (typeof getCurrentUser === 'function') ? getCurrentUser() : null;
+  const cardNum = (u && u.cardNumber) ? u.cardNumber : '0000000000000000';
+  const full = cardNum.replace(/(\d{4})/g, '$1 ').trim();
+  const masked = cardNum.slice(0,4) + ' •••• •••• ' + cardNum.slice(12);
   if (numEl.textContent.includes('•')) {
     numEl.textContent = full;
     if (btn) btn.textContent = 'Hide';
+    setTimeout(() => {
+      numEl.textContent = masked;
+      if (btn) btn.textContent = 'Reveal';
+    }, 12000);
   } else {
     numEl.textContent = masked;
     if (btn) btn.textContent = 'Reveal';

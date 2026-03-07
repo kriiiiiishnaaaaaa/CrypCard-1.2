@@ -230,6 +230,10 @@ if(u){
   document.getElementById('cardHolder').textContent=u.name.toUpperCase().slice(0,22);
   userCard=u.cardNumber||'0000000000000000';
   document.getElementById('cardNum').innerHTML='&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; '+userCard.slice(-4);
+  // Set CVV from user data
+  if(u.cvv && document.getElementById('cvvVal')) {
+    document.getElementById('cvvVal').textContent = u.cvv;
+  }
 }
 
 let cvvShowing=false;

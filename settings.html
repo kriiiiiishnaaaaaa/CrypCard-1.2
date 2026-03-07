@@ -211,7 +211,15 @@ if(_u){
   if(document.getElementById('settName'))document.getElementById('settName').value=_u.name;
   if(document.getElementById('settEmail'))document.getElementById('settEmail').value=_u.email||'';
 }
-function saveProfile(){showToast('Profile updated successfully!');}
+function saveProfile(){
+  const nameVal = document.getElementById('settName').value.trim();
+  if(!nameVal){showToast('Name cannot be empty');return;}
+  updateCurrentUser({name: nameVal});
+  // Update avatar initials live
+  const avatarEl = document.getElementById('avatarBtn');
+  if(avatarEl) avatarEl.textContent = nameVal.charAt(0).toUpperCase();
+  showToast('Profile updated successfully!');
+}
 let _fc=0,_dc=0;
 function confirmFreeze(){_fc++;if(_fc===1){alert('WARNING: Freezing your account will block your card and all transactions.\nClick again to confirm.');return;}if(_fc===2){alert('Are you absolutely sure? Click once more to freeze.');return;}if(_fc>=3){_fc=0;showToast('Account freeze request submitted');}}
 function confirmDelete(){_dc++;if(_dc===1){alert('DANGER: This will permanently delete your account, balance, and card.\nThis CANNOT be undone. Click again to proceed.');return;}if(_dc===2){const inp=prompt('Type DELETE (in capitals) to confirm permanent deletion:');if(inp!=='DELETE'){_dc=0;alert('Deletion cancelled.');return;}alert('Final warning: all data will be permanently erased.\nClick Delete Account one last time.');return;}if(_dc>=3){_dc=0;const uid=localStorage.getItem('cc_current_user');const users=JSON.parse(localStorage.getItem('cc_users')||'[]');localStorage.setItem('cc_users',JSON.stringify(users.filter(u=>u.id!==uid)));logout();}}
