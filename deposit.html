@@ -3,201 +3,278 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
-<title>Deposit USDC &mdash; CryptoCard</title>
+<title>Deposit &mdash; CryptoCard</title>
 <link rel="stylesheet" href="style.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:#0B0E11;color:#EAECEF;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
-.page-layout{display:flex;min-height:100vh;}
-.sidebar{width:220px;background:#0D1117;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s ease;}
-.sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 24px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#EAECEF;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:12px;}
+body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
+.page-layout{display:flex;}
+.sidebar{width:220px;background:#0D1117;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s;}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 24px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:12px;}
 .sidebar-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border-radius:8px;display:flex;align-items:center;justify-content:center;}
 .sidebar-nav{list-style:none;flex:1;padding:0 8px;}
-.sidebar-nav li a{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:rgba(234,236,239,.55);text-decoration:none;font-size:.875rem;font-weight:500;transition:all .2s;margin-bottom:2px;}
+.sidebar-nav li a{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:rgba(255,255,255,.45);text-decoration:none;font-size:.875rem;font-weight:500;transition:all .2s;margin-bottom:2px;}
 .sidebar-nav li a:hover,.sidebar-nav li a.active{background:rgba(240,185,11,.08);color:#F0B90B;}
 .sidebar-nav li a.active svg{stroke:#F0B90B;}
 .sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.07);}
-.logout-btn{width:100%;display:flex;align-items:center;gap:8px;padding:10px 14px;background:none;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(234,236,239,.5);font-size:.84rem;cursor:pointer;font-family:inherit;transition:all .2s;}
+.logout-btn{width:100%;display:flex;align-items:center;gap:8px;padding:10px 14px;background:none;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(255,255,255,.4);font-size:.84rem;cursor:pointer;font-family:inherit;transition:all .2s;}
 .logout-btn:hover{border-color:rgba(239,68,68,.4);color:#EF4444;}
-.page-main{margin-left:220px;flex:1;padding:28px 32px;max-width:1100px;}
-.page-topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:fixed;top:0;left:220px;right:0;z-index:50;background:#0B0E11;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);}
-.page-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:#EAECEF;}
-.page-subtitle{font-size:.82rem;color:rgba(234,236,239,.4);margin-top:4px;}
-.avatar-circle{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;}
-.card-box{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:24px;margin-bottom:20px;}
-.card-box-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;color:#EAECEF;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-.form-label{font-size:.78rem;color:rgba(234,236,239,.5);font-weight:500;margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:.4px;}
-.form-input{width:100%;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px;color:#EAECEF;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s;}
-.form-input:focus{border-color:rgba(240,185,11,.4);}
-.form-group{margin-bottom:18px;}
-.btn-gold{background:linear-gradient(135deg,#F0B90B,#F8D12F);color:#000;font-weight:700;border:none;border-radius:10px;padding:12px 24px;font-size:.9rem;cursor:pointer;font-family:inherit;transition:opacity .2s;display:inline-flex;align-items:center;gap:6px;}
-.btn-gold:hover{opacity:.85;}
-.btn-ghost{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 20px;color:rgba(234,236,239,.7);font-size:.85rem;cursor:pointer;font-family:inherit;transition:all .2s;}
-.btn-ghost:hover{border-color:rgba(255,255,255,.2);color:#EAECEF;}
-.badge-green{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(14,203,129,.1);border:1px solid rgba(14,203,129,.2);border-radius:100px;font-size:.72rem;color:#0ECB81;font-weight:600;}
-.badge-yellow{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.2);border-radius:100px;font-size:.72rem;color:#F0B90B;font-weight:600;}
-.badge-red{display:inline-flex;align-items:center;padding:3px 10px;background:rgba(246,70,93,.1);border:1px solid rgba(246,70,93,.2);border-radius:100px;font-size:.72rem;color:#F6465D;font-weight:600;}
-.info-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.85rem;}
-.info-row:last-child{border-bottom:none;}
-.info-row .lbl{color:rgba(234,236,239,.45);}
-.info-row .val{color:#EAECEF;font-weight:500;}
-.mob-menu-btn{display:none;position:fixed;bottom:20px;left:20px;z-index:200;width:44px;height:44px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
-.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:999;white-space:nowrap;}
-.toast.show{transform:translateX(-50%) translateY(0);}
-@media(max-width:900px){
-  .sidebar{transform:translateX(-100%);}
-  .sidebar.open{transform:translateX(0);}
-  .page-main{margin-left:0;padding:20px 16px 80px;}
-  .mob-menu-btn{display:flex;}
-  .sidebar-backdrop.show{display:block;}
-}
-@media(max-width:600px){
-  .page-title{font-size:1.2rem;}
-  .card-box{padding:16px;}
-}
-</style>
-<style>
-.net-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
-.net-tab{display:flex;align-items:center;gap:8px;padding:9px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:10px;cursor:pointer;font-size:.84rem;font-weight:500;color:rgba(234,236,239,.6);transition:all .2s;font-family:inherit;}
-.net-tab:hover{border-color:rgba(240,185,11,.3);}
-.net-tab.active{background:rgba(240,185,11,.08);border-color:rgba(240,185,11,.4);color:#F0B90B;}
+/* UNIFIED HEADER (same as dashboard) */
+.page-topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;position:fixed;top:0;left:220px;right:0;z-index:50;background:#0B0E11;border-bottom:1px solid rgba(255,255,255,.06);}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
+.icon-btn:hover{background:rgba(255,255,255,.1);}
+.search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:160px;transition:border-color .2s;}
+.search-pill:hover{border-color:rgba(240,185,11,.35);}
+.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
+.page-main{margin-left:220px;flex:1;padding:86px 24px 80px;}
+/* NETWORK TABS */
+.net-tabs{display:flex;gap:8px;margin-bottom:24px;overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap;padding-bottom:2px;}
+.net-tabs::-webkit-scrollbar{display:none;}
+.net-tab{padding:8px 18px;border-radius:100px;font-size:.82rem;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);font-family:inherit;white-space:nowrap;flex-shrink:0;transition:all .2s;display:flex;align-items:center;gap:7px;}
+.net-tab.active{background:rgba(240,185,11,.1);border-color:rgba(240,185,11,.35);color:#F0B90B;}
 .net-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.addr-box{background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 16px;font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:#EAECEF;word-break:break-all;line-height:1.7;margin-bottom:12px;}
-.deposit-grid{display:grid;grid-template-columns:1fr 320px;gap:20px;}
-@media(max-width:800px){.deposit-grid{grid-template-columns:1fr;}}
-</style>
-<style>
-/* HEADER LOCK OVERRIDE */
+.net-panel{display:none;}.net-panel.active{display:block;}
+/* ADDRESS CARD */
+.addr-card{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:28px;margin-bottom:16px;}
+.addr-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+.addr-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0;font-family:'Space Grotesk',sans-serif;}
+.addr-net-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:#fff;}
+.addr-net-sub{font-size:.78rem;color:rgba(255,255,255,.35);margin-top:2px;}
+.qr-addr-row{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
+.qr-box{background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0;}
+.qr-box img{width:140px;height:140px;border-radius:8px;display:block;}
+.qr-lbl{font-size:.7rem;color:rgba(255,255,255,.3);font-weight:500;}
+.addr-info{flex:1;min-width:200px;}
+.addr-label{font-size:.72rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;font-weight:600;}
+.addr-value{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:#fff;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px;word-break:break-all;line-height:1.6;margin-bottom:12px;}
+.copy-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.28);border-radius:100px;color:#F0B90B;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;}
+.copy-btn:hover{background:rgba(240,185,11,.18);}
+.warn-box{background:rgba(246,70,93,.05);border:1px solid rgba(246,70,93,.2);border-radius:12px;padding:13px 16px;font-size:.8rem;color:rgba(246,70,93,.85);margin-bottom:22px;display:flex;gap:9px;align-items:flex-start;}
+.notice-box{background:rgba(240,185,11,.05);border:1px solid rgba(240,185,11,.15);border-radius:12px;padding:13px 16px;font-size:.8rem;color:rgba(255,255,255,.5);margin-top:16px;line-height:1.6;}
+.panel{display:none;position:fixed;top:60px;right:12px;background:#161A1F;border:1px solid rgba(255,255,255,.1);border-radius:16px;z-index:800;box-shadow:0 20px 60px rgba(0,0,0,.8);overflow:hidden;}
+.dash-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:1000;white-space:nowrap;}
+.dash-toast.show{transform:translateX(-50%) translateY(0);}
+.mob-btn{display:none;position:fixed;bottom:22px;left:18px;z-index:200;width:46px;height:46px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:99;}
 @media(max-width:900px){
-  .page-topbar{left:0 !important;right:0 !important;padding:12px 16px !important;}
-  .page-main{padding-top:72px !important; margin-left:0 !important;}
+  .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
+  .page-main{margin-left:0;padding-left:16px;padding-right:16px}
+  .page-topbar{left:0 !important}
+  .mob-btn{display:flex}.sidebar-backdrop.show{display:block}
 }
-.page-topbar{padding-top: 0 !important; margin-bottom:0 !important;}
+@media(max-width:580px){.qr-addr-row{flex-direction:column;}.qr-box{width:100%;flex-direction:row;}.qr-box img{width:100px;height:100px}}
 </style>
 </head>
 <body>
+<script src="auth.js"></script>
+<script>if(!authGuard()){}</script>
 <div class="page-layout">
 <aside class="sidebar" id="sidebar">
   <a href="index.html" class="sidebar-logo">
-    <div class="sidebar-logo-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-    </div>
+    <div class="sidebar-logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
     CryptoCard
   </a>
   <ul class="sidebar-nav">
-    <li><a href="dashboard.html" >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="3" y="15" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="11" rx="1"/></svg>
-      Dashboard</a></li>
-    <li><a href="deposit.html" class="active">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg>
-      Deposit</a></li>
-    <li><a href="card.html" >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-      Card</a></li>
-    <li><a href="transactions.html" >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>
-      Transactions</a></li>
-    <li><a href="kyc.html" >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-      KYC</a></li>
-    <li><a href="settings.html" >
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      Settings</a></li>
+    <li><a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="3" y="15" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="11" rx="1"/></svg>Dashboard</a></li>
+    <li><a href="deposit.html" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg>Deposit</a></li>
+    <li><a href="card.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Card</a></li>
+    <li><a href="transactions.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>Transactions</a></li>
+    <li><a href="kyc.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>KYC</a></li>
+    <li><a href="settings.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a></li>
   </ul>
-  <div class="sidebar-footer">
-    <button class="logout-btn" onclick="logout()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      Logout
-    </button>
-  </div>
+  <div class="sidebar-footer"><button class="logout-btn" onclick="logout()"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</button></div>
 </aside>
+
 <div class="page-main">
+  <!-- UNIFIED HEADER (identical to dashboard) -->
   <div class="page-topbar">
-    <div><div class="page-title">Deposit USDC</div><div class="page-subtitle">Send USDC to your wallet address</div></div>
-    <div class="avatar-circle" id="userAvatar"></div>
-  </div>
-
-  <div style="background:rgba(240,185,11,.07);border:1px solid rgba(240,185,11,.25);border-radius:12px;padding:14px 18px;margin-bottom:22px;display:flex;gap:10px;align-items:flex-start;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F0B90B" stroke-width="1.75" style="flex-shrink:0;margin-top:1px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
-    <div><div style="font-weight:600;font-size:.88rem;color:#F0B90B;margin-bottom:2px;">Only send USDC to this address</div><div style="font-size:.78rem;color:rgba(234,236,239,.5);">Sending any other token may result in permanent loss. Minimum deposit: 10 USDC.</div></div>
-  </div>
-
-  <div class="net-tabs">
-    <button class="net-tab active" onclick="selectNet('eth',this)"><div class="net-dot" style="background:#627EEA;"></div>Ethereum (ERC-20)</button>
-    <button class="net-tab" onclick="selectNet('base',this)"><div class="net-dot" style="background:#0052FF;"></div>Base</button>
-    <button class="net-tab" onclick="selectNet('tron',this)"><div class="net-dot" style="background:#FF060A;"></div>Tron (TRC-20)</button>
-    <button class="net-tab" onclick="selectNet('sol',this)"><div class="net-dot" style="background:#9945FF;"></div>Solana</button>
-    <button class="net-tab" onclick="selectNet('pol',this)"><div class="net-dot" style="background:#8247E5;"></div>Polygon</button>
-  </div>
-
-  <div class="deposit-grid">
-    <div id="netContent"></div>
-    <div>
-      <div class="card-box">
-        <div class="card-box-title">Your Balance</div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:2rem;font-weight:700;color:#EAECEF;" id="depBalance">0.00</div>
-        <div style="font-size:.8rem;color:rgba(234,236,239,.4);margin-top:4px;margin-bottom:16px;">USDC Available</div>
-        <div class="info-row"><span class="lbl">Total Deposited</span><span class="val">0.00 USDC</span></div>
-        <div class="info-row"><span class="lbl">Total Spent</span><span class="val">0.00 USDC</span></div>
-      </div>
-      <div class="card-box">
-        <div class="card-box-title">Network Info</div>
-        <div id="netInfo"></div>
-      </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="icon-btn" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+      <div class="search-pill"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Search coins...</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button class="icon-btn" onclick="toggleNotif(event)" style="position:relative;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span style="position:absolute;top:6px;right:6px;width:7px;height:7px;background:#F0B90B;border-radius:50%;border:2px solid #0B0E11;"></span>
+      </button>
+      <div class="avatar-btn" id="avatarBtn" onclick="toggleProfile(event)"></div>
     </div>
   </div>
+
+  <div style="margin-bottom:6px;"><span style="font-size:.72rem;color:rgba(255,255,255,.3);">Dashboard / </span><span style="font-size:.72rem;color:#F0B90B;font-weight:600;">Deposit USDC</span></div>
+  <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:#fff;margin-bottom:6px;">Deposit USDC</h2>
+  <p style="font-size:.83rem;color:rgba(255,255,255,.35);margin-bottom:22px;">Send USDC to your wallet address below. Choose the network that matches your sending wallet.</p>
+
+  <div class="warn-box">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span><strong>Only send USDC on the selected network.</strong> Sending the wrong token or using a different network will result in permanent loss of funds.</span>
+  </div>
+
+  <!-- NETWORK TABS -->
+  <div class="net-tabs">
+    <button class="net-tab active" onclick="switchNet('eth',this)"><div class="net-dot" style="background:#627EEA;"></div>Ethereum (ERC-20)</button>
+    <button class="net-tab" onclick="switchNet('trx',this)"><div class="net-dot" style="background:#FF060A;"></div>Tron (TRC-20)</button>
+    <button class="net-tab" onclick="switchNet('bnb',this)"><div class="net-dot" style="background:#F0B90B;"></div>BNB Chain (BEP-20)</button>
+    <button class="net-tab" onclick="switchNet('sol',this)"><div class="net-dot" style="background:#9945FF;"></div>Solana (SPL)</button>
+    <button class="net-tab" onclick="switchNet('pol',this)"><div class="net-dot" style="background:#8247E5;"></div>Polygon (MATIC)</button>
+  </div>
+
+  <!-- ETHEREUM -->
+  <div class="net-panel active" id="panel-eth">
+    <div class="addr-card">
+      <div class="addr-header">
+        <div class="addr-icon" style="background:rgba(98,126,234,.15);color:#627EEA;">ETH</div>
+        <div><div class="addr-net-name">Ethereum Network</div><div class="addr-net-sub">ERC-20 &bull; Confirmation: ~2 min &bull; Min: 10 USDC</div></div>
+      </div>
+      <div class="qr-addr-row">
+        <div class="qr-box">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4&bgcolor=0D1117&color=EAECEF&margin=8" alt="ETH QR Code" loading="lazy"/>
+          <div class="qr-lbl">Scan to copy</div>
+        </div>
+        <div class="addr-info">
+          <div class="addr-label">USDC Deposit Address (ERC-20)</div>
+          <div class="addr-value" id="eth-addr">0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4</div>
+          <button class="copy-btn" onclick="copyAddr('eth-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
+        </div>
+      </div>
+      <div class="notice-box">Network fee applies. Use ERC-20 USDC only (contract: 0xA0b8...eB48). Arrives after ~12 block confirmations.</div>
+    </div>
+  </div>
+
+  <!-- TRON -->
+  <div class="net-panel" id="panel-trx">
+    <div class="addr-card">
+      <div class="addr-header">
+        <div class="addr-icon" style="background:rgba(255,6,10,.15);color:#FF060A;">TRX</div>
+        <div><div class="addr-net-name">Tron Network</div><div class="addr-net-sub">TRC-20 &bull; Confirmation: ~30 sec &bull; Min: 10 USDC</div></div>
+      </div>
+      <div class="qr-addr-row">
+        <div class="qr-box">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=TKoXyTen4kzPNMQh3e7KpvpK4j8KyUdDaZ&bgcolor=0D1117&color=EAECEF&margin=8" alt="TRX QR Code" loading="lazy"/>
+          <div class="qr-lbl">Scan to copy</div>
+        </div>
+        <div class="addr-info">
+          <div class="addr-label">USDC Deposit Address (TRC-20)</div>
+          <div class="addr-value" id="trx-addr">TKoXyTen4kzPNMQh3e7KpvpK4j8KyUdDaZ</div>
+          <button class="copy-btn" onclick="copyAddr('trx-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
+        </div>
+      </div>
+      <div class="notice-box">Lowest network fees. TRC-20 USDC only. Funds arrive in ~1 minute. Minimum 10 TRX in your wallet for gas.</div>
+    </div>
+  </div>
+
+  <!-- BNB CHAIN -->
+  <div class="net-panel" id="panel-bnb">
+    <div class="addr-card">
+      <div class="addr-header">
+        <div class="addr-icon" style="background:rgba(240,185,11,.15);color:#F0B90B;">BNB</div>
+        <div><div class="addr-net-name">BNB Chain (BSC)</div><div class="addr-net-sub">BEP-20 &bull; Confirmation: ~15 sec &bull; Min: 10 USDC</div></div>
+      </div>
+      <div class="qr-addr-row">
+        <div class="qr-box">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4&bgcolor=0D1117&color=EAECEF&margin=8" alt="BNB QR Code" loading="lazy"/>
+          <div class="qr-lbl">Scan to copy</div>
+        </div>
+        <div class="addr-info">
+          <div class="addr-label">USDC Deposit Address (BEP-20)</div>
+          <div class="addr-value" id="bnb-addr">0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4</div>
+          <button class="copy-btn" onclick="copyAddr('bnb-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
+        </div>
+      </div>
+      <div class="notice-box">BEP-20 USDC only. Send BNB for gas. This is the same address format as Ethereum — confirm you are on BSC.</div>
+    </div>
+  </div>
+
+  <!-- SOLANA -->
+  <div class="net-panel" id="panel-sol">
+    <div class="addr-card">
+      <div class="addr-header">
+        <div class="addr-icon" style="background:rgba(153,69,255,.15);color:#9945FF;">SOL</div>
+        <div><div class="addr-net-name">Solana Network</div><div class="addr-net-sub">SPL Token &bull; Confirmation: ~5 sec &bull; Min: 10 USDC</div></div>
+      </div>
+      <div class="qr-addr-row">
+        <div class="qr-box">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU&bgcolor=0D1117&color=EAECEF&margin=8" alt="SOL QR Code" loading="lazy"/>
+          <div class="qr-lbl">Scan to copy</div>
+        </div>
+        <div class="addr-info">
+          <div class="addr-label">USDC Deposit Address (SPL)</div>
+          <div class="addr-value" id="sol-addr">7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU</div>
+          <button class="copy-btn" onclick="copyAddr('sol-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
+        </div>
+      </div>
+      <div class="notice-box">Solana USDC (SPL) only. Near-instant settlement. Ensure you have ~0.001 SOL for transaction fees.</div>
+    </div>
+  </div>
+
+  <!-- POLYGON -->
+  <div class="net-panel" id="panel-pol">
+    <div class="addr-card">
+      <div class="addr-header">
+        <div class="addr-icon" style="background:rgba(130,71,229,.15);color:#8247E5;">POL</div>
+        <div><div class="addr-net-name">Polygon Network</div><div class="addr-net-sub">MATIC/POL &bull; Confirmation: ~5 sec &bull; Min: 10 USDC</div></div>
+      </div>
+      <div class="qr-addr-row">
+        <div class="qr-box">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4&bgcolor=0D1117&color=EAECEF&margin=8" alt="POL QR Code" loading="lazy"/>
+          <div class="qr-lbl">Scan to copy</div>
+        </div>
+        <div class="addr-info">
+          <div class="addr-label">USDC Deposit Address (Polygon)</div>
+          <div class="addr-value" id="pol-addr">0x742d35Cc6634C0532925a3b8D4C9b3e8b3e2a1d4</div>
+          <button class="copy-btn" onclick="copyAddr('pol-addr')"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>Copy Address</button>
+        </div>
+      </div>
+      <div class="notice-box">Polygon USDC only. Very low fees. Ensure you are on Polygon mainnet, not Ethereum mainnet.</div>
+    </div>
+  </div>
+
+</div></div>
+
+<!-- NOTIFICATION PANEL -->
+<div class="panel" id="notifPanel" style="width:300px;max-width:calc(100vw - 24px);">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.07);">
+    <span style="font-weight:600;font-size:.88rem;color:#fff;">Notifications</span>
+    <button onclick="closeNotif()" style="background:none;border:none;color:rgba(255,255,255,.35);font-size:1.2rem;cursor:pointer;">&times;</button>
+  </div>
+  <div style="padding:6px 0;">
+    <div style="padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.04);"><div style="font-size:.82rem;color:#fff;margin-bottom:2px;">Complete KYC to activate card</div><div style="font-size:.72rem;color:rgba(255,255,255,.35);">Required &bull; Now</div></div>
+    <div style="padding:12px 18px;"><div style="font-size:.82rem;color:#0ECB81;margin-bottom:2px;">Wallet ready for deposit</div><div style="font-size:.72rem;color:rgba(255,255,255,.35);">Send USDC to any network above</div></div>
+  </div>
 </div>
+<!-- PROFILE PANEL -->
+<div class="panel" id="profilePanel" style="width:230px;max-width:calc(100vw - 24px);">
+  <div style="padding:16px 18px;text-align:center;border-bottom:1px solid rgba(255,255,255,.07);">
+    <div id="ppAv" style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:#000;margin:0 auto 8px;font-family:'Space Grotesk',sans-serif;"></div>
+    <div id="ppName" style="font-weight:600;font-size:.88rem;color:#fff;"></div>
+    <div id="ppEmail" style="font-size:.7rem;color:rgba(255,255,255,.35);margin-top:2px;"></div>
+  </div>
+  <div style="padding:4px 0;">
+    <a href="settings.html" style="display:flex;align-items:center;gap:8px;padding:10px 18px;color:rgba(255,255,255,.6);text-decoration:none;font-size:.82rem;">Settings</a>
+    <a href="kyc.html" style="display:flex;align-items:center;gap:8px;padding:10px 18px;color:rgba(255,255,255,.6);text-decoration:none;font-size:.82rem;">KYC Verification</a>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:8px;padding:10px 18px;color:#F6465D;font-size:.82rem;background:none;border:none;cursor:pointer;font-family:inherit;">Sign Out</button>
+  </div>
 </div>
 
 <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
-<button class="mob-menu-btn" onclick="toggleSidebar()" aria-label="Menu">
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
-</button>
-<div class="toast" id="pageToast"></div>
-<script src="auth.js"></script><script>if(!authGuard()){}</script>
+<button class="mob-btn" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+<div class="dash-toast" id="dashToast"></div>
+
 <script src="app.js"></script>
 <script>
+const _u=getCurrentUser();
+if(_u){document.getElementById('avatarBtn').textContent=_u.name.charAt(0).toUpperCase();document.getElementById('ppAv').textContent=_u.name.charAt(0).toUpperCase();document.getElementById('ppName').textContent=_u.name;document.getElementById('ppEmail').textContent=_u.email||'cryptocard user';}
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarBackdrop').classList.toggle('show');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('show');}
-function showToast(m){const t=document.getElementById('pageToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-const _u=getCurrentUser();
-if(_u&&document.getElementById('userAvatar'))document.getElementById('userAvatar').textContent=_u.name.charAt(0).toUpperCase();
-</script>
-<script>
-const NETS={
-  eth:{addr:'0x742d35Cc6634C0532925a3b8D4C9E2d1dE04b9f3',name:'Ethereum Mainnet',token:'USDC (ERC-20)',min:'10 USDC',confirm:'~12 min',fee:'~-8 ETH gas'},
-  base:{addr:'0x8a3B5cD9E1f2Ab43c8D4C9E2d1dE04b9f3742d35',name:'Base (Coinbase L2)',token:'USDC',min:'10 USDC',confirm:'~1-2 min',fee:'<.01'},
-  tron:{addr:'TQnEWmN9e1dE04b9f3742d35Cc6634C0532925a3',name:'Tron Mainnet',token:'USDC (TRC-20)',min:'10 USDC',confirm:'~3 min',fee:'~ TRX'},
-  sol:{addr:'9xjF4mK7pW2nR8sL3vQ6tE1yB5cH0dG4mN8wZ2xV7kP',name:'Solana Mainnet',token:'USDC (SPL)',min:'10 USDC',confirm:'<30 sec',fee:'~.001'},
-  pol:{addr:'0xC0532925a3b8D4b9f3742d35Cc6634C9E2d1dE04',name:'Polygon (MATIC)',token:'USDC',min:'10 USDC',confirm:'~2 min',fee:'<.01'}
-};
-function selectNet(key,btn){
-  document.querySelectorAll('.net-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const n=NETS[key];
-  document.getElementById('netContent').innerHTML=
-    <div class="card-box">
-      <div class="card-box-title">Deposit Address</div>
-      <div class="addr-box"></div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <button class="btn-gold" onclick="navigator.clipboard.writeText('').then(()=>showToast('Address copied!'))">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-          Copy Address</button>
-        <button class="btn-ghost">View on Explorer</button>
-      </div>
-    </div>;
-  document.getElementById('netInfo').innerHTML=
-    <div class="info-row"><span class="lbl">Network</span><span class="val"></span></div>
-    <div class="info-row"><span class="lbl">Token</span><span class="val"></span></div>
-    <div class="info-row"><span class="lbl">Minimum</span><span class="val"></span></div>
-    <div class="info-row"><span class="lbl">Confirmation</span><span class="val"></span></div>
-    <div class="info-row"><span class="lbl">Network Fee</span><span class="val"></span></div>
-    <div class="info-row"><span class="lbl">Credit</span><span class="val"><span class="badge-green">Instant after confirm</span></span></div>;
-}
-selectNet('eth', document.querySelector('.net-tab'));
-const u=getCurrentUser();
-if(u)document.getElementById('depBalance').textContent=(u.balance||0).toFixed(2);
+function showToast(m){const t=document.getElementById('dashToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function toggleNotif(e){e.stopPropagation();closeProfile();const p=document.getElementById('notifPanel');p.style.display=p.style.display==='block'?'none':'block';}
+function closeNotif(){document.getElementById('notifPanel').style.display='none';}
+function toggleProfile(e){e.stopPropagation();closeNotif();const p=document.getElementById('profilePanel');p.style.display=p.style.display==='block'?'none':'block';}
+function closeProfile(){document.getElementById('profilePanel').style.display='none';}
+document.addEventListener('click',()=>{closeNotif();closeProfile();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeNotif();closeProfile();}});
+function switchNet(n,btn){document.querySelectorAll('.net-tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.net-panel').forEach(p=>p.classList.remove('active'));btn.classList.add('active');document.getElementById('panel-'+n).classList.add('active');}
+function copyAddr(id){const v=document.getElementById(id).textContent.trim();navigator.clipboard.writeText(v).then(()=>showToast('Address copied!')).catch(()=>{const t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);showToast('Address copied!');});}
 </script>
 </body>
 </html>

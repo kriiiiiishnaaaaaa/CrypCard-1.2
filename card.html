@@ -21,6 +21,10 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 .logout-btn:hover{border-color:rgba(239,68,68,.4);color:#EF4444;}
 .page-main{margin-left:220px;flex:1;padding:72px 24px 80px;}
 .page-topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:fixed;top:0;left:220px;right:0;z-index:50;background:#0B0E11;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
+.icon-btn:hover{background:rgba(255,255,255,.1);}
+.search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:150px;}
+.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
 .page-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.4rem;color:#fff;}
 .page-subtitle{font-size:.8rem;color:rgba(255,255,255,.35);margin-top:4px;}
 .avatar-circle{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;font-family:'Space Grotesk',sans-serif;}
@@ -67,7 +71,11 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 .page-toast.show{transform:translateX(-50%) translateY(0);}
 .mob-menu-btn{display:none;position:fixed;bottom:20px;left:20px;z-index:200;width:44px;height:44px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
 .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;}
-@media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.page-main{margin-left:0;padding-left:16px;padding-right:16px}.page-topbar{left:0;}.mob-menu-btn{display:flex}.sidebar-backdrop.show{display:block}}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.page-main{margin-left:0;padding-left:16px;padding-right:16px}.page-topbar{left:0;}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
+.icon-btn:hover{background:rgba(255,255,255,.1);}
+.search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:150px;}
+.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}.mob-menu-btn{display:flex}.sidebar-backdrop.show{display:block}}
 @media(max-width:720px){.two-col{grid-template-columns:1fr}}
 @media(max-width:500px){.page-main{padding:12px 14px 80px}.card-btn{font-size:.74rem;padding:10px 6px}}
 </style>
@@ -75,9 +83,17 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 /* HEADER LOCK OVERRIDE */
 @media(max-width:900px){
   .page-topbar{left:0 !important;right:0 !important;padding:12px 16px !important;}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
+.icon-btn:hover{background:rgba(255,255,255,.1);}
+.search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:150px;}
+.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
   .page-main{padding-top:72px !important; margin-left:0 !important;}
 }
 .page-topbar{padding-top: 0 !important; margin-bottom:0 !important;}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
+.icon-btn:hover{background:rgba(255,255,255,.1);}
+.search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:150px;}
+.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -101,9 +117,19 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 </aside>
 
 <div class="page-main">
-  <div class="page-topbar">
-    <div><div class="page-title">Card Management</div><div class="page-subtitle">Manage your virtual debit card</div></div>
-    <div class="avatar-circle" id="userAvatar"></div>
+  <!-- UNIFIED HEADER (same as dashboard) -->
+  <div class="page-topbar" id="pageTopbar">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="icon-btn" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+      <div class="search-pill"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Search coins...</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button class="icon-btn" style="position:relative;" onclick="if(typeof toggleNotif==='function')toggleNotif(event)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span style="position:absolute;top:6px;right:6px;width:7px;height:7px;background:#F0B90B;border-radius:50%;border:2px solid #0B0E11;"></span>
+      </button>
+      <div class="avatar-btn" id="avatarBtn" onclick="if(typeof toggleProfile==='function')toggleProfile(event)"></div>
+    </div>
   </div>
   <div class="two-col">
     <div>
@@ -192,6 +218,7 @@ body{background:#0B0E11;color:#fff;font-family:'IBM Plex Sans',-apple-system,san
 
 <script src="app.js"></script>
 <script>
+const _pu=getCurrentUser();if(_pu&&document.getElementById('avatarBtn'))document.getElementById('avatarBtn').textContent=_pu.name.charAt(0).toUpperCase();
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarBackdrop').classList.toggle('show');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('show');}
 function showToast(m){const t=document.getElementById('pageToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
