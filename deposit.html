@@ -9,7 +9,7 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,255,255,0.07) 1.5px,transparent 1.5px);background-size:26px 26px;color:#fff;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
 .page-layout{display:flex;}
-.sidebar{width:220px;background:#0D1117;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:200;transition:transform .3s;}
+.sidebar{width:220px;background:#0D1117;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:300;transition:transform .3s;}
 .sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 24px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:12px;}
 .sidebar-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border-radius:8px;display:flex;align-items:center;justify-content:center;}
 .sidebar-nav{list-style:none;flex:1;padding:0 8px;}
@@ -24,33 +24,61 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
 .icon-btn:hover{background:rgba(255,255,255,.1);}
 .search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:160px;}
 .avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
-.page-main{margin-left:220px;flex:1;padding:86px 24px 80px;}
-.addr-card{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:28px;margin-bottom:16px;}
-.addr-header{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
-.addr-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0;font-family:'Space Grotesk',sans-serif;}
-.addr-net-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:#fff;}
-.addr-net-sub{font-size:.78rem;color:rgba(255,255,255,.35);margin-top:2px;}
-.qr-addr-row{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
-.qr-box{background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0;}
-.qr-box img{width:140px;height:140px;border-radius:8px;display:block;}
-.qr-lbl{font-size:.7rem;color:rgba(255,255,255,.3);font-weight:500;}
-.addr-info{flex:1;min-width:200px;}
-.addr-label{font-size:.72rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;font-weight:600;}
-.addr-value{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:#fff;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px;word-break:break-all;line-height:1.6;margin-bottom:12px;}
-.copy-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.28);border-radius:100px;color:#F0B90B;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;}
-.copy-btn:hover{background:rgba(240,185,11,.18);}
-.warn-box{background:rgba(246,70,93,.05);border:1px solid rgba(246,70,93,.2);border-radius:12px;padding:13px 16px;font-size:.8rem;color:rgba(246,70,93,.85);margin-bottom:22px;display:flex;gap:9px;align-items:flex-start;}
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:160;}
+.sidebar-backdrop.show{display:block;}
+.page-main{margin-left:220px;flex:1;padding:80px 28px 60px;}
+/* Deposit page styles */
+.dep-warn{display:flex;align-items:flex-start;gap:10px;background:rgba(246,70,93,.06);border:1px solid rgba(246,70,93,.2);border-radius:12px;padding:13px 16px;font-size:.8rem;color:rgba(246,70,93,.9);margin-bottom:20px;line-height:1.5;}
+.dep-network-badge{display:flex;align-items:center;gap:14px;background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px 20px;margin-bottom:20px;}
+.dep-network-icon{width:44px;height:44px;border-radius:50%;background:rgba(255,6,10,.12);color:#FF060A;font-weight:700;font-size:.78rem;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
+.dep-network-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;color:#fff;}
+.dep-network-meta{font-size:.75rem;color:rgba(255,255,255,.35);margin-top:3px;}
+.dep-network-status{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:.75rem;color:#0ECB81;font-weight:600;}
+.dep-status-dot{width:7px;height:7px;border-radius:50%;background:#0ECB81;display:inline-block;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.dep-card{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;}
+.dep-qr-row{display:flex;gap:28px;align-items:flex-start;padding:28px;}
+.dep-qr-box{flex-shrink:0;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.dep-qr-box img{width:160px;height:160px;border-radius:10px;display:block;}
+.dep-qr-label{font-size:.7rem;color:rgba(255,255,255,.3);font-weight:500;}
+.dep-addr-block{flex:1;min-width:0;}
+.dep-addr-label{font-size:.72rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:8px;}
+.dep-addr-box{font-family:'IBM Plex Mono',monospace;font-size:.83rem;color:#fff;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 15px;word-break:break-all;line-height:1.7;margin-bottom:12px;}
+.dep-copy-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.3);border-radius:100px;color:#F0B90B;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;}
+.dep-copy-btn:hover{background:rgba(240,185,11,.2);}
+.dep-steps{margin-top:20px;display:flex;flex-direction:column;gap:10px;}
+.dep-step{display:flex;align-items:center;gap:12px;font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.4;}
+.dep-step-num{width:22px;height:22px;border-radius:50%;background:rgba(240,185,11,.12);border:1px solid rgba(240,185,11,.3);color:#F0B90B;font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Space Grotesk',sans-serif;}
+.dep-divider{height:1px;background:rgba(255,255,255,.06);margin:0 28px;}
+.dep-verify-section{padding:28px;}
+.dep-verify-title{display:flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;color:#fff;margin-bottom:6px;}
+.dep-verify-sub{font-size:.78rem;color:rgba(255,255,255,.35);margin-bottom:20px;line-height:1.5;}
+.dep-input-wrap{margin-bottom:14px;}
+.dep-input-label{font-size:.72rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;font-weight:600;display:block;margin-bottom:7px;}
+.dep-input{width:100%;background:#0D1117;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 15px;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.82rem;outline:none;transition:border-color .2s;}
+.dep-input:focus{border-color:rgba(240,185,11,.4);}
+.dep-input::placeholder{color:rgba(255,255,255,.2);}
+.dep-verify-btn{width:100%;padding:13px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border:none;border-radius:12px;color:#000;font-weight:700;font-size:.9rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;}
+.dep-verify-btn:hover{opacity:.9;}
+.dep-verify-btn:disabled{opacity:.5;cursor:not-allowed;}
+.dep-status{margin-top:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px;}
 .panel{display:none;position:fixed;top:60px;right:12px;background:#161A1F;border:1px solid rgba(255,255,255,.1);border-radius:16px;z-index:800;box-shadow:0 20px 60px rgba(0,0,0,.8);overflow:hidden;}
 .dash-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:1000;white-space:nowrap;}
 .dash-toast.show{transform:translateX(-50%) translateY(0);}
-.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:none;z-index:160;}
 @media(max-width:900px){
-  .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
-  .page-main{margin-left:0;padding-left:16px;padding-right:16px}
-  .page-topbar{left:0 !important}
-  .sidebar-backdrop.show{display:block}
+  .sidebar{transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .sidebar-backdrop.show{display:block;}
+  .page-main{margin-left:0 !important;padding:76px 16px 40px;}
+  .page-topbar{left:0 !important;}
+  .dep-qr-row{flex-direction:column;padding:20px;}
+  .dep-qr-box{width:100%;flex-direction:row;gap:16px;align-items:center;}
+  .dep-qr-box img{width:110px;height:110px;}
+  .dep-addr-block{width:100%;}
+  .dep-verify-section{padding:20px;}
+  .dep-divider{margin:0 20px;}
+  .search-pill{min-width:120px;}
 }
-@media(max-width:580px){.qr-addr-row{flex-direction:column;}.qr-box{width:100%;flex-direction:row;}.qr-box img{width:100px;height:100px}}
 </style>
 </head>
 <body>
@@ -86,70 +114,93 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
       <div class="avatar-btn" id="avatarBtn" onclick="toggleProfile(event)"></div>
     </div>
   </div>
+  <!-- BREADCRUMB -->
+  <div style="margin-bottom:8px;">
+    <span style="font-size:.72rem;color:rgba(255,255,255,.3);">Dashboard / </span>
+    <span style="font-size:.72rem;color:#F0B90B;font-weight:600;">Deposit USDC</span>
+  </div>
+  <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.4rem;color:#fff;margin-bottom:20px;">Deposit USDC</h2>
 
-  <div style="margin-bottom:6px;"><span style="font-size:.72rem;color:rgba(255,255,255,.3);">Dashboard / </span><span style="font-size:.72rem;color:#F0B90B;font-weight:600;">Deposit USDC</span></div>
-  <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:#fff;margin-bottom:18px;">Deposit USDC</h2>
-
-  <div class="warn-box">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    <span>Only send USDC on TRC20 Network. Sending the wrong token or using a different network will result in permanent loss of funds.</span>
+  <!-- WARNING -->
+  <div class="dep-warn">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span>Only send USDC on <strong>TRC-20 Network</strong>. Wrong token or network = permanent loss of funds.</span>
   </div>
 
-  <!-- TRC-20 ONLY -->
-  <div class="addr-card">
-    <div class="addr-header">
-      <div class="addr-icon" style="background:rgba(255,6,10,.15);color:#FF060A;">TRX</div>
-      <div>
-        <div class="addr-net-name">Tron Network</div>
-        <div class="addr-net-sub">TRC-20 &bull; Confirmation: ~30 sec &bull; Min: $100 USDC</div>
-      </div>
+  <!-- NETWORK BADGE -->
+  <div class="dep-network-badge">
+    <div class="dep-network-icon">TRX</div>
+    <div>
+      <div class="dep-network-name">Tron Network (TRC-20)</div>
+      <div class="dep-network-meta">~30 sec confirmation &nbsp;·&nbsp; Min: <span style="color:#F0B90B;font-weight:600;">$100 USDC</span></div>
     </div>
-    <div class="qr-addr-row">
-      <div class="qr-box">
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=TNsXmYuCXQV9BVUXVPehGvY6PZ32XikFKv&bgcolor=0D1117&color=EAECEF&margin=8" alt="TRX QR" loading="lazy"/>
-        <div class="qr-lbl">Scan to copy</div>
+    <div class="dep-network-status">
+      <span class="dep-status-dot"></span> Live
+    </div>
+  </div>
+
+  <!-- MAIN CARD -->
+  <div class="dep-card">
+    <!-- QR + ADDRESS -->
+    <div class="dep-qr-row">
+      <div class="dep-qr-box">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=TNsXmYuCXQV9BVUXVPehGvY6PZ32XikFKv&bgcolor=161A1F&color=F0B90B&margin=10" alt="QR Code" loading="lazy"/>
+        <div class="dep-qr-label">Scan with wallet</div>
       </div>
-      <div class="addr-info">
-        <div class="addr-label">USDC Deposit Address (TRC-20)</div>
-        <div class="addr-value" id="trx-addr">TNsXmYuCXQV9BVUXVPehGvY6PZ32XikFKv</div>
-        <button class="copy-btn" onclick="copyAddr('trx-addr')">
+      <div class="dep-addr-block">
+        <div class="dep-addr-label">USDC Deposit Address (TRC-20)</div>
+        <div class="dep-addr-box" id="trx-addr">TNsXmYuCXQV9BVUXVPehGvY6PZ32XikFKv</div>
+        <button class="dep-copy-btn" onclick="copyAddr('trx-addr')">
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
           Copy Address
         </button>
+
+        <!-- STEPS -->
+        <div class="dep-steps">
+          <div class="dep-step"><span class="dep-step-num">1</span><span>Open your crypto wallet</span></div>
+          <div class="dep-step"><span class="dep-step-num">2</span><span>Send <strong>USDC</strong> via <strong>TRC-20</strong> to the address above</span></div>
+          <div class="dep-step"><span class="dep-step-num">3</span><span>Copy the transaction hash and paste below</span></div>
+        </div>
       </div>
     </div>
 
-    <!-- FUND WALLET FORM -->
-    <div style="margin-top:20px;">
-      <button id="openFundBtn" onclick="toggleFundForm()" style="display:inline-flex;align-items:center;gap:8px;padding:11px 22px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border:none;border-radius:12px;color:#000;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;">
+    <div class="dep-divider"></div>
+
+    <!-- VERIFY SECTION -->
+    <div class="dep-verify-section">
+      <div class="dep-verify-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F0B90B" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        Verify Your Transfer
+      </div>
+      <div class="dep-verify-sub">After sending, paste the TxID (transaction hash) from your wallet to instantly credit your balance.</div>
+
+      <div class="dep-input-wrap">
+        <label class="dep-input-label">Transaction Hash (TxID)</label>
+        <input id="txHashInput" type="text" class="dep-input" placeholder="e.g. a3f4b9c1d2e08fa3..."/>
+      </div>
+
+      <button onclick="submitHash()" id="verifyBtn" class="dep-verify-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        I've Sent — Add Funds
+        Add Funds to Wallet
       </button>
 
-      <div id="fundForm" style="display:none;margin-top:14px;background:#0D1117;border:1px solid rgba(240,185,11,.2);border-radius:14px;padding:20px;">
-        <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.9rem;color:#fff;margin-bottom:4px;">Verify Your TRC-20 Deposit</div>
-        <div style="font-size:.74rem;color:rgba(255,255,255,.35);margin-bottom:16px;">Paste the transaction hash from your wallet after sending USDC to our address. Minimum <strong style="color:#F0B90B;">$100 USDC</strong>.</div>
-        <label style="font-size:.72rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.5px;font-weight:600;display:block;margin-bottom:6px;">Transaction Hash (TxID)</label>
-        <input id="txHashInput" type="text" placeholder="e.g. a3f4b9c1d2e0..." style="width:100%;background:#161A1F;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.8rem;outline:none;margin-bottom:12px;"/>
-        <button onclick="submitHash()" id="verifyBtn" style="width:100%;padding:12px;background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.3);border-radius:10px;color:#F0B90B;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit;">Verify &amp; Add to Wallet</button>
-        <div id="depositStatus" style="display:none;margin-top:14px;border-radius:10px;padding:14px 16px;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div id="statusIcon" style="font-size:1.3rem;">⏳</div>
-            <div>
-              <div id="statusTitle" style="font-size:.86rem;font-weight:700;color:#fff;">Checking transaction...</div>
-              <div id="statusMsg" style="font-size:.74rem;color:rgba(255,255,255,.4);margin-top:2px;"></div>
-            </div>
+      <div id="depositStatus" class="dep-status" style="display:none;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div id="statusIcon" style="font-size:1.4rem;">⏳</div>
+          <div>
+            <div id="statusTitle" style="font-size:.88rem;font-weight:700;color:#fff;"></div>
+            <div id="statusMsg" style="font-size:.74rem;color:rgba(255,255,255,.4);margin-top:2px;"></div>
           </div>
-          <div style="margin-top:12px;height:3px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;">
-            <div id="statusBar" style="height:100%;width:0%;background:#F0B90B;border-radius:100px;transition:width .5s;"></div>
-          </div>
-          <div id="statusTimer" style="font-size:.68rem;color:rgba(255,255,255,.25);margin-top:5px;text-align:right;"></div>
         </div>
+        <div style="margin-top:14px;height:3px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden;">
+          <div id="statusBar" style="height:100%;width:0%;background:#F0B90B;border-radius:100px;transition:width .5s;"></div>
+        </div>
+        <div id="statusTimer" style="font-size:.68rem;color:rgba(255,255,255,.25);margin-top:5px;text-align:right;"></div>
       </div>
     </div>
   </div>
 
-</div></div>
+</div>
 
 <!-- NOTIFICATION PANEL -->
 <div class="panel" id="notifPanel" style="width:300px;max-width:calc(100vw - 24px);">

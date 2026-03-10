@@ -6,10 +6,11 @@
 <title>Transactions &mdash; CryptoCard</title>
 <link rel="stylesheet" href="style.css"/>
 <style>
+
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,255,255,0.07) 1.5px,transparent 1.5px);background-size:26px 26px;color:#fff;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
 .page-layout{display:flex;}
-.sidebar{width:220px;background:#0D1117;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:200;transition:transform .3s;}
+.sidebar{width:220px;background:#0D1117;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:400;transition:transform .3s;}
 .sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 24px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:12px;}
 .sidebar-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border-radius:8px;display:flex;align-items:center;justify-content:center;}
 .sidebar-nav{list-style:none;flex:1;padding:0 8px;}
@@ -35,12 +36,18 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
 .dash-toast.show{transform:translateX(-50%) translateY(0);}
 .mob-menu-btn{display:none !important;position:fixed;bottom:20px;left:20px;z-index:200;width:44px;height:44px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
 .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:none;z-index:160;}
+
+
+/* MOBILE SIDEBAR FIX */
 @media(max-width:900px){
-  .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
-  .page-main{margin-left:0;padding-left:16px;padding-right:16px}
-  .page-topbar{left:0 !important}
-  .sidebar-backdrop.show{display:block}
+  .sidebar{transform:translateX(-100%);z-index:400;}
+  .sidebar.open{transform:translateX(0);}
+  .sidebar-backdrop{z-index:350;}
+  .sidebar-backdrop.show{display:block;}
+  .page-main{margin-left:0 !important;padding-left:16px !important;padding-right:16px !important;padding-top:72px !important;}
+  .page-topbar{left:0 !important;right:0 !important;}
 }
+
 </style>
 </head>
 <body>
