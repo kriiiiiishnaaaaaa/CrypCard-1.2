@@ -6,7 +6,6 @@
 <title>Sign In — CryptoCard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -303,23 +302,10 @@ function doLogin() {
   const pwd   = document.getElementById('loginPwd').value;
   document.getElementById('loginErr').style.display = 'none';
   if (!email || !pwd) { showErr('loginErr', 'Please fill in all fields.'); return; }
-  // Validate credentials first
+  btn.disabled = true; btn.textContent = 'Signing in…';
   const r = loginUser(email, pwd);
-  if (!r.ok) { showErr('loginErr', r.error); return; }
-  // Credentials OK — send OTP for 2FA
-  btn.disabled = true; btn.textContent = 'Sending code…';
-  otpContext = { mode: 'login', email, tempUser: r.user };
-  sendOTP(email, r.user.name || 'User', () => {
-    document.getElementById('otpSubtext').textContent = 'We sent a 6-digit code to ' + email + '. Enter it below to sign in.';
-    document.getElementById('otp-prog-2').classList.add('done');
-    goTo('step-otp');
-    setupOTPBoxes();
-    btn.disabled = false; btn.textContent = 'Sign In →';
-  }, () => {
-    // EmailJS failed — skip OTP and log in directly
-    localStorage.setItem('cryptocard_user', JSON.stringify(r.user));
-    window.location.href = 'dashboard.html';
-  });
+  if (r.ok) { window.location.href = 'dashboard.html'; }
+  else { showErr('loginErr', r.error); btn.disabled = false; btn.textContent = 'Sign In →'; }
 }
 
 function doDemo() {
@@ -351,26 +337,12 @@ function doSignupInfo() {
   }
 
   signupData = { name, email, password: pwd };
-  // Send OTP
-  const regBtn2 = document.getElementById('regBtn');
-  regBtn2.disabled = true; regBtn2.textContent = 'Sending code…';
-  otpContext = { mode: 'signup' };
-  sendOTP(email, name, () => {
-    document.getElementById('otpSubtext').textContent = 'We sent a 6-digit code to ' + email + '. Enter it to verify your email.';
-    document.getElementById('otp-prog-2').classList.add('done');
-    goTo('step-otp');
-    setupOTPBoxes();
-    regBtn2.disabled = false; regBtn2.textContent = 'Continue →';
-  }, () => {
-    // EmailJS failed — skip OTP and go to PIN
-    pinBuffer = ''; confirmBuffer = ''; pinStage = 'create';
-    updatePinDots(0);
-    document.getElementById('pinLabel').textContent = 'Enter new PIN';
-    document.getElementById('pinErr').style.display = 'none';
-    buildNumpad();
-    goTo('step-pin');
-    regBtn2.disabled = false; regBtn2.textContent = 'Continue →';
-  });
+  pinBuffer  = ''; confirmBuffer = ''; pinStage = 'create';
+  updatePinDots(0);
+  document.getElementById('pinLabel').textContent = 'Enter new PIN';
+  document.getElementById('pinErr').style.display = 'none';
+  buildNumpad();
+  goTo('step-pin');
 }
 
 // ── PIN NUMPAD ──
