@@ -4,29 +4,47 @@ const CC_USERS_KEY   = 'cc_users';
 const CC_SESSION_KEY = 'cryptocard_user';
 
 /* ---- Generate a unique card number per user ---- */
-function generateCardNumber(email) {
-  // Deterministic 16-digit number seeded from email
-  let hash = 0;
-  for (let i = 0; i < email.length; i++) {
-    hash = ((hash << 5) - hash) + email.charCodeAt(i);
-    hash |= 0;
-  }
-  const seed = Math.abs(hash);
-  // Build 16 digits: 4216 + 12 more
-  const part2 = String(seed % 10000).padStart(4, '0');
-  const part3 = String((seed * 31) % 10000).padStart(4, '0');
-  const part4 = String((seed * 97) % 10000).padStart(4, '0');
-  return '4216' + part2 + part3 + part4;
+/* ---- Virtual card pool — shuffled and assigned to users ---- */
+const CARD_POOL = [
+  { number: '4622943127011022', cvv: '341' },
+  { number: '4622943127011030', cvv: '287' },
+  { number: '4622943127011048', cvv: '193' },
+  { number: '4622943127011055', cvv: '462' },
+  { number: '4622943127011063', cvv: '758' },
+  { number: '4622943127011071', cvv: '524' },
+  { number: '4622943127011089', cvv: '316' },
+  { number: '4622943127010990', cvv: '847' },
+  { number: '4622943127011006', cvv: '139' },
+  { number: '4622943127011014', cvv: '673' },
+];
+
+function getNextCard() {
+  // Get already assigned cards from storage
+  let users = [];
+  try { users = JSON.parse(localStorage.getItem(CC_USERS_KEY) || '[]'); } catch(e) {}
+  const usedNumbers = users.map(u => u.cardNumber).filter(Boolean);
+
+  // Find unassigned card — shuffle pool first using current timestamp seed
+  const shuffled = [...CARD_POOL].sort(() => {
+    const seed = usedNumbers.length * 1337 + 42;
+    return (Math.sin(seed) * 10000) % 1 - 0.5;
+  });
+
+  const available = shuffled.find(c => !usedNumbers.includes(c.number));
+  // If all 10 used, cycle back from beginning (re-use from shuffled pool)
+  return available || shuffled[usedNumbers.length % CARD_POOL.length];
 }
 
-/* ---- Generate random CVV ---- */
+function generateCardNumber(email) {
+  // Legacy - not used for new users, kept for compatibility
+  const card = getNextCard();
+  return card.number;
+}
+
 function generateCVV(email) {
-  let hash = 0;
-  for (let i = 0; i < email.length; i++) {
-    hash = ((hash << 3) - hash) + email.charCodeAt(i);
-    hash |= 0;
-  }
-  return String(Math.abs(hash) % 900 + 100);
+  // Legacy - not used for new users, kept for compatibility
+  const card = getNextCard();
+  return card.cvv;
 }
 
 /* ---- Seed default test account if not exists ---- */
@@ -42,8 +60,8 @@ function generateCVV(email) {
       password:   'Test12345',
       balance:    0,
       deposits:   [],
-      cardNumber: generateCardNumber(email),
-      cvv:        generateCVV(email),
+      cardNumber: CARD_POOL[0].number,
+      cvv:        CARD_POOL[0].cvv,
       kycStatus:  'pending',
       dailyLimit: 500,
       joined:     Date.now()
@@ -102,14 +120,15 @@ function registerUser(name, email, password) {
     return { ok: false, error: 'An account with this email already exists.' };
   }
   const emailClean = email.toLowerCase().trim();
+  const assignedCard = getNextCard();
   const user = {
     name:       name.trim(),
     email:      emailClean,
     password,
     balance:    0,
     deposits:   [],
-    cardNumber: generateCardNumber(emailClean),
-    cvv:        generateCVV(emailClean),
+    cardNumber: assignedCard.number,
+    cvv:        assignedCard.cvv,
     kycStatus:  'pending',
     dailyLimit: 500,
     joined:     Date.now()

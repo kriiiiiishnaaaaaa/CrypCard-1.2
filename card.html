@@ -233,21 +233,11 @@ if(u) {
   if(document.getElementById('avatarBtn')) document.getElementById('avatarBtn').textContent = u.name.charAt(0).toUpperCase();
   document.getElementById('cardHolder').textContent = u.name.toUpperCase().slice(0,22);
   userCard = u.cardNumber || '0000000000000000';
-  userCVV = u.cvv || '???';
-  isLocked = !u.balance || parseFloat(u.balance) <= 0;
-
-  if(isLocked) {
-    document.getElementById('cardNum').innerHTML = '&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;';
-    document.getElementById('cvvVal').textContent = '???';
-    // Show lock banner
-    const banner = document.createElement('div');
-    banner.style.cssText = 'background:rgba(246,70,93,.08);border:1px solid rgba(246,70,93,.2);border-radius:12px;padding:12px 16px;font-size:.8rem;color:rgba(246,70,93,.85);margin-top:14px;display:flex;gap:9px;align-items:center;width:100%;max-width:380px;';
-    banner.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Add funds to your wallet to reveal your card details.</span>';
-    document.querySelector('.card-btn-row').after(banner);
-  } else {
-    document.getElementById('cardNum').innerHTML = '&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; ' + userCard.slice(-4);
-    document.getElementById('cvvVal').textContent = userCVV;
-  }
+  userCVV = u.cvv || '000';
+  isLocked = false;
+  // Show last 4 digits by default
+  document.getElementById('cardNum').innerHTML = '&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; ' + userCard.slice(-4);
+  document.getElementById('cvvVal').textContent = userCVV;
 }
 
 let cvvShowing = false;
@@ -277,7 +267,7 @@ function switchNet(net) {
 }
 
 function doCVV() {
-  if(isLocked) { showToast('⚠️ Deposit funds to reveal CVV'); return; }
+  
   cvvShowing = !cvvShowing;
   const scene = document.getElementById('cardScene');
   const btn = document.getElementById('cvvBtn');
@@ -287,7 +277,7 @@ function doCVV() {
 }
 
 function doReveal() {
-  if(isLocked) { showToast('⚠️ Deposit funds to reveal card number'); return; }
+  
   revealed = !revealed;
   const el = document.getElementById('cardNum');
   const btn = document.getElementById('revealBtn');
@@ -309,7 +299,7 @@ function doReveal() {
 }
 
 function doCopy() {
-  if(isLocked) { showToast('⚠️ Deposit funds first'); return; }
+  
   navigator.clipboard.writeText(userCard).then(() => showToast('Card number copied!')).catch(() => showToast('Copy failed'));
 }
 
