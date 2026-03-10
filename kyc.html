@@ -1,70 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,255,255,0.07) 1.5px,transparent 1.5px);background-size:26px 26px;color:#fff;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
-.page-layout{display:flex;}
-.sidebar{width:220px;background:#0D1117;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:200;transition:transform .3s;}
-.sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 24px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:12px;}
-.sidebar-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border-radius:8px;display:flex;align-items:center;justify-content:center;}
-.sidebar-nav{list-style:none;flex:1;padding:0 8px;}
-.sidebar-nav li a{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:rgba(255,255,255,.45);text-decoration:none;font-size:.875rem;font-weight:500;transition:all .2s;margin-bottom:2px;}
-.sidebar-nav li a:hover,.sidebar-nav li a.active{background:rgba(240,185,11,.08);color:#F0B90B;}
-.sidebar-nav li a.active svg{stroke:#F0B90B;}
-.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.07);}
-.logout-btn{width:100%;display:flex;align-items:center;gap:8px;padding:10px 14px;background:none;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(255,255,255,.4);font-size:.84rem;cursor:pointer;font-family:inherit;transition:all .2s;}
-.logout-btn:hover{border-color:rgba(239,68,68,.4);color:#EF4444;}
-.dash-topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;position:sticky;top:0;background:#0B0E11;z-index:50;border-bottom:1px solid rgba(255,255,255,.06);}
-.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
-.icon-btn:hover{background:rgba(255,255,255,.1);}
-.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
-.dash-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:1000;white-space:nowrap;}
-.dash-toast.show{transform:translateX(-50%) translateY(0);}
-.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:none;z-index:160;}
-@media(max-width:900px){
-  .sidebar{transform:translateX(-100%)}
-  .sidebar.open{transform:translateX(0)}
-  .dash-main{margin-left:0;filter:none !important;}
-  .sidebar-backdrop.show{display:block}
-  .dash-center{max-width:100%}
-}
-.page-main{margin-left:220px;flex:1;padding:80px 24px 80px;}
-
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,255,255,0.07) 1.5px,transparent 1.5px);background-size:26px 26px;color:#fff;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
-.page-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;}
-@media(max-width:900px){
-}
-.kyc-box{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:22px;margin-bottom:18px;}
-.kyc-box-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.95rem;color:#fff;margin-bottom:4px;}
-.kyc-box-sub{font-size:.78rem;color:rgba(255,255,255,.35);margin-bottom:16px;}
-.form-group{margin-bottom:14px;}
-.form-label{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:5px;display:block;}
-.form-input{width:100%;background:#0B0E11;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;}
-.form-input:focus{border-color:rgba(240,185,11,.4);}
-.form-select{width:100%;background:#0B0E11;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-size:.88rem;outline:none;cursor:pointer;}
-.upload-area{border:1.5px dashed rgba(255,255,255,.15);border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s;}
-.upload-area:hover{border-color:rgba(240,185,11,.3);}
-.upload-icon{color:rgba(255,255,255,.3);margin-bottom:8px;}
-.upload-text{font-size:.82rem;color:rgba(255,255,255,.4);}
-.btn-gold{padding:13px 28px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border:none;border-radius:12px;color:#000;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:opacity .2s;}
-.btn-gold:hover{opacity:.9;}
-.status-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;font-size:.75rem;font-weight:600;}
-.status-pending{background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.25);color:#F0B90B;}
-.status-verified{background:rgba(14,203,129,.1);border:1px solid rgba(14,203,129,.25);color:#0ECB81;}
-
-
-</style>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
 <title>KYC &mdash; CryptoCard</title>
 <link rel="stylesheet" href="style.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#0B0E11;color:#EAECEF;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
+.page-layout{display:flex;}
+.sidebar{width:220px;background:#0D1117;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:200;transition:transform .3s;}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 24px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#EAECEF;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:12px;}
+.sidebar-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.sidebar-nav{list-style:none;flex:1;padding:0 8px;}
+.sidebar-nav li a{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:rgba(234,236,239,.55);text-decoration:none;font-size:.875rem;font-weight:500;transition:all .2s;margin-bottom:2px;}
+.sidebar-nav li a:hover,.sidebar-nav li a.active{background:rgba(240,185,11,.08);color:#F0B90B;}
+.sidebar-nav li a.active svg{stroke:#F0B90B;}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.07);}
+.logout-btn{width:100%;display:flex;align-items:center;gap:8px;padding:10px 14px;background:none;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(234,236,239,.5);font-size:.84rem;cursor:pointer;font-family:inherit;transition:all .2s;}
+.logout-btn:hover{border-color:rgba(239,68,68,.4);color:#EF4444;}
+.page-main{margin-left:220px;flex:1;padding:28px 32px;min-height:100vh;}
+.page-topbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:fixed;top:0;left:220px;right:0;z-index:210;background:#0B0E11;padding:14px 24px;border-bottom:1px solid rgba(255,255,255,.06);}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
+.icon-btn:hover{background:rgba(255,255,255,.1);}
+.search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:150px;}
+.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
+.page-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:#EAECEF;}
+.page-subtitle{font-size:.82rem;color:rgba(234,236,239,.4);margin-top:4px;}
+.avatar-circle{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;}
+.card-box{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:24px;margin-bottom:20px;}
+.card-box-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;color:#EAECEF;margin-bottom:16px;}
+.form-label{font-size:.76rem;color:rgba(234,236,239,.5);font-weight:600;margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:.4px;}
+.form-input{width:100%;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px;color:#EAECEF;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:rgba(240,185,11,.4);}
+.form-select{width:100%;background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 14px;color:#EAECEF;font-size:.9rem;font-family:inherit;outline:none;}
+.form-group{margin-bottom:18px;}
+.btn-gold{background:linear-gradient(135deg,#F0B90B,#F8D12F);color:#000;font-weight:700;border:none;border-radius:10px;padding:13px 28px;font-size:.9rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:8px;justify-content:center;}
+.btn-gold:hover{opacity:.85;}
+.btn-ghost{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 22px;color:rgba(234,236,239,.7);font-size:.88rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;}
+.btn-ghost:hover{border-color:rgba(255,255,255,.2);color:#EAECEF;}
+.step-progress{display:flex;align-items:center;gap:0;margin-bottom:28px;}
+.step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;flex-shrink:0;font-family:'Space Grotesk',sans-serif;transition:all .3s;}
+.step-line-seg{flex:1;height:2px;transition:background .3s;}
+.step-block{display:none;}
+.step-block.active{display:block;}
+input[type=file]{display:none;}
+.file-drop{border:2px dashed rgba(255,255,255,.1);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color .2s;font-size:.85rem;color:rgba(234,236,239,.4);}
+.file-drop:hover{border-color:rgba(240,185,11,.35);color:#F0B90B;}
+.two-col-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.mob-menu-btn{display:none !important;position:fixed;bottom:20px;left:20px;z-index:200;width:44px;height:44px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:none;z-index:160;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:999;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.page-main{margin-left:0;padding:20px 16px 80px}.sidebar-backdrop.show{display:block}}
+@media(max-width:600px){.two-col-grid{grid-template-columns:1fr}.page-title{font-size:1.2rem}.card-box{padding:16px}}
+</style>
+<style>
+/* HEADER LOCK OVERRIDE */
+@media(max-width:900px){
+  .page-topbar{left:0 !important;right:0 !important;padding:12px 16px !important;}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
+.icon-btn:hover{background:rgba(255,255,255,.1);}
+.search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:150px;}
+.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
+  .page-main{padding-top:72px !important; margin-left:0 !important;}
+}
+.page-topbar{padding-top: 0 !important; margin-bottom:0 !important;}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
+.icon-btn:hover{background:rgba(255,255,255,.1);}
+.search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:150px;}
+.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
+</style>
 </head>
 <body>
-<script src="auth.js">function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarBackdrop').classList.toggle('show');}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('show');}
-</script>
+<script src="auth.js"></script>
 <script>if(!authGuard()){}</script>
 <div class="page-layout">
 <aside class="sidebar" id="sidebar">
@@ -73,30 +82,35 @@ function closeSidebar(){document.getElementById('sidebar').classList.remove('ope
     CryptoCard
   </a>
   <ul class="sidebar-nav">
-    <li><a href="dashboard.html" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="3" y="15" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="11" rx="1"/></svg>Dashboard</a></li>
+    <li><a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="3" y="15" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="11" rx="1"/></svg>Dashboard</a></li>
     <li><a href="deposit.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg>Deposit</a></li>
     <li><a href="transactions.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>Transactions</a></li>
     <li><a href="kyc.html" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>KYC</a></li>
     <li><a href="settings.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a></li>
   </ul>
-  <div class="sidebar-footer"><button class="logout-btn" onclick="logout()"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</button></div>
+  <div class="sidebar-footer">
+    <button class="logout-btn" onclick="logout()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Logout
+    </button>
+  </div>
 </aside>
 
-<div class="dash-topbar">
+<div class="page-main">
+  <!-- UNIFIED HEADER (same as dashboard) -->
+  <div class="page-topbar" id="pageTopbar">
     <div style="display:flex;align-items:center;gap:10px;">
       <button class="icon-btn" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
-      <div class="search-pill" onclick="openSearch()"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Search coins...</div>
+      <div class="search-pill"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Search coins...</div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
-      <button class="icon-btn" onclick="toggleNotif(event)" style="position:relative;">
+      <button class="icon-btn" style="position:relative;" onclick="if(typeof toggleNotif==='function')toggleNotif(event)">
         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         <span style="position:absolute;top:6px;right:6px;width:7px;height:7px;background:#F0B90B;border-radius:50%;border:2px solid #0B0E11;"></span>
       </button>
-      <div class="avatar-btn" id="avatarBtn" onclick="toggleProfile(event)"></div>
+      <div class="avatar-btn" id="avatarBtn" onclick="if(typeof toggleProfile==='function')toggleProfile(event)"></div>
     </div>
   </div>
-<div class="page-main">
-  
 
   <div class="card-box" style="max-width:700px;">
     <!-- Step progress bar -->
@@ -218,8 +232,8 @@ function closeSidebar(){document.getElementById('sidebar').classList.remove('ope
 <script src="app.js"></script>
 <script>
 const _pu=getCurrentUser();if(_pu&&document.getElementById('avatarBtn'))document.getElementById('avatarBtn').textContent=_pu.name.charAt(0).toUpperCase();
-
-
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarBackdrop').classList.toggle('show');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('show');}
 function showToast(m){const t=document.getElementById('pageToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 const _u=getCurrentUser();if(_u&&document.getElementById('userAvatar'))document.getElementById('userAvatar').textContent=_u.name.charAt(0).toUpperCase();
 
