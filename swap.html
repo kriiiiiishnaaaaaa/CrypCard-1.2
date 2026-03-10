@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<title>Swap — CryptoCard</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,255,255,0.07) 1.5px,transparent 1.5px);background-size:26px 26px;color:#fff;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
+.page-layout{display:flex;}
+.sidebar{width:220px;background:#0D1117;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;padding:24px 0;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .3s;}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 20px 24px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:12px;}
+.sidebar-logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.sidebar-nav{list-style:none;flex:1;padding:0 8px;}
+.sidebar-nav li a{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:rgba(255,255,255,.45);text-decoration:none;font-size:.875rem;font-weight:500;transition:all .2s;margin-bottom:2px;}
+.sidebar-nav li a:hover,.sidebar-nav li a.active{background:rgba(240,185,11,.08);color:#F0B90B;}
+.sidebar-nav li a.active svg{stroke:#F0B90B;}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.07);}
+.logout-btn{width:100%;display:flex;align-items:center;gap:8px;padding:10px 14px;background:none;border:1px solid rgba(255,255,255,.1);border-radius:10px;color:rgba(255,255,255,.4);font-size:.84rem;cursor:pointer;font-family:inherit;transition:all .2s;}
+.logout-btn:hover{border-color:rgba(239,68,68,.4);color:#EF4444;}
+.page-topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;position:fixed;top:0;left:220px;right:0;z-index:50;background:#0B0E11;border-bottom:1px solid rgba(255,255,255,.06);}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
+.icon-btn:hover{background:rgba(255,255,255,.1);}
+.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
+.page-main{margin-left:220px;flex:1;padding:86px 24px 80px;display:flex;justify-content:center;}
+.swap-wrap{width:100%;max-width:460px;}
+.swap-card{background:#161A1F;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:24px;margin-bottom:16px;}
+.swap-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:#fff;margin-bottom:4px;}
+.swap-sub{font-size:.8rem;color:rgba(255,255,255,.4);margin-bottom:24px;}
+.swap-box{background:#0D1117;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px 18px;margin-bottom:4px;transition:border-color .2s;}
+.swap-box:focus-within{border-color:rgba(240,185,11,.35);}
+.swap-box-label{font-size:.68rem;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.6px;font-weight:600;margin-bottom:8px;}
+.swap-box-row{display:flex;align-items:center;gap:10px;}
+.swap-amount{flex:1;background:none;border:none;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;outline:none;width:100%;min-width:0;}
+.swap-amount::placeholder{color:rgba(255,255,255,.15);}
+.swap-currency-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:8px 14px;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .2s;}
+.swap-currency-pill:hover{background:rgba(240,185,11,.08);border-color:rgba(240,185,11,.25);}
+.currency-flag{font-size:1.1rem;}
+.currency-code{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.88rem;color:#fff;}
+.swap-arrow{display:flex;justify-content:center;align-items:center;height:36px;position:relative;z-index:1;margin:-2px 0;}
+.swap-arrow-btn{width:36px;height:36px;border-radius:50%;background:#161A1F;border:2px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;}
+.swap-arrow-btn:hover{border-color:#F0B90B;background:rgba(240,185,11,.08);}
+.rate-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,.05);margin-top:8px;}
+.rate-label{font-size:.75rem;color:rgba(255,255,255,.35);}
+.rate-val{font-size:.78rem;font-family:'IBM Plex Mono',monospace;color:rgba(255,255,255,.6);}
+.swap-btn{width:100%;padding:15px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border:none;border-radius:14px;color:#000;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;transition:opacity .2s;margin-top:6px;}
+.swap-btn:hover{opacity:.9;}
+.swap-btn:disabled{opacity:.4;cursor:not-allowed;}
+.currency-select-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;background:#1E2329;border:1px solid rgba(255,255,255,.1);border-radius:14px;z-index:200;min-width:200px;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.6);}
+.currency-select-dropdown.open{display:block;}
+.currency-option{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;transition:background .15s;}
+.currency-option:hover{background:rgba(240,185,11,.08);}
+.currency-option .flag{font-size:1.2rem;}
+.currency-option .code{font-weight:700;font-size:.9rem;color:#fff;font-family:'Space Grotesk',sans-serif;}
+.currency-option .name{font-size:.74rem;color:rgba(255,255,255,.4);}
+.history-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.history-row:last-child{border-bottom:none;}
+.history-icon{width:38px;height:38px;border-radius:50%;background:rgba(14,203,129,.1);border:1px solid rgba(14,203,129,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.history-info{flex:1;}
+.history-title{font-size:.88rem;font-weight:600;color:#fff;}
+.history-sub{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:2px;}
+.history-amt{text-align:right;}
+.history-usdc{font-size:.88rem;font-weight:600;font-family:'IBM Plex Mono',monospace;color:#F6465D;}
+.history-local{font-size:.72rem;color:rgba(255,255,255,.45);font-family:'IBM Plex Mono',monospace;margin-top:2px;}
+.dash-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:1000;white-space:nowrap;}
+.dash-toast.show{transform:translateX(-50%) translateY(0);}
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:99;}
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
+  .page-main{margin-left:0;padding:80px 16px 80px}
+  .page-topbar{left:0 !important}
+  .sidebar-backdrop.show{display:block}
+}
+</style>
+</head>
+<body>
+<script src="auth.js"></script>
+<script>if(!authGuard()){}</script>
+<div class="page-layout">
+<aside class="sidebar" id="sidebar">
+  <a href="index.html" class="sidebar-logo">
+    <div class="sidebar-logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+    CryptoCard
+  </a>
+  <ul class="sidebar-nav">
+    <li><a href="dashboard.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="3" y="15" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="11" rx="1"/></svg>Dashboard</a></li>
+    <li><a href="deposit.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17V3"/><path d="m6 11 6 6 6-6"/><path d="M19 21H5"/></svg>Deposit</a></li>
+    <li><a href="card.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Card</a></li>
+    <li><a href="swap.html" class="active"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m17 1 4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="m7 23-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>Swap</a></li>
+    <li><a href="transactions.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>Transactions</a></li>
+    <li><a href="kyc.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>KYC</a></li>
+    <li><a href="settings.html"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a></li>
+  </ul>
+  <div class="sidebar-footer"><button class="logout-btn" onclick="logout()"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</button></div>
+</aside>
+
+<div class="page-main">
+<div class="swap-wrap">
+
+  <div class="page-topbar">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="icon-btn" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="avatar-btn" id="avatarBtn"></div>
+    </div>
+  </div>
+
+  <!-- SWAP CARD -->
+  <div class="swap-card">
+    <div class="swap-title">Swap USDC</div>
+    <div class="swap-sub">Convert your USDC balance to local currency instantly</div>
+
+    <!-- FROM: USDC -->
+    <div class="swap-box">
+      <div class="swap-box-label">You Send</div>
+      <div class="swap-box-row">
+        <input class="swap-amount" id="fromAmount" type="number" placeholder="0.00" min="0" step="0.01" oninput="calcOutput()"/>
+        <div class="swap-currency-pill" style="cursor:default;">
+          <span class="currency-flag">💵</span>
+          <span class="currency-code">USDC</span>
+        </div>
+      </div>
+      <div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:8px;">Balance: <span id="usdcBalance" style="color:#F0B90B;">$0.00</span></div>
+    </div>
+
+    <!-- ARROW -->
+    <div class="swap-arrow">
+      <div class="swap-arrow-btn" onclick="flipSwap()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F0B90B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m7 16 4 4 4-4"/><path d="m7 8 4-4 4 4"/></svg>
+      </div>
+    </div>
+
+    <!-- TO: LOCAL CURRENCY -->
+    <div class="swap-box" style="margin-top:4px;">
+      <div class="swap-box-label">You Receive</div>
+      <div class="swap-box-row">
+        <input class="swap-amount" id="toAmount" type="number" placeholder="0.00" readonly style="cursor:default;color:rgba(255,255,255,.7);"/>
+        <div style="position:relative;">
+          <div class="swap-currency-pill" id="currencyPill" onclick="toggleDropdown()">
+            <span class="currency-flag" id="selFlag">🇮🇳</span>
+            <span class="currency-code" id="selCode">INR</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:2px;"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="currency-select-dropdown" id="currencyDropdown">
+            <div class="currency-option" onclick="selectCurrency('INR','🇮🇳','Indian Rupee','₹')">
+              <span class="flag">🇮🇳</span><div><div class="code">INR</div><div class="name">Indian Rupee • ₹</div></div>
+            </div>
+            <div class="currency-option" onclick="selectCurrency('IDR','🇮🇩','Indonesian Rupiah','Rp')">
+              <span class="flag">🇮🇩</span><div><div class="code">IDR</div><div class="name">Indonesian Rupiah • Rp</div></div>
+            </div>
+            <div class="currency-option" onclick="selectCurrency('BRL','🇧🇷','Brazilian Real','R$')">
+              <span class="flag">🇧🇷</span><div><div class="code">BRL</div><div class="name">Brazilian Real • R$</div></div>
+            </div>
+            <div class="currency-option" onclick="selectCurrency('ARS','🇦🇷','Argentine Peso','$')">
+              <span class="flag">🇦🇷</span><div><div class="code">ARS</div><div class="name">Argentine Peso • $</div></div>
+            </div>
+            <div class="currency-option" onclick="selectCurrency('VES','🇻🇪','Venezuelan Bolívar','Bs')">
+              <span class="flag">🇻🇪</span><div><div class="code">VES</div><div class="name">Venezuelan Bolívar • Bs</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RATE ROW -->
+    <div class="rate-row">
+      <span class="rate-label">Exchange Rate</span>
+      <span class="rate-val" id="rateDisplay">1 USDC ≈ loading...</span>
+    </div>
+    <div class="rate-row" style="border-top:none;padding-top:0;">
+      <span class="rate-label">Fee</span>
+      <span class="rate-val" style="color:#0ECB81;">0% — Free</span>
+    </div>
+
+    <button class="swap-btn" id="swapBtn" onclick="doSwap()">Swap Now</button>
+  </div>
+
+  <!-- SWAP HISTORY -->
+  <div class="swap-card">
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.95rem;color:#fff;margin-bottom:14px;">Swap History</div>
+    <div id="swapHistory">
+      <div style="text-align:center;padding:30px 0;color:rgba(255,255,255,.25);font-size:.82rem;">No swaps yet</div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
+<div class="dash-toast" id="dashToast"></div>
+
+<script src="app.js"></script>
+<script>
+const _u = getCurrentUser();
+if(_u) {
+  document.getElementById('avatarBtn').textContent = _u.name.charAt(0).toUpperCase();
+  document.getElementById('usdcBalance').textContent = '$' + (parseFloat(_u.balance)||0).toFixed(2);
+}
+
+// Currency data
+const CURRENCIES = {
+  INR:  { flag:'🇮🇳', name:'Indian Rupee',        symbol:'₹',  code:'INR' },
+  IDR:  { flag:'🇮🇩', name:'Indonesian Rupiah',    symbol:'Rp', code:'IDR' },
+  BRL:  { flag:'🇧🇷', name:'Brazilian Real',       symbol:'R$', code:'BRL' },
+  ARS:  { flag:'🇦🇷', name:'Argentine Peso',       symbol:'$',  code:'ARS' },
+  VES:  { flag:'🇻🇪', name:'Venezuelan Bolívar',   symbol:'Bs', code:'VES' }
+};
+
+let selectedCurrency = 'INR';
+let rates = {}; // USD rates from API
+
+// Fetch live exchange rates
+async function fetchRates() {
+  try {
+    const r = await fetch('https://open.er-api.com/v6/latest/USD');
+    const d = await r.json();
+    if(d.rates) {
+      rates = d.rates;
+      calcOutput();
+      updateRateDisplay();
+    }
+  } catch(e) {
+    // Fallback rates
+    rates = { INR: 83.5, IDR: 15800, BRL: 5.05, ARS: 890, VES: 36 };
+    calcOutput();
+    updateRateDisplay();
+  }
+}
+
+function getRate(code) {
+  return rates[code] || 1;
+}
+
+function updateRateDisplay() {
+  const rate = getRate(selectedCurrency);
+  const cur = CURRENCIES[selectedCurrency];
+  document.getElementById('rateDisplay').textContent = '1 USDC ≈ ' + cur.symbol + ' ' + rate.toLocaleString('en-US', {maximumFractionDigits: 2});
+}
+
+function calcOutput() {
+  const from = parseFloat(document.getElementById('fromAmount').value) || 0;
+  const rate = getRate(selectedCurrency);
+  const out = from * rate;
+  document.getElementById('toAmount').value = out > 0 ? out.toFixed(2) : '';
+}
+
+function selectCurrency(code, flag, name, symbol) {
+  selectedCurrency = code;
+  document.getElementById('selFlag').textContent = flag;
+  document.getElementById('selCode').textContent = code;
+  document.getElementById('currencyDropdown').classList.remove('open');
+  calcOutput();
+  updateRateDisplay();
+}
+
+function toggleDropdown() {
+  document.getElementById('currencyDropdown').classList.toggle('open');
+}
+
+function flipSwap() {
+  // Visually animate the arrow
+  const btn = document.querySelector('.swap-arrow-btn svg');
+  btn.style.transform = 'rotate(180deg)';
+  setTimeout(() => btn.style.transform = '', 300);
+  showToast('USDC → ' + selectedCurrency + ' only. Reverse swap coming soon.');
+}
+
+document.addEventListener('click', (e) => {
+  if(!e.target.closest('#currencyPill') && !e.target.closest('#currencyDropdown')) {
+    document.getElementById('currencyDropdown').classList.remove('open');
+  }
+});
+
+function doSwap() {
+  const user = getCurrentUser();
+  if(!user) return;
+
+  const fromAmt = parseFloat(document.getElementById('fromAmount').value);
+  if(!fromAmt || fromAmt <= 0) { showToast('Enter an amount to swap'); return; }
+
+  const balance = parseFloat(user.balance) || 0;
+  if(fromAmt > balance) { showToast('⚠️ Insufficient USDC balance'); return; }
+  if(fromAmt < 1) { showToast('Minimum swap is 1 USDC'); return; }
+
+  const rate = getRate(selectedCurrency);
+  const toAmt = fromAmt * rate;
+  const cur = CURRENCIES[selectedCurrency];
+
+  // Confirm
+  const btn = document.getElementById('swapBtn');
+  btn.disabled = true;
+  btn.textContent = 'Processing…';
+
+  setTimeout(() => {
+    // Deduct from wallet
+    const newBalance = parseFloat((balance - fromAmt).toFixed(4));
+    const swapRecord = {
+      from: fromAmt,
+      to: toAmt,
+      currency: selectedCurrency,
+      symbol: cur.symbol,
+      rate,
+      ts: Date.now()
+    };
+
+    const swapHistory = user.swapHistory || [];
+    swapHistory.unshift(swapRecord);
+
+    updateCurrentUser({ balance: newBalance, swapHistory });
+
+    // Update UI
+    document.getElementById('usdcBalance').textContent = '$' + newBalance.toFixed(2);
+    document.getElementById('fromAmount').value = '';
+    document.getElementById('toAmount').value = '';
+
+    showToast('✅ Swapped ' + fromAmt + ' USDC → ' + cur.symbol + toAmt.toLocaleString('en-US', {maximumFractionDigits:2}) + ' ' + selectedCurrency);
+    renderHistory();
+
+    btn.disabled = false;
+    btn.textContent = 'Swap Now';
+  }, 1200);
+}
+
+function renderHistory() {
+  const user = getCurrentUser();
+  const history = (user?.swapHistory || []).slice(0, 10);
+  const el = document.getElementById('swapHistory');
+  if(!history.length) {
+    el.innerHTML = '<div style="text-align:center;padding:30px 0;color:rgba(255,255,255,.25);font-size:.82rem;">No swaps yet</div>';
+    return;
+  }
+  el.innerHTML = history.map(s => {
+    const cur = CURRENCIES[s.currency] || {flag:'💱',symbol:'',code:s.currency};
+    const date = new Date(s.ts).toLocaleDateString('en-US', {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    return `<div class="history-row">
+      <div class="history-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ECB81" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 1 4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="m7 23-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+      <div class="history-info">
+        <div class="history-title">USDC → ${s.currency} ${cur.flag}</div>
+        <div class="history-sub">${date}</div>
+      </div>
+      <div class="history-amt">
+        <div class="history-usdc">-${s.from.toFixed(2)} USDC</div>
+        <div class="history-local">+${cur.symbol}${parseFloat(s.to).toLocaleString('en-US',{maximumFractionDigits:2})}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarBackdrop').classList.toggle('show');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('show');}
+function showToast(m){const t=document.getElementById('dashToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+
+// Init
+fetchRates();
+renderHistory();
+setInterval(fetchRates, 60000); // refresh rates every minute
+</script>
+</body>
+</html>
