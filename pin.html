@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<title>Enter PIN — CryptoCard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#0B0E11;background-image:radial-gradient(circle,rgba(255,255,255,0.06) 1.5px,transparent 1.5px);background-size:26px 26px;color:#fff;font-family:'IBM Plex Sans',-apple-system,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.pin-wrap{width:100%;max-width:360px;padding:24px;}
+.logo{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:40px;}
+.logo-icon{width:44px;height:44px;background:linear-gradient(135deg,#F0B90B,#F8D12F);border-radius:12px;display:flex;align-items:center;justify-content:center;}
+.logo-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;}
+.pin-card{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:32px 28px;text-align:center;}
+.pin-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;margin-bottom:6px;}
+.pin-sub{font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:28px;line-height:1.5;}
+.pin-dots{display:flex;justify-content:center;gap:14px;margin-bottom:28px;}
+.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.2);background:transparent;transition:all .2s;}
+.pin-dot.filled{background:#F0B90B;border-color:#F0B90B;}
+.pin-dot.error{background:#F6465D;border-color:#F6465D;}
+.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.pin-key{height:60px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;font-size:1.2rem;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.pin-key:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.15);}
+.pin-key:active{transform:scale(.95);background:rgba(240,185,11,.1);border-color:rgba(240,185,11,.3);}
+.pin-key.del{color:rgba(255,255,255,.5);font-size:1rem;}
+.pin-key.empty{border:none;background:none;cursor:default;}
+.pin-error{font-size:.78rem;color:#F6465D;min-height:20px;margin-bottom:8px;}
+.pin-logout{font-size:.76rem;color:rgba(255,255,255,.25);cursor:pointer;margin-top:12px;text-decoration:underline;}
+.pin-logout:hover{color:rgba(255,255,255,.5);}
+/* Setup mode */
+.setup-step{font-size:.72rem;color:rgba(255,255,255,.3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.6px;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="pin-wrap">
+  <div class="logo">
+    <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
+    <div class="logo-name">CryptoCard</div>
+  </div>
+  <div class="pin-card">
+    <div class="setup-step" id="setupStep"></div>
+    <div class="pin-title" id="pinTitle">Enter Your PIN</div>
+    <div class="pin-sub" id="pinSub">Enter your 6-digit security PIN to continue</div>
+    <div class="pin-dots" id="pinDots">
+      <div class="pin-dot" id="d0"></div>
+      <div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div>
+      <div class="pin-dot" id="d3"></div>
+      <div class="pin-dot" id="d4"></div>
+      <div class="pin-dot" id="d5"></div>
+    </div>
+    <div class="pin-error" id="pinError"></div>
+    <div class="pin-keypad">
+      <button class="pin-key" onclick="pressKey('1')">1</button>
+      <button class="pin-key" onclick="pressKey('2')">2</button>
+      <button class="pin-key" onclick="pressKey('3')">3</button>
+      <button class="pin-key" onclick="pressKey('4')">4</button>
+      <button class="pin-key" onclick="pressKey('5')">5</button>
+      <button class="pin-key" onclick="pressKey('6')">6</button>
+      <button class="pin-key" onclick="pressKey('7')">7</button>
+      <button class="pin-key" onclick="pressKey('8')">8</button>
+      <button class="pin-key" onclick="pressKey('9')">9</button>
+      <button class="pin-key empty"></button>
+      <button class="pin-key" onclick="pressKey('0')">0</button>
+      <button class="pin-key del" onclick="pressDelete()">⌫</button>
+    </div>
+    <div class="pin-logout" onclick="doLogout()">Sign out instead</div>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script>
+// Modes: 'setup' (first time), 'confirm' (confirm setup), 'enter' (login)
+let mode = 'enter';
+let current = '';
+let firstPin = '';
+let redirectTo = 'dashboard.html';
+
+function init(){
+  const params = new URLSearchParams(location.search);
+  redirectTo = params.get('r') || 'dashboard.html';
+
+  const u = getCurrentUser();
+  if(!u){ location.href='auth.html'; return; }
+
+  if(!u.pin){
+    // No PIN set yet — setup mode
+    mode = 'setup';
+    document.getElementById('setupStep').textContent = 'Step 1 of 2';
+    document.getElementById('pinTitle').textContent = 'Create Your PIN';
+    document.getElementById('pinSub').textContent = 'Set a 6-digit PIN to secure your account';
+  } else {
+    mode = 'enter';
+    document.getElementById('pinTitle').textContent = 'Welcome back';
+    const name = u.name ? u.name.split(' ')[0] : '';
+    document.getElementById('pinSub').textContent = (name ? 'Hi ' + name + '! ' : '') + 'Enter your 6-digit PIN to continue';
+  }
+}
+
+function updateDots(){
+  for(let i=0;i<6;i++){
+    const d = document.getElementById('d'+i);
+    d.classList.toggle('filled', i < current.length);
+    d.classList.remove('error');
+  }
+}
+
+function pressKey(k){
+  if(current.length >= 6) return;
+  current += k;
+  updateDots();
+  document.getElementById('pinError').textContent = '';
+  if(current.length === 6) setTimeout(handleComplete, 120);
+}
+
+function pressDelete(){
+  if(!current.length) return;
+  current = current.slice(0, -1);
+  updateDots();
+}
+
+function shakeError(msg){
+  for(let i=0;i<6;i++) document.getElementById('d'+i).classList.add('error');
+  document.getElementById('pinError').textContent = msg;
+  setTimeout(()=>{ current=''; updateDots(); }, 700);
+}
+
+function handleComplete(){
+  const u = getCurrentUser();
+  if(mode === 'setup'){
+    firstPin = current;
+    current = '';
+    updateDots();
+    mode = 'confirm';
+    document.getElementById('setupStep').textContent = 'Step 2 of 2';
+    document.getElementById('pinTitle').textContent = 'Confirm Your PIN';
+    document.getElementById('pinSub').textContent = 'Enter the same PIN again to confirm';
+  } else if(mode === 'confirm'){
+    if(current === firstPin){
+      // Hash and save PIN
+      const hashed = btoa(current + '_cc_salt_' + (u.email||''));
+      updateCurrentUser({pin: hashed});
+      // Mark session as unlocked
+      sessionStorage.setItem('cc_pin_ok', '1');
+      location.href = redirectTo;
+    } else {
+      shakeError('PINs do not match. Try again.');
+      mode = 'setup';
+      firstPin = '';
+      document.getElementById('setupStep').textContent = 'Step 1 of 2';
+      document.getElementById('pinTitle').textContent = 'Create Your PIN';
+      document.getElementById('pinSub').textContent = 'Set a 6-digit PIN to secure your account';
+    }
+  } else {
+    // Verify
+    const hashed = btoa(current + '_cc_salt_' + (u.email||''));
+    if(hashed === u.pin){
+      sessionStorage.setItem('cc_pin_ok', '1');
+      location.href = redirectTo;
+    } else {
+      shakeError('Incorrect PIN. Try again.');
+    }
+  }
+}
+
+function doLogout(){
+  sessionStorage.removeItem('cc_pin_ok');
+  if(typeof logout === 'function') logout();
+  else { localStorage.removeItem('cryptocard_user'); location.href='auth.html'; }
+}
+
+// Keyboard support
+document.addEventListener('keydown', e => {
+  if(e.key >= '0' && e.key <= '9') pressKey(e.key);
+  else if(e.key === 'Backspace') pressDelete();
+});
+
+init();
+</script>
+</body>
+</html>

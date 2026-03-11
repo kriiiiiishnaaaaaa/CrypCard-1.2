@@ -131,8 +131,8 @@ body::before{content:'';position:fixed;top:-200px;left:50%;transform:translateX(
       <div class="field"><label>Email</label><input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email"/></div>
       <div class="field"><label>Password</label><input type="password" id="loginPwd" placeholder="••••••••" autocomplete="current-password"/></div>
       <button class="btn-gold" id="loginBtn" onclick="doLogin()">Sign In →</button>
-      <div class="divider"><span>or try demo</span></div>
-      <button class="demo-btn" onclick="doDemo()">⚡ Login with Demo Account</button>
+      <div class="divider"><span>or use test account</span></div>
+      <button class="demo-btn" onclick="doDemo()">⚡ Login with Test Account</button>
     </div>
 
     <!-- SIGNUP sub-form (just name/email/pass, rest handled in steps) -->
@@ -304,13 +304,13 @@ function doLogin() {
   if (!email || !pwd) { showErr('loginErr', 'Please fill in all fields.'); return; }
   btn.disabled = true; btn.textContent = 'Signing in…';
   const r = loginUser(email, pwd);
-  if (r.ok) { window.location.href = r.user.defaultCurrency ? 'dashboard.html' : 'setup-currency.html'; }
+  if (r.ok) { const dest = r.user.defaultCurrency ? 'dashboard.html' : 'setup-currency.html'; window.location.href = r.user.pin ? 'pin.html?r=' + dest : 'pin.html?r=' + dest; }
   else { showErr('loginErr', r.error); btn.disabled = false; btn.textContent = 'Sign In →'; }
 }
 
 function doDemo() {
   const r = loginUser('test@gmail.com', 'Test12345');
-  if (r.ok) window.location.href = r.user.defaultCurrency ? 'dashboard.html' : 'setup-currency.html';
+  if (r.ok) { const dest = r.user.defaultCurrency ? 'dashboard.html' : 'setup-currency.html'; window.location.href = 'pin.html?r=' + dest; }
   else alert('Demo account not found. Refresh and try again.');
 }
 

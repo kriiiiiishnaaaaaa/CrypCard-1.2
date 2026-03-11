@@ -90,6 +90,21 @@ function authGuard() {
 }
 window.authGuard = authGuard;
 
+/* ---- pinGuard: check PIN is entered for this session ---- */
+function pinGuard() {
+  const user = getCurrentUser();
+  if (!user) { window.location.href = 'auth.html'; return false; }
+  // If PIN is set and session not unlocked yet, redirect to pin page
+  if (user.pin && sessionStorage.getItem('cc_pin_ok') !== '1') {
+    const current = encodeURIComponent(location.pathname.split('/').pop() || 'dashboard.html');
+    window.location.href = 'pin.html?r=' + current;
+    return false;
+  }
+  return true;
+}
+window.pinGuard = pinGuard;
+
+
 /* ---- logout ---- */
 function logout() {
   localStorage.removeItem(CC_SESSION_KEY);

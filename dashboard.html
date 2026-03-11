@@ -104,7 +104,7 @@ body{background-color:#0B0E11;background-image:radial-gradient(circle,rgba(255,2
 </head>
 <body>
 <script src="auth.js"></script>
-<script>if(!authGuard()){}else{const _cu=getCurrentUser();if(_cu&&!_cu.defaultCurrency)window.location.href="setup-currency.html";}</script>
+<script>if(!authGuard()){}; if(!pinGuard()){}else{const _cu=getCurrentUser();if(_cu&&!_cu.defaultCurrency)window.location.href="setup-currency.html";}</script>
 
 <div class="dash-layout">
 <aside class="sidebar" id="sidebar">

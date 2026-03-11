@@ -79,7 +79,7 @@ input[type=file]{display:none;}
 </head>
 <body>
 <script src="auth.js"></script>
-<script>if(!authGuard()){}</script>
+<script>if(!authGuard()){}; if(!pinGuard()){}</script>
 <div class="page-layout">
 <aside class="sidebar" id="sidebar">
   <a href="index.html" class="sidebar-logo">
@@ -113,7 +113,7 @@ input[type=file]{display:none;}
     </div>
   </div>
 
-  <div class="card-box" style="max-width:700px;">
+  <div id="kycFormArea"><div class="card-box" style="max-width:700px;">
     <!-- Step progress bar -->
     <div class="step-progress">
       <div class="step-dot" id="sn1" style="background:#F0B90B;color:#000;">1</div>
@@ -223,6 +223,22 @@ input[type=file]{display:none;}
     </div>
   </div>
 </div>
+</div></div>
+
+<!-- KYC SUCCESS AREA -->
+<div id="kycSuccessArea" style="display:none;max-width:700px;">
+  <div class="card-box" style="text-align:center;padding:60px 40px;">
+    <div style="width:80px;height:80px;border-radius:50%;background:rgba(14,203,129,.1);border:2px solid rgba(14,203,129,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0ECB81" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+    </div>
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;color:#EAECEF;margin-bottom:10px;">KYC Verified ✓</div>
+    <div style="font-size:.88rem;color:rgba(234,236,239,.5);max-width:360px;margin:0 auto 8px;line-height:1.6;">Your identity has been successfully verified. You have full access to all CryptoCard features.</div>
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(14,203,129,.08);border:1px solid rgba(14,203,129,.2);border-radius:100px;padding:6px 18px;font-size:.8rem;color:#0ECB81;font-weight:600;margin-top:8px;margin-bottom:32px;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Identity Verified
+    </div>
+    <a href="dashboard.html" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#F0B90B,#F8D12F);color:#000;font-weight:700;border-radius:12px;padding:13px 32px;text-decoration:none;font-size:.92rem;font-family:'Space Grotesk',sans-serif;">Go to Dashboard →</a>
+  </div>
 </div>
 
 <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
@@ -264,9 +280,25 @@ function retakePhoto(){document.getElementById('capturedPhoto').style.display='n
 function submitKYC(){
   if(!_selfieOk){showToast('Please take your selfie first');return;}
   stopCamera();
+  // Save KYC submitted state to user data
+  const u=getCurrentUser();
+  if(u){ updateCurrentUser({kyc_submitted:true,kyc_date:new Date().toISOString()}); }
   [1,2,3].forEach(i=>document.getElementById('step'+i).classList.remove('active'));
   document.getElementById('stepDone').classList.add('active');
+  showKYCDone();
 }
+function showKYCDone(){
+  document.getElementById('kycFormArea').style.display='none';
+  document.getElementById('kycSuccessArea').style.display='block';
+}
+// On page load, check if already submitted
+window.addEventListener('DOMContentLoaded',function(){
+  const u=getCurrentUser();
+  if(u && u.kyc_submitted){
+    document.getElementById('kycFormArea').style.display='none';
+    document.getElementById('kycSuccessArea').style.display='block';
+  }
+});
 </script>
 </body>
 </html>
