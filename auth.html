@@ -514,8 +514,9 @@ function doVerify() {
     err.style.display = 'block';
     return;
   }
-  // Save pin + recovery phrase to user record
-  updateCurrentUser({ pin: signupData.pin, recoveryPhrase: recoveryWords });
+  // Save pin + recovery phrase to user record (hash PIN same way as pin.html)
+  const _pinHashed = btoa(signupData.pin + '_cc_salt_' + (r.user.email || ''));
+  updateCurrentUser({ pin: _pinHashed, recoveryPhrase: recoveryWords });
   goTo('step-success');
 }
 
