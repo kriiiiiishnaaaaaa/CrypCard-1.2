@@ -105,43 +105,10 @@
       color:#000; font-weight:600; font-size:0.82rem;
       border-radius:8px; text-decoration:none; white-space:nowrap;
     }
-    .mobile-backdrop { display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:998; }
-    .mobile-backdrop.show { display:block; }
-    .mobile-menu {
-      position:fixed; top:0; right:0; bottom:0; width:260px;
-      background:#0D1117; border-left:1px solid rgba(255,255,255,.08);
-      z-index:999; display:flex; flex-direction:column;
-      transform:translateX(100%); transition:transform .3s ease;
-    }
-    .mobile-menu.open { transform:translateX(0); }
-    .mobile-menu-header {
-      display:flex; align-items:center; justify-content:space-between;
-      padding:16px 18px; border-bottom:1px solid rgba(255,255,255,.07);
-    }
-    .mobile-close {
-      background:none; border:1px solid rgba(255,255,255,.1); border-radius:8px;
-      width:30px; height:30px; color:rgba(255,255,255,.4); font-size:0.9rem;
-      cursor:pointer; display:flex; align-items:center; justify-content:center;
-    }
-    .mobile-menu-links { flex:1; padding:8px; display:flex; flex-direction:column; gap:2px; }
-    .mobile-link {
-      display:flex; align-items:center; padding:11px 14px; border-radius:8px;
-      color:rgba(255,255,255,.55); text-decoration:none;
-      font-size:0.9rem; font-weight:500; transition:all .2s;
-    }
-    .mobile-link:hover { background:rgba(255,255,255,.05); color:#fff; }
-    .mobile-menu-footer {
-      padding:16px 18px; border-top:1px solid rgba(255,255,255,.07);
-      display:flex; flex-direction:column; gap:8px;
-    }
-    .mobile-login-link {
-      text-align:center; color:rgba(255,255,255,.45);
-      text-decoration:none; font-size:0.9rem; font-weight:500; padding:9px;
-    }
+
     @media (max-width:900px) {
       .nav-actions { display:none; }
       .nav-menu { display:none !important; }
-      .hamburger { display:flex !important; }
       .nav-mobile-cta { display:inline-flex; }
       .hero-inner { grid-template-columns:1fr; text-align:center; gap:32px; }
       .hero-visual { order:-1; min-height:300px; }
@@ -188,36 +155,12 @@
         <a href="auth.html" class="nav-login">Login</a>
         <a href="auth.html" class="btn btn-primary btn-sm">Get Your Card &rarr;</a>
       </div>
-      <!-- Mobile: Get Card button + hamburger -->
-      <a href="auth.html" class="nav-mobile-cta">Get Card</a>
-      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <!-- Mobile CTA only -->
+      <a href="auth.html" class="nav-mobile-cta">Get Your Card</a>
     </div>
   </div>
 </nav>
 
-<!-- Mobile Slide-in Menu -->
-<div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileMenu()"></div>
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-menu-header">
-    <div style="display:flex;align-items:center;gap:8px;">
-      <div class="nav-logo-icon" style="width:28px;height:28px;border-radius:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg></div>
-      <span style="font-family:var(--font-heading);font-weight:700;font-size:.95rem;">CryptoCard</span>
-    </div>
-    <button class="mobile-close" id="mobileClose" onclick="closeMobileMenu()">&#x2715;</button>
-  </div>
-  <div class="mobile-menu-links">
-    <a href="#how-it-works" class="mobile-link" onclick="closeMobileMenu()">How It Works</a>
-    <a href="#features" class="mobile-link" onclick="closeMobileMenu()">Features</a>
-    <a href="#pricing" class="mobile-link" onclick="closeMobileMenu()">Pricing</a>
-    <a href="#faq" class="mobile-link" onclick="closeMobileMenu()">FAQ</a>
-  </div>
-  <div class="mobile-menu-footer">
-    <a href="auth.html" class="mobile-login-link">Login</a>
-    <a href="auth.html" class="btn btn-primary" style="width:100%;justify-content:center;">Get Your Card &rarr;</a>
-  </div>
-</div>
 
 <!-- ===== HERO ===== -->
 <section class="hero" id="home">
