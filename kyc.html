@@ -6,7 +6,6 @@
 <title>KYC &mdash; CryptoCard</title>
 <link rel="stylesheet" href="style.css"/>
 <style>
-
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#0B0E11;color:#EAECEF;font-family:'IBM Plex Sans',-apple-system,sans-serif;}
 .page-layout{display:flex;}
@@ -26,9 +25,6 @@ body{background:#0B0E11;color:#EAECEF;font-family:'IBM Plex Sans',-apple-system,
 .icon-btn:hover{background:rgba(255,255,255,.1);}
 .search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:150px;}
 .avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
-.page-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.5rem;color:#EAECEF;}
-.page-subtitle{font-size:.82rem;color:rgba(234,236,239,.4);margin-top:4px;}
-.avatar-circle{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;}
 .card-box{background:#161A1F;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:24px;margin-bottom:20px;}
 .card-box-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;color:#EAECEF;margin-bottom:16px;}
 .form-label{font-size:.76rem;color:rgba(234,236,239,.5);font-weight:600;margin-bottom:6px;display:block;text-transform:uppercase;letter-spacing:.4px;}
@@ -38,6 +34,7 @@ body{background:#0B0E11;color:#EAECEF;font-family:'IBM Plex Sans',-apple-system,
 .form-group{margin-bottom:18px;}
 .btn-gold{background:linear-gradient(135deg,#F0B90B,#F8D12F);color:#000;font-weight:700;border:none;border-radius:10px;padding:13px 28px;font-size:.9rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:8px;justify-content:center;}
 .btn-gold:hover{opacity:.85;}
+.btn-gold:disabled{opacity:.4;cursor:not-allowed;}
 .btn-ghost{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 22px;color:rgba(234,236,239,.7);font-size:.88rem;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;}
 .btn-ghost:hover{border-color:rgba(255,255,255,.2);color:#EAECEF;}
 .step-progress{display:flex;align-items:center;gap:0;margin-bottom:28px;}
@@ -48,33 +45,32 @@ body{background:#0B0E11;color:#EAECEF;font-family:'IBM Plex Sans',-apple-system,
 input[type=file]{display:none;}
 .file-drop{border:2px dashed rgba(255,255,255,.1);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color .2s;font-size:.85rem;color:rgba(234,236,239,.4);}
 .file-drop:hover{border-color:rgba(240,185,11,.35);color:#F0B90B;}
+.file-drop.uploaded{border-color:rgba(14,203,129,.4);color:#0ECB81;}
 .two-col-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.mob-menu-btn{display:none !important;position:fixed;bottom:20px;left:20px;z-index:200;width:44px;height:44px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
-.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:none;z-index:300;}
+/* Backdrop: pointer-events none so it never blocks sidebar clicks */
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;pointer-events:none;}
+.sidebar-backdrop.show{display:block;pointer-events:auto;}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:999;white-space:nowrap;}
 .toast.show{transform:translateX(-50%) translateY(0);}
+.person-status{font-size:.75rem;margin-top:6px;text-align:center;min-height:18px;}
 
-@media(max-width:600px){.two-col-grid{grid-template-columns:1fr}.page-title{font-size:1.2rem}.card-box{padding:16px}}
+@media(max-width:600px){.two-col-grid{grid-template-columns:1fr}.card-box{padding:16px}}
 
-
-/* HEADER LOCK OVERRIDE */
-
-.page-topbar{padding-top: 0 !important; margin-bottom:0 !important;}
-.icon-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;}
-.icon-btn:hover{background:rgba(255,255,255,.1);}
-.search-pill{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:7px 16px;font-size:.82rem;color:rgba(255,255,255,.35);cursor:pointer;min-width:150px;}
-.avatar-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#F0B90B,#F8D12F);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:#000;cursor:pointer;font-family:'Space Grotesk',sans-serif;flex-shrink:0;}
-
-/* MOBILE SIDEBAR FIX */
+/* MOBILE SIDEBAR */
 @media(max-width:900px){
   .sidebar{transform:translateX(-100%);z-index:400;}
   .sidebar.open{transform:translateX(0);}
   .sidebar-backdrop{z-index:350;}
-  .sidebar-backdrop.show{display:block;}
-  .page-main{margin-left:0 !important;padding-left:16px !important;padding-right:16px !important;padding-top:72px !important;}
+  .sidebar-backdrop.show{display:block;pointer-events:auto;}
+  .page-main{margin-left:0 !important;padding:72px 16px 24px !important;}
   .page-topbar{left:0 !important;right:0 !important;}
 }
 
+/* KYC success area — proper top margin on mobile */
+#kycSuccessArea{margin-top:0;}
+@media(max-width:900px){
+  #kycFormArea,#kycSuccessArea{margin-top:0;}
+}
 </style>
 </head>
 <body>
@@ -98,162 +94,164 @@ input[type=file]{display:none;}
 </aside>
 
 <div class="page-main">
-  <!-- UNIFIED HEADER (same as dashboard) -->
   <div class="page-topbar" id="pageTopbar">
     <div style="display:flex;align-items:center;gap:10px;">
       <button class="icon-btn" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
       <div class="search-pill"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Search coins...</div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
-      <button class="icon-btn" style="position:relative;" onclick="if(typeof toggleNotif==='function')toggleNotif(event)">
+      <button class="icon-btn" style="position:relative;">
         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         <span style="position:absolute;top:6px;right:6px;width:7px;height:7px;background:#F0B90B;border-radius:50%;border:2px solid #0B0E11;"></span>
       </button>
-      <div class="avatar-btn" id="avatarBtn" onclick="if(typeof toggleProfile==='function')toggleProfile(event)"></div>
+      <div class="avatar-btn" id="avatarBtn"></div>
     </div>
   </div>
 
-  <div id="kycFormArea"><div class="card-box" style="max-width:700px;">
-    <!-- Step progress bar -->
-    <div class="step-progress">
-      <div class="step-dot" id="sn1" style="background:#F0B90B;color:#000;">1</div>
-      <div class="step-line-seg" id="sl1" style="background:rgba(255,255,255,.08);"></div>
-      <div class="step-dot" id="sn2" style="background:rgba(255,255,255,.08);color:rgba(234,236,239,.4);">2</div>
-      <div class="step-line-seg" id="sl2" style="background:rgba(255,255,255,.08);"></div>
-      <div class="step-dot" id="sn3" style="background:rgba(255,255,255,.08);color:rgba(234,236,239,.4);">3</div>
-    </div>
+  <!-- KYC FORM AREA -->
+  <div id="kycFormArea">
+    <div class="card-box" style="max-width:700px;">
+      <div class="step-progress">
+        <div class="step-dot" id="sn1" style="background:#F0B90B;color:#000;">1</div>
+        <div class="step-line-seg" id="sl1" style="background:rgba(255,255,255,.08);"></div>
+        <div class="step-dot" id="sn2" style="background:rgba(255,255,255,.08);color:rgba(234,236,239,.4);">2</div>
+        <div class="step-line-seg" id="sl2" style="background:rgba(255,255,255,.08);"></div>
+        <div class="step-dot" id="sn3" style="background:rgba(255,255,255,.08);color:rgba(234,236,239,.4);">3</div>
+      </div>
 
-    <!-- STEP 1: Personal -->
-    <div class="step-block active" id="step1">
-      <div class="card-box-title">Personal Information</div>
-      <div class="two-col-grid">
-        <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" id="kFN" placeholder="John" required /></div>
-        <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" id="kLN" placeholder="Doe" required /></div>
-      </div>
-      <div class="form-group"><label class="form-label">Date of Birth</label><input type="date" class="form-input" id="kDOB" required /></div>
-      <div class="form-group"><label class="form-label">Nationality</label>
-        <select class="form-select" id="kNAT" required>
-          <option value="">Select country...</option>
-          <option>India</option><option>United States</option><option>United Kingdom</option>
-          <option>Germany</option><option>Singapore</option><option>UAE</option><option>Other</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Residential Address</label><input type="text" class="form-input" id="kADDR" placeholder="123 Main St, City, State, ZIP" required /></div>
-      <button class="btn-gold" style="width:100%;" onclick="nextKYC(1)">Continue &rarr;</button>
-    </div>
-
-    <!-- STEP 2: Document -->
-    <div class="step-block" id="step2">
-      <div class="card-box-title">Identity Document</div>
-      <div class="form-group"><label class="form-label">Document Type</label>
-        <select class="form-select" id="kDOCT" required>
-          <option value="">Select...</option>
-          <option>Passport</option><option>National ID</option><option>Driving License</option>
-        </select>
-      </div>
-      <div class="form-group"><label class="form-label">Document Number</label><input type="text" class="form-input" id="kDOCN" placeholder="Enter document number" required /></div>
-      <div class="form-group">
-        <label class="form-label">Upload Front</label>
-        <div class="file-drop" onclick="document.getElementById('kF1').click()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:6px;opacity:.4;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><br/>
-          Click to upload front of document<br/>
-          <small style="font-size:.72rem;opacity:.5;">JPG, PNG or PDF &bull; Max 10MB</small>
+      <!-- STEP 1: Personal -->
+      <div class="step-block active" id="step1">
+        <div class="card-box-title">Personal Information</div>
+        <div class="two-col-grid">
+          <div class="form-group"><label class="form-label">First Name *</label><input type="text" class="form-input" id="kFN" placeholder="John" /></div>
+          <div class="form-group"><label class="form-label">Last Name *</label><input type="text" class="form-input" id="kLN" placeholder="Doe" /></div>
         </div>
-        <input type="file" id="kF1" accept="image/*,.pdf" onchange="filePicked(this,'kF1Status')" />
-        <div id="kF1Status" style="font-size:.75rem;color:#0ECB81;margin-top:4px;"></div>
+        <div class="form-group">
+          <label class="form-label">Date of Birth * <small style="opacity:.5;font-size:.7rem;">(must be 18+)</small></label>
+          <input type="date" class="form-input" id="kDOB" />
+        </div>
+        <div class="form-group"><label class="form-label">Nationality *</label>
+          <select class="form-select" id="kNAT">
+            <option value="">Select country...</option>
+            <option>India</option><option>United States</option><option>United Kingdom</option>
+            <option>Germany</option><option>Singapore</option><option>UAE</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Residential Address *</label><input type="text" class="form-input" id="kADDR" placeholder="123 Main St, City, State, ZIP" /></div>
+        <button class="btn-gold" style="width:100%;" onclick="nextKYC(1)">Continue &rarr;</button>
       </div>
-      <div class="form-group">
-        <label class="form-label">Upload Back <small style="opacity:.5;font-size:.72rem;">(not required for passport)</small></label>
-        <div class="file-drop" onclick="document.getElementById('kF2').click()">Click to upload back of document</div>
-        <input type="file" id="kF2" accept="image/*,.pdf" onchange="filePicked(this,'kF2Status')" />
-        <div id="kF2Status" style="font-size:.75rem;color:#0ECB81;margin-top:4px;"></div>
-      </div>
-      <div style="display:flex;gap:10px;">
-        <button class="btn-ghost" onclick="goKYC(1)">&larr; Back</button>
-        <button class="btn-gold" style="flex:1;" onclick="nextKYC(2)">Continue &rarr;</button>
-      </div>
-    </div>
 
-    <!-- STEP 3: Camera Selfie -->
-    <div class="step-block" id="step3">
-      <div class="card-box-title">Live Selfie Verification</div>
-      <div class="form-group">
-        <label class="form-label">Hold your ID document next to your face</label>
-        <div id="cameraArea" style="background:#0D1117;border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;position:relative;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-          <video id="cameraFeed" autoplay playsinline style="width:100%;max-height:280px;object-fit:cover;display:none;"></video>
-          <canvas id="cameraCanvas" style="display:none;"></canvas>
-          <img id="capturedPhoto" style="width:100%;max-height:280px;object-fit:cover;border-radius:10px;display:none;" alt="Selfie" />
-          <div id="cameraPlaceholder" style="text-align:center;padding:30px 20px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" style="opacity:.25;margin-bottom:10px;"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-            <div style="font-size:.84rem;color:rgba(234,236,239,.35);">Camera not started</div>
-            <div style="font-size:.72rem;color:rgba(234,236,239,.2);margin-top:4px;">Click Start Camera below</div>
+      <!-- STEP 2: Document -->
+      <div class="step-block" id="step2">
+        <div class="card-box-title">Identity Document</div>
+        <div class="form-group"><label class="form-label">Document Type *</label>
+          <select class="form-select" id="kDOCT" onchange="docTypeChanged()">
+            <option value="">Select...</option>
+            <option>Passport</option><option>National ID</option><option>Driving License</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Document Number *</label><input type="text" class="form-input" id="kDOCN" placeholder="Enter document number" /></div>
+        <div class="form-group">
+          <label class="form-label">Upload Front *</label>
+          <div class="file-drop" id="kF1Drop" onclick="document.getElementById('kF1').click()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:6px;opacity:.4;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><br/>
+            Click to upload front of document<br/>
+            <small style="font-size:.72rem;opacity:.5;">JPG, PNG or PDF &bull; Max 10MB</small>
           </div>
+          <input type="file" id="kF1" accept="image/*,.pdf" onchange="filePicked(this,'kF1Status','kF1Drop')" />
+          <div id="kF1Status" style="font-size:.75rem;color:#0ECB81;margin-top:4px;"></div>
         </div>
-        <div style="display:flex;gap:8px;margin-top:10px;">
-          <button class="btn-ghost" id="startCamBtn" style="flex:1;justify-content:center;" onclick="startCamera()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-            Start Camera
-          </button>
-          <button class="btn-gold" id="snapBtn" style="flex:1;display:none;justify-content:center;" onclick="snapPhoto()">
-            Take Photo
-          </button>
-          <button class="btn-ghost" id="retakeBtn" style="flex:1;display:none;justify-content:center;" onclick="retakePhoto()">
-            Retake
-          </button>
+        <div class="form-group" id="backGroup">
+          <label class="form-label">Upload Back *</label>
+          <div class="file-drop" id="kF2Drop" onclick="document.getElementById('kF2').click()">Click to upload back of document</div>
+          <input type="file" id="kF2" accept="image/*,.pdf" onchange="filePicked(this,'kF2Status','kF2Drop')" />
+          <div id="kF2Status" style="font-size:.75rem;color:#0ECB81;margin-top:4px;"></div>
         </div>
-        <div id="selfieStatus" style="font-size:.75rem;color:#0ECB81;margin-top:6px;text-align:center;"></div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn-ghost" onclick="goKYC(1)">&larr; Back</button>
+          <button class="btn-gold" style="flex:1;" onclick="nextKYC(2)">Continue &rarr;</button>
+        </div>
       </div>
-      <div style="font-size:.8rem;color:rgba(234,236,239,.5);background:rgba(240,185,11,.05);border:1px solid rgba(240,185,11,.15);border-radius:10px;padding:12px 16px;margin-bottom:16px;">
-        After submission, our team reviews within <strong style="color:#F0B90B;">3 working days</strong>. Check your email for updates.
+
+      <!-- STEP 3: Camera Selfie -->
+      <div class="step-block" id="step3">
+        <div class="card-box-title">Live Selfie Verification</div>
+        <div class="form-group">
+          <label class="form-label">Hold your ID document next to your face</label>
+          <div id="cameraArea" style="background:#0D1117;border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;position:relative;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <video id="cameraFeed" autoplay playsinline style="width:100%;max-height:280px;object-fit:cover;display:none;"></video>
+            <canvas id="cameraCanvas" style="display:none;"></canvas>
+            <img id="capturedPhoto" style="width:100%;max-height:280px;object-fit:cover;border-radius:10px;display:none;" alt="Selfie" />
+            <div id="cameraPlaceholder" style="text-align:center;padding:30px 20px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" style="opacity:.25;margin-bottom:10px;"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+              <div style="font-size:.84rem;color:rgba(234,236,239,.35);">Camera not started</div>
+              <div style="font-size:.72rem;color:rgba(234,236,239,.2);margin-top:4px;">Click Start Camera below</div>
+            </div>
+          </div>
+          <div class="person-status" id="personStatus"></div>
+          <div style="display:flex;gap:8px;margin-top:6px;">
+            <button class="btn-ghost" id="startCamBtn" style="flex:1;justify-content:center;" onclick="startCamera()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+              Start Camera
+            </button>
+            <button class="btn-gold" id="snapBtn" style="flex:1;display:none;justify-content:center;" onclick="snapPhoto()" disabled>
+              Take Photo
+            </button>
+            <button class="btn-ghost" id="retakeBtn" style="flex:1;display:none;justify-content:center;" onclick="retakePhoto()">
+              Retake
+            </button>
+          </div>
+          <div id="selfieStatus" style="font-size:.75rem;color:#0ECB81;margin-top:6px;text-align:center;"></div>
+        </div>
+        <div style="font-size:.8rem;color:rgba(234,236,239,.5);background:rgba(240,185,11,.05);border:1px solid rgba(240,185,11,.15);border-radius:10px;padding:12px 16px;margin-bottom:16px;">
+          After submission, our team reviews within <strong style="color:#F0B90B;">3 working days</strong>. Check your email for updates.
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn-ghost" onclick="goKYC(2);stopCamera();">&larr; Back</button>
+          <button class="btn-gold" style="flex:1;" onclick="submitKYC()">Submit for Review</button>
+        </div>
       </div>
-      <div style="display:flex;gap:10px;">
-        <button class="btn-ghost" onclick="goKYC(2);stopCamera();">&larr; Back</button>
-        <button class="btn-gold" style="flex:1;" onclick="submitKYC()">Submit for Review</button>
+
+      <!-- DONE -->
+      <div class="step-block" id="stepDone">
+        <div style="text-align:center;padding:40px 0;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#0ECB81" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;color:#EAECEF;margin-bottom:10px;">Documents Submitted!</div>
+          <div style="font-size:.85rem;color:rgba(234,236,239,.5);max-width:380px;margin:0 auto 24px;">Your KYC documents have been submitted successfully. Verification will be completed within <strong style="color:#F0B90B;">3 working days</strong>.</div>
+          <a href="dashboard.html" class="btn-gold" style="text-decoration:none;">Back to Dashboard</a>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- DONE -->
-    <div class="step-block" id="stepDone">
-      <div style="text-align:center;padding:40px 0;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#0ECB81" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
-        <div style="font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;color:#EAECEF;margin-bottom:10px;">Documents Submitted!</div>
-        <div style="font-size:.85rem;color:rgba(234,236,239,.5);max-width:380px;margin:0 auto 24px;">Your KYC documents have been submitted successfully. Verification will be completed within <strong style="color:#F0B90B;">3 working days</strong>. Check your email for updates.</div>
-        <a href="dashboard.html" class="btn-gold" style="text-decoration:none;">Back to Dashboard</a>
+  <!-- KYC ALREADY VERIFIED -->
+  <div id="kycSuccessArea" style="display:none;max-width:700px;">
+    <div class="card-box" style="text-align:center;padding:60px 40px;">
+      <div style="width:80px;height:80px;border-radius:50%;background:rgba(14,203,129,.1);border:2px solid rgba(14,203,129,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0ECB81" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
       </div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;color:#EAECEF;margin-bottom:10px;">KYC Verified ✓</div>
+      <div style="font-size:.88rem;color:rgba(234,236,239,.5);max-width:360px;margin:0 auto 8px;line-height:1.6;">Your identity has been successfully verified. You have full access to all CryptoCard features.</div>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(14,203,129,.08);border:1px solid rgba(14,203,129,.2);border-radius:100px;padding:6px 18px;font-size:.8rem;color:#0ECB81;font-weight:600;margin-top:8px;margin-bottom:32px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Identity Verified
+      </div>
+      <a href="dashboard.html" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#F0B90B,#F8D12F);color:#000;font-weight:700;border-radius:12px;padding:13px 32px;text-decoration:none;font-size:.92rem;font-family:'Space Grotesk',sans-serif;">Go to Dashboard →</a>
     </div>
   </div>
 </div>
-</div></div>
-
-<!-- KYC SUCCESS AREA -->
-<div id="kycSuccessArea" style="display:none;max-width:700px;">
-  <div class="card-box" style="text-align:center;padding:60px 40px;">
-    <div style="width:80px;height:80px;border-radius:50%;background:rgba(14,203,129,.1);border:2px solid rgba(14,203,129,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0ECB81" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-    </div>
-    <div style="font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;color:#EAECEF;margin-bottom:10px;">KYC Verified ✓</div>
-    <div style="font-size:.88rem;color:rgba(234,236,239,.5);max-width:360px;margin:0 auto 8px;line-height:1.6;">Your identity has been successfully verified. You have full access to all CryptoCard features.</div>
-    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(14,203,129,.08);border:1px solid rgba(14,203,129,.2);border-radius:100px;padding:6px 18px;font-size:.8rem;color:#0ECB81;font-weight:600;margin-top:8px;margin-bottom:32px;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      Identity Verified
-    </div>
-    <a href="dashboard.html" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#F0B90B,#F8D12F);color:#000;font-weight:700;border-radius:12px;padding:13px 32px;text-decoration:none;font-size:.92rem;font-family:'Space Grotesk',sans-serif;">Go to Dashboard →</a>
-  </div>
 </div>
 
 <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
-<button class="mob-menu-btn" onclick="toggleSidebar()" aria-label="Menu">
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
-</button>
 <div class="toast" id="pageToast"></div>
 <script src="app.js"></script>
 <script>
 const _pu=getCurrentUser();if(_pu&&document.getElementById('avatarBtn'))document.getElementById('avatarBtn').textContent=_pu.name.charAt(0).toUpperCase();
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarBackdrop').classList.toggle('show');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('show');}
-function showToast(m){const t=document.getElementById('pageToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-const _u=getCurrentUser();if(_u&&document.getElementById('userAvatar'))document.getElementById('userAvatar').textContent=_u.name.charAt(0).toUpperCase();
+function showToast(m){const t=document.getElementById('pageToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
+// ── Step navigation ──
 function goKYC(n){
   [1,2,3].forEach(i=>{
     document.getElementById('step'+i).classList.remove('active');
@@ -264,40 +262,180 @@ function goKYC(n){
   });
   document.getElementById('step'+n).classList.add('active');
 }
+
+// ── Validation ──
 function nextKYC(from){
-  const req={1:['kFN','kLN','kDOB','kNAT','kADDR'],2:['kDOCT','kDOCN']};
-  for(const id of (req[from]||[])){
-    const el=document.getElementById(id);
-    if(!el||!el.value.trim()){showToast('Please fill in all required fields');if(el)el.focus();return;}
+  if(from===1){
+    const fn=document.getElementById('kFN').value.trim();
+    const ln=document.getElementById('kLN').value.trim();
+    const dob=document.getElementById('kDOB').value;
+    const nat=document.getElementById('kNAT').value;
+    const addr=document.getElementById('kADDR').value.trim();
+    if(!fn){showToast('First name is required');document.getElementById('kFN').focus();return;}
+    if(!ln){showToast('Last name is required');document.getElementById('kLN').focus();return;}
+    if(!dob){showToast('Date of birth is required');document.getElementById('kDOB').focus();return;}
+    // 18+ check
+    const dobDate=new Date(dob);
+    const today=new Date();
+    let age=today.getFullYear()-dobDate.getFullYear();
+    const m=today.getMonth()-dobDate.getMonth();
+    if(m<0||(m===0&&today.getDate()<dobDate.getDate()))age--;
+    if(age<18){showToast('You must be at least 18 years old');document.getElementById('kDOB').focus();return;}
+    if(!nat){showToast('Please select your nationality');document.getElementById('kNAT').focus();return;}
+    if(!addr){showToast('Residential address is required');document.getElementById('kADDR').focus();return;}
+    goKYC(2);
+  } else if(from===2){
+    const docType=document.getElementById('kDOCT').value;
+    const docNum=document.getElementById('kDOCN').value.trim();
+    if(!docType){showToast('Please select document type');document.getElementById('kDOCT').focus();return;}
+    if(!docNum){showToast('Document number is required');document.getElementById('kDOCN').focus();return;}
+    if(!_frontUploaded){showToast('Please upload front of document');return;}
+    // Back required for non-passport
+    if(docType!=='Passport'&&!_backUploaded){showToast('Please upload back of document');return;}
+    goKYC(3);
   }
-  goKYC(from+1);
 }
-let _stream=null,_selfieOk=false;
-function startCamera(){navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false}).then(stream=>{_stream=stream;const v=document.getElementById('cameraFeed');v.srcObject=stream;v.style.display='block';document.getElementById('cameraPlaceholder').style.display='none';document.getElementById('startCamBtn').style.display='none';document.getElementById('snapBtn').style.display='flex';showToast('Camera ready — take your selfie');}).catch(err=>{showToast('Camera access denied: '+err.message);});}
-function stopCamera(){if(_stream){_stream.getTracks().forEach(t=>t.stop());_stream=null;}}
-function snapPhoto(){const v=document.getElementById('cameraFeed');const c=document.getElementById('cameraCanvas');const img=document.getElementById('capturedPhoto');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);const dataUrl=c.toDataURL('image/jpeg',0.85);img.src=dataUrl;img.style.display='block';v.style.display='none';stopCamera();_selfieOk=true;document.getElementById('snapBtn').style.display='none';document.getElementById('retakeBtn').style.display='flex';document.getElementById('selfieStatus').textContent='Selfie captured successfully!';showToast('Selfie captured!');}
-function retakePhoto(){document.getElementById('capturedPhoto').style.display='none';document.getElementById('retakeBtn').style.display='none';document.getElementById('cameraPlaceholder').style.display='none';document.getElementById('selfieStatus').textContent='';_selfieOk=false;startCamera();}
+
+// ── File upload ──
+let _frontUploaded=false,_backUploaded=false;
+function filePicked(input,statusId,dropId){
+  if(!input.files||!input.files[0])return;
+  const f=input.files[0];
+  document.getElementById(statusId).textContent='✓ '+f.name;
+  const drop=document.getElementById(dropId);
+  if(drop)drop.classList.add('uploaded');
+  if(dropId==='kF1Drop')_frontUploaded=true;
+  if(dropId==='kF2Drop')_backUploaded=true;
+}
+
+// ── Passport = no back needed ──
+function docTypeChanged(){
+  const t=document.getElementById('kDOCT').value;
+  const bg=document.getElementById('backGroup');
+  if(t==='Passport'){
+    bg.querySelector('.form-label').textContent='Upload Back (optional for Passport)';
+    _backUploaded=true; // passport doesn't require back
+  } else {
+    bg.querySelector('.form-label').textContent='Upload Back *';
+    _backUploaded=!!document.getElementById('kF2').files[0];
+  }
+}
+
+// ── Camera + face detection ──
+let _stream=null,_selfieOk=false,_faceDetectInterval=null;
+
+async function startCamera(){
+  try{
+    _stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});
+    const v=document.getElementById('cameraFeed');
+    v.srcObject=_stream;
+    v.style.display='block';
+    document.getElementById('cameraPlaceholder').style.display='none';
+    document.getElementById('startCamBtn').style.display='none';
+    document.getElementById('snapBtn').style.display='flex';
+    document.getElementById('snapBtn').disabled=true;
+    document.getElementById('personStatus').style.color='rgba(234,236,239,.4)';
+    document.getElementById('personStatus').textContent='🔍 Detecting person...';
+    startFaceDetection();
+  }catch(err){
+    showToast('Camera access denied: '+err.message);
+  }
+}
+
+function startFaceDetection(){
+  // Use ImageCapture + canvas to analyse frames for skin-tone pixels (simple heuristic)
+  // Falls back gracefully if API not available
+  const v=document.getElementById('cameraFeed');
+  const snapBtn=document.getElementById('snapBtn');
+  const statusEl=document.getElementById('personStatus');
+  let detected=false;
+
+  _faceDetectInterval=setInterval(()=>{
+    if(!_stream||!v.videoWidth)return;
+    // Draw frame to offscreen canvas
+    const oc=document.createElement('canvas');
+    oc.width=Math.min(v.videoWidth,160);
+    oc.height=Math.min(v.videoHeight,120);
+    const ctx=oc.getContext('2d');
+    ctx.drawImage(v,0,0,oc.width,oc.height);
+    const data=ctx.getImageData(0,0,oc.width,oc.height).data;
+    // Count skin-tone pixels (rough heuristic: R>60, G>40, B>20, R>G, R>B, R-G>15)
+    let skinCount=0,total=data.length/4;
+    for(let i=0;i<data.length;i+=4){
+      const r=data[i],g=data[i+1],b=data[i+2];
+      if(r>60&&g>40&&b>20&&r>g&&r>b&&(r-g)>15&&(r-b)>10)skinCount++;
+    }
+    const ratio=skinCount/total;
+    if(ratio>0.04){
+      if(!detected){
+        detected=true;
+        snapBtn.disabled=false;
+        statusEl.style.color='#0ECB81';
+        statusEl.textContent='✓ Person detected — ready to take photo';
+      }
+    } else {
+      if(detected){
+        detected=false;
+        snapBtn.disabled=true;
+        statusEl.style.color='#F6465D';
+        statusEl.textContent='⚠ No person detected — position your face in frame';
+      }
+    }
+  },600);
+}
+
+function stopCamera(){
+  if(_faceDetectInterval){clearInterval(_faceDetectInterval);_faceDetectInterval=null;}
+  if(_stream){_stream.getTracks().forEach(t=>t.stop());_stream=null;}
+}
+
+function snapPhoto(){
+  const v=document.getElementById('cameraFeed');
+  const c=document.getElementById('cameraCanvas');
+  const img=document.getElementById('capturedPhoto');
+  c.width=v.videoWidth;c.height=v.videoHeight;
+  c.getContext('2d').drawImage(v,0,0);
+  img.src=c.toDataURL('image/jpeg',0.85);
+  img.style.display='block';
+  v.style.display='none';
+  stopCamera();
+  _selfieOk=true;
+  document.getElementById('snapBtn').style.display='none';
+  document.getElementById('retakeBtn').style.display='flex';
+  document.getElementById('selfieStatus').textContent='✓ Selfie captured successfully!';
+  document.getElementById('personStatus').textContent='';
+  showToast('Selfie captured!');
+}
+
+function retakePhoto(){
+  document.getElementById('capturedPhoto').style.display='none';
+  document.getElementById('retakeBtn').style.display='none';
+  document.getElementById('selfieStatus').textContent='';
+  _selfieOk=false;
+  startCamera();
+}
+
 function submitKYC(){
   if(!_selfieOk){showToast('Please take your selfie first');return;}
   stopCamera();
-  // Save KYC submitted state to user data
   const u=getCurrentUser();
-  if(u){ updateCurrentUser({kyc_submitted:true,kyc_date:new Date().toISOString()}); }
+  if(u){updateCurrentUser({kyc_submitted:true,kyc_date:new Date().toISOString()});}
   [1,2,3].forEach(i=>document.getElementById('step'+i).classList.remove('active'));
   document.getElementById('stepDone').classList.add('active');
-  showKYCDone();
-}
-function showKYCDone(){
   document.getElementById('kycFormArea').style.display='none';
   document.getElementById('kycSuccessArea').style.display='block';
 }
-// On page load, check if already submitted
+
+// On load — check if already submitted
 window.addEventListener('DOMContentLoaded',function(){
   const u=getCurrentUser();
-  if(u && u.kyc_submitted){
+  if(u&&u.kyc_submitted){
     document.getElementById('kycFormArea').style.display='none';
     document.getElementById('kycSuccessArea').style.display='block';
   }
+  // Set max DOB to today
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('kDOB').max=today;
 });
 </script>
 </body>
