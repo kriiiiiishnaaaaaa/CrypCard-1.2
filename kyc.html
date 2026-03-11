@@ -48,8 +48,6 @@ input[type=file]{display:none;}
 .file-drop.uploaded{border-color:rgba(14,203,129,.4);color:#0ECB81;}
 .two-col-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 /* Backdrop: pointer-events none so it never blocks sidebar clicks */
-.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;pointer-events:none;}
-.sidebar-backdrop.show{display:block;pointer-events:auto;}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:999;white-space:nowrap;}
 .toast.show{transform:translateX(-50%) translateY(0);}
 .person-status{font-size:.75rem;margin-top:6px;text-align:center;min-height:18px;}
@@ -60,8 +58,6 @@ input[type=file]{display:none;}
 @media(max-width:900px){
   .sidebar{transform:translateX(-100%);z-index:400;}
   .sidebar.open{transform:translateX(0);}
-  .sidebar-backdrop{z-index:350;}
-  .sidebar-backdrop.show{display:block;pointer-events:auto;}
   .page-main{margin-left:0 !important;padding:72px 16px 24px !important;}
   .page-topbar{left:0 !important;right:0 !important;}
 }
@@ -242,13 +238,12 @@ input[type=file]{display:none;}
 </div>
 </div>
 
-<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
 <div class="toast" id="pageToast"></div>
 <script src="app.js"></script>
 <script>
 const _pu=getCurrentUser();if(_pu&&document.getElementById('avatarBtn'))document.getElementById('avatarBtn').textContent=_pu.name.charAt(0).toUpperCase();
-function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarBackdrop').classList.toggle('show');}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('show');}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');}
 function showToast(m){const t=document.getElementById('pageToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
 // ── Step navigation ──

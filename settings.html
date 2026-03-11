@@ -53,7 +53,6 @@ body{background:#0B0E11;color:#EAECEF;font-family:'IBM Plex Sans',-apple-system,
 .toggle input:checked+.slider{background:#F0B90B;}
 .toggle input:checked+.slider:before{transform:translateX(18px);}
 .mob-menu-btn{display:none !important;position:fixed;bottom:20px;left:20px;z-index:200;width:44px;height:44px;border-radius:50%;background:#F0B90B;border:none;cursor:pointer;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,185,11,.4);}
-.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;pointer-events:none;}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1E2026;border:1px solid rgba(240,185,11,.3);border-radius:12px;padding:11px 20px;font-size:.84rem;color:#F0B90B;box-shadow:0 8px 32px rgba(0,0,0,.5);transition:transform .3s;z-index:999;white-space:nowrap;}
 .toast.show{transform:translateX(-50%) translateY(0);}
 
@@ -73,8 +72,6 @@ body{background:#0B0E11;color:#EAECEF;font-family:'IBM Plex Sans',-apple-system,
 @media(max-width:900px){
   .sidebar{transform:translateX(-100%);z-index:400;}
   .sidebar.open{transform:translateX(0);}
-  .sidebar-backdrop{z-index:350;}
-  .sidebar-backdrop.show{display:block;pointer-events:auto;}
   .page-main{margin-left:0 !important;padding-left:16px !important;padding-right:16px !important;padding-top:72px !important;}
   .page-topbar{left:0 !important;right:0 !important;}
 }
@@ -194,7 +191,6 @@ body{background:#0B0E11;color:#EAECEF;font-family:'IBM Plex Sans',-apple-system,
 </div>
 </div>
 
-<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
 <button class="mob-menu-btn" onclick="toggleSidebar()" aria-label="Menu">
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
 </button>
@@ -202,8 +198,8 @@ body{background:#0B0E11;color:#EAECEF;font-family:'IBM Plex Sans',-apple-system,
 <script src="app.js"></script>
 <script>
 const _pu=getCurrentUser();if(_pu&&document.getElementById('avatarBtn'))document.getElementById('avatarBtn').textContent=_pu.name.charAt(0).toUpperCase();
-function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarBackdrop').classList.toggle('show');}
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('show');}
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');}
 function showToast(m){const t=document.getElementById('pageToast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 const _u=getCurrentUser();
 if(_u){
