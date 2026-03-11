@@ -99,7 +99,12 @@
 
     /* ===== MOBILE ===== */
     /* ===== MOBILE NAV ===== */
-    .nav-mobile-cta { display:none; }
+    .nav-mobile-cta {
+      display:none; align-items:center; padding:7px 13px;
+      background:linear-gradient(135deg,#F0B90B,#F8D12F);
+      color:#000; font-weight:600; font-size:0.82rem;
+      border-radius:8px; text-decoration:none; white-space:nowrap;
+    }
     .mobile-backdrop { display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:998; }
     .mobile-backdrop.show { display:block; }
     .mobile-menu {
@@ -137,12 +142,7 @@
       .nav-actions { display:none; }
       .nav-menu { display:none !important; }
       .hamburger { display:flex !important; }
-      .nav-mobile-cta {
-        display:inline-flex; align-items:center; padding:7px 13px;
-        background:linear-gradient(135deg,#F0B90B,#F8D12F);
-        color:#000; font-weight:600; font-size:0.82rem;
-        border-radius:8px; text-decoration:none; white-space:nowrap;
-      }
+      .nav-mobile-cta { display:inline-flex; }
       .hero-inner { grid-template-columns:1fr; text-align:center; gap:32px; }
       .hero-visual { order:-1; min-height:300px; }
       .hero-actions { justify-content:center; flex-direction:column; align-items:center; }
